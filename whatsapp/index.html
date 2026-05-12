@@ -1,0 +1,1326 @@
+<!DOCTYPE html>
+<html lang="es-CO">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, interactive-widget=resizes-content">
+  <title>Escalia Dental | WhatsApp</title>
+  <style>
+    /* =============================================
+       TOKENS
+       ============================================= */
+    :root {
+      --wa-page:         #0a1014;
+      --wa-rail:         #16222a;
+      --wa-sidebar:      #111b21;
+      --wa-sidebar-act:  #2a3942;
+      --wa-sidebar-hov:  #182229;
+      --wa-panel:        #202c33;
+      --wa-chat:         #0b141a;
+      --wa-input:        #2a3942;
+      --wa-search-bg:    #202c33;
+      --wa-divider:      rgba(134,150,160,.12);
+      --wa-text:         #e9edef;
+      --wa-muted:        #8696a0;
+      --wa-subtle:       #aebac1;
+      --wa-out:          #005c4b;
+      --wa-in:           #202c33;
+      --wa-accent:       #00a884;
+      --wa-accent2:      #25d366;
+      --wa-tick:         #53bdeb;
+      --wa-banner:       #182229;
+      --wa-shadow:       0 1px .5px rgba(11,20,26,.13);
+      --safe-t: env(safe-area-inset-top,    0px);
+      --safe-r: env(safe-area-inset-right,  0px);
+      --safe-b: env(safe-area-inset-bottom, 0px);
+      --safe-l: env(safe-area-inset-left,   0px);
+      --app-height: 100dvh;
+      --vk-offset: 0px;
+    }
+
+    /* =============================================
+       RESET
+       ============================================= */
+    *, *::before, *::after { box-sizing: border-box; }
+    html { height: 100%; }
+
+    body {
+      margin: 0;
+      height: 100%;
+      min-height: 100dvh;
+      font-family: "Segoe UI","Helvetica Neue",Helvetica,Arial,sans-serif;
+      background: var(--wa-chat);
+      color: var(--wa-text);
+      overflow: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* =============================================
+       SHELL — mobile: single column full-screen
+       ============================================= */
+    .shell {
+      display: flex;
+      flex-direction: column;
+      width:  100%;
+      height: var(--app-height);
+      overflow: hidden;
+      background: var(--wa-chat);
+    }
+
+    /* Rail & sidebar hidden on mobile */
+    .rail    { display: none; }
+    .sidebar { display: none; }
+
+    /* =============================================
+       CHAT PANE — fills the shell on mobile
+       ============================================= */
+    .chat-pane {
+      flex: 1;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      background: var(--wa-chat);
+    }
+
+    /* =============================================
+       MOBILE STATUS BAR (fake OS bar)
+       ============================================= */
+    .mobile-statusbar {
+      flex: none;
+      height: calc(20px + var(--safe-t));
+      padding: max(4px, var(--safe-t)) 18px 3px;
+      background: var(--wa-panel);
+      color: #f2f5f7;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: .01em;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+    }
+
+    .mobile-status-icons {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      opacity: .9;
+    }
+
+    /* =============================================
+       CHAT HEADER
+       ============================================= */
+    .chat-header {
+      flex: none;
+      height: 58px;
+      background: var(--wa-panel);
+      display: flex;
+      align-items: center;
+      padding: 0 8px 0 6px;
+      gap: 6px;
+      position: relative;
+      z-index: 3;
+      box-shadow: 0 1px 2px rgba(0,0,0,.22);
+    }
+
+    .chat-contact {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+    }
+
+    .avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: linear-gradient(135deg,#00a884,#008f72);
+      color: #fff;
+      font-weight: 600;
+      font-size: 14px;
+      letter-spacing: .4px;
+      display: grid;
+      place-items: center;
+      flex: none;
+      overflow: hidden;
+    }
+
+    .contact-copy { min-width: 0; }
+
+    .contact-copy strong {
+      display: block;
+      font-size: 16px;
+      font-weight: 500;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      color: var(--wa-text);
+    }
+
+    .contact-copy span {
+      display: block;
+      font-size: 12.5px;
+      color: var(--wa-muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .contact-copy span.typing { color: var(--wa-accent2); }
+
+    .chat-actions {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      color: var(--wa-subtle);
+    }
+
+    /* Hide call-pill by default (mobile); shown on desktop */
+    .call-pill { display: none; }
+
+    /* =============================================
+       SHARED ICON BUTTON
+       ============================================= */
+    .icon-btn {
+      width: 44px;
+      height: 44px;
+      border: 0;
+      border-radius: 50%;
+      background: transparent;
+      color: inherit;
+      display: grid;
+      place-items: center;
+      padding: 0;
+      cursor: default;
+      -webkit-tap-highlight-color: transparent;
+      transition: background-color 120ms ease;
+    }
+
+    .icon-btn:active { background: rgba(134,150,160,.14); }
+    .icon-btn svg { width: 22px; height: 22px; display: block; }
+
+    /* =============================================
+       CHAT STAGE — scrollable message area
+       ============================================= */
+    .chat-stage {
+      flex: 1;
+      min-height: 0;
+      overflow-y: auto;
+      overflow-x: hidden;
+      -webkit-overflow-scrolling: touch;
+      padding: 10px 12px calc(8px + var(--vk-offset));
+      background-color: var(--wa-chat);
+      background-image: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='540' height='540' viewBox='0 0 540 540'%3E%3Cg fill='none' stroke='%23ffffff' stroke-opacity='0.045' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='40' cy='40' r='14'/%3E%3Cpath d='M30 40 L50 40 M40 30 L40 50'/%3E%3Cpath d='M100 30 q10 -10 20 0 q10 10 0 20 q-10 10 -20 0 q-10 -10 0 -20 z'/%3E%3Cpath d='M170 36 L186 36 L182 52 L174 52 z M178 30 L178 36'/%3E%3Cpath d='M240 30 q12 0 12 12 q0 12 -12 12 q-12 0 -12 -12 q0 -12 12 -12 z M232 38 L248 38 M240 30 L240 46'/%3E%3Cpath d='M300 28 L320 28 L320 52 L300 52 z M306 36 L314 36 M306 42 L314 42'/%3E%3Cpath d='M370 30 q10 0 10 10 L380 50 L360 50 L360 40 q0 -10 10 -10 z'/%3E%3Cpath d='M440 30 L460 30 L450 52 z'/%3E%3Cpath d='M500 30 q-8 8 0 16 q8 8 16 0 q-8 -8 -16 -16 z'/%3E%3Cpath d='M40 110 q8 -8 16 0 q8 -8 16 0 q0 8 -16 22 q-16 -14 -16 -22 z'/%3E%3Cpath d='M120 100 L140 116 L120 132 z'/%3E%3Cpath d='M180 110 L200 110 M180 116 L200 116 M180 122 L200 122'/%3E%3Cpath d='M240 100 q14 0 14 14 q0 14 -14 14 q-14 0 -14 -14 q0 -14 14 -14 z M240 108 L240 122 M232 114 L248 114'/%3E%3Cpath d='M310 100 L330 100 M320 100 L320 130 M310 130 L330 130'/%3E%3Cpath d='M380 102 q10 -2 18 6 q8 8 6 18 q-2 10 -12 12 q-10 2 -18 -6 q-8 -8 -6 -18 q2 -10 12 -12 z'/%3E%3Cpath d='M450 104 L470 104 L470 124 L460 130 L450 124 z'/%3E%3Cpath d='M40 182 L60 182 L60 200 L40 200 z M44 188 L56 188 M44 194 L56 194'/%3E%3Cpath d='M110 178 q12 -4 22 6 q10 10 6 22 q-4 12 -18 12 q-14 0 -20 -10 q-6 -10 0 -22 q6 -12 10 -8 z'/%3E%3Cpath d='M180 180 L200 180 L200 196 L190 204 L180 196 z'/%3E%3Cpath d='M250 180 q12 0 12 12 L262 200 L238 200 L238 192 q0 -12 12 -12 z'/%3E%3Cpath d='M310 180 L330 180 L320 200 z M312 184 L328 184'/%3E%3Cpath d='M380 178 q14 0 14 14 q0 14 -14 14 q-14 0 -14 -14 q0 -14 14 -14 z'/%3E%3Cpath d='M450 180 L470 180 L468 196 L452 196 z M460 180 L460 196'/%3E%3Cpath d='M40 252 q10 -8 22 0 q12 8 0 18 q-12 -2 -22 -8 q-10 -6 0 -10 z'/%3E%3Cpath d='M110 250 L130 268 M130 250 L110 268'/%3E%3Cpath d='M180 252 L200 252 q4 8 0 16 L180 268 z'/%3E%3Cpath d='M250 250 q14 0 14 14 q0 14 -14 14 q-14 0 -14 -14 q0 -14 14 -14 z M250 260 L250 268 M244 264 L256 264'/%3E%3Cpath d='M310 252 L330 252 L330 274 L310 274 z M315 256 L325 256 M315 268 L325 268'/%3E%3Cpath d='M380 252 q12 0 12 12 q0 12 -12 12 q-12 0 -12 -12 q0 -12 12 -12 z M380 252 L380 276 M368 264 L392 264'/%3E%3Cpath d='M450 252 L470 264 L450 276 z'/%3E%3Cpath d='M40 322 L60 322 L60 342 L50 348 L40 342 z'/%3E%3Cpath d='M100 320 q12 -2 22 8 q10 10 4 22 q-6 12 -20 8 q-14 -4 -16 -18 q-2 -14 10 -20 z'/%3E%3Cpath d='M180 322 L200 322 M180 330 L200 330 M180 338 L200 338 M180 346 L196 346'/%3E%3Cpath d='M240 322 L260 332 L240 342 L260 352 L240 362 z'/%3E%3Cpath d='M310 322 L330 322 q4 8 0 16 L310 338 z M310 338 L320 350'/%3E%3Cpath d='M376 320 L398 320 L388 350 z'/%3E%3Cpath d='M450 322 q10 0 10 10 q0 10 -10 10 q-10 0 -10 -10 q0 -10 10 -10 z M440 332 L460 332'/%3E%3Cpath d='M40 392 q14 -4 22 6 q8 10 0 22 q-8 12 -22 6 q-14 -6 -14 -18 q0 -12 14 -16 z'/%3E%3Cpath d='M100 390 L120 390 L120 416 L100 416 z M105 396 L115 396 M110 396 L110 410'/%3E%3Cpath d='M170 392 L190 392 L184 416 L176 416 z'/%3E%3Cpath d='M240 392 L260 392 L260 412 L240 412 z M250 392 L250 412 M240 402 L260 402'/%3E%3Cpath d='M310 392 q12 0 12 12 L322 416 L298 416 L298 404 q0 -12 12 -12 z'/%3E%3Cpath d='M380 392 q14 4 16 18 q2 14 -10 22 q-12 8 -22 -2 q-10 -10 -8 -22 q2 -12 14 -16 q6 -2 10 0 z'/%3E%3Cpath d='M450 392 L470 410 L450 428 z'/%3E%3Cpath d='M40 462 L60 462 L60 482 L40 482 z M50 458 L50 462 M48 472 L52 476 M56 472 L52 476'/%3E%3Cpath d='M100 462 q14 0 14 14 q0 14 -14 14 q-14 0 -14 -14 q0 -14 14 -14 z'/%3E%3Cpath d='M170 460 L190 472 L170 484 z'/%3E%3Cpath d='M240 462 L260 462 L260 484 L240 484 z M240 472 L260 472'/%3E%3Cpath d='M310 462 q10 -8 20 0 q-2 12 -10 18 q-8 -6 -10 -18 z'/%3E%3Cpath d='M380 460 q12 -2 18 8 q6 10 0 20 q-6 10 -18 8 q-12 -2 -14 -14 q-2 -12 14 -22 z'/%3E%3Cpath d='M450 462 L470 478 L450 494 z M450 462 L450 494'/%3E%3C/g%3E%3C/svg%3E");
+      background-size: 540px 540px;
+      background-repeat: repeat;
+    }
+
+    .chat-stage::-webkit-scrollbar { width: 6px; }
+    .chat-stage::-webkit-scrollbar-thumb {
+      background: rgba(134,150,160,.22);
+      border-radius: 3px;
+    }
+
+    /* =============================================
+       MESSAGES
+       ============================================= */
+    .messages {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      padding-bottom: 6px;
+      /* mobile: full width */
+    }
+
+    .day-divider {
+      align-self: center;
+      color: var(--wa-muted);
+      font-size: 12.5px;
+      font-weight: 500;
+      margin: 4px 0 12px;
+      letter-spacing: .02em;
+    }
+
+    .encrypt-banner {
+      align-self: center;
+      background: var(--wa-banner);
+      color: #ffd279;
+      border-radius: 7px;
+      padding: 7px 12px;
+      font-size: 12px;
+      margin: 0 0 14px;
+      box-shadow: var(--wa-shadow);
+      max-width: 92%;
+      text-align: center;
+      line-height: 1.45;
+      display: inline-flex;
+      align-items: flex-start;
+      gap: 6px;
+    }
+
+    .encrypt-banner svg { width: 13px; height: 13px; flex: none; margin-top: 2px; }
+
+    .message {
+      max-width: min(85%, 520px);
+      padding: 6px 7px 8px 9px;
+      border-radius: 7.5px;
+      position: relative;
+      box-shadow: var(--wa-shadow);
+      line-height: 1.42;
+      font-size: 14.5px;
+      word-wrap: break-word;
+      margin-top: 2px;
+    }
+
+    .message.in        { align-self: flex-start; background: var(--wa-in);  border-top-left-radius:  0; }
+    .message.out       { align-self: flex-end;   background: var(--wa-out); border-top-right-radius: 0; }
+    .message.in.first  { margin-top: 8px; }
+    .message.out.first { margin-top: 8px; }
+    .message.in:not(.first)  { border-top-left-radius:  7.5px; }
+    .message.out:not(.first) { border-top-right-radius: 7.5px; }
+
+    .message.in.first::before {
+      content: "";
+      position: absolute;
+      top: 0; left: -8px;
+      width: 8px; height: 13px;
+      background-image: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='13' viewBox='0 0 8 13'%3E%3Cpath fill='%23202c33' d='M5.188 0H0v11.193l6.467-8.625C7.526 1.156 6.958 0 5.188 0z'/%3E%3C/svg%3E");
+    }
+
+    .message.out.first::before {
+      content: "";
+      position: absolute;
+      top: 0; right: -8px;
+      width: 8px; height: 13px;
+      background-image: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='13' viewBox='0 0 8 13'%3E%3Cpath fill='%23005c4b' d='M2.812 0H8v11.193L1.533 2.568C.474 1.156 1.042 0 2.812 0z'/%3E%3C/svg%3E");
+    }
+
+    .message-text {
+      padding-right: 60px;
+      white-space: pre-wrap;
+      color: var(--wa-text);
+    }
+
+    .message.out .message-text { padding-right: 80px; }
+
+    .meta {
+      position: absolute;
+      right: 8px; bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      font-size: 11px;
+      color: rgba(233,237,239,.6);
+      line-height: 15px;
+    }
+
+    .meta .tick { width: 16px; height: 11px; color: var(--wa-tick); display: inline-flex; }
+    .meta .tick svg { width: 100%; height: 100%; }
+
+    /* =============================================
+       TYPING INDICATOR
+       ============================================= */
+    .typing { min-width: 64px; padding: 8px 12px 10px; }
+    .typing .message-text { padding-right: 0; }
+    .typing .meta { display: none; }
+
+    .typing-dots {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      min-height: 18px;
+      padding: 2px 0;
+    }
+
+    .typing-dots span {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: #b8c4ca;
+      opacity: .45;
+      animation: bounce 1.05s infinite ease-in-out;
+    }
+
+    .typing-dots span:nth-child(2) { animation-delay: .15s; }
+    .typing-dots span:nth-child(3) { animation-delay: .30s; }
+
+    @keyframes bounce {
+      0%,60%,100% { transform: translateY(0); opacity: .4; }
+      30%          { transform: translateY(-3px); opacity: 1; }
+    }
+
+    /* =============================================
+       COMPOSER
+       ============================================= */
+    .composer {
+      flex: none;
+      background: var(--wa-panel);
+      /* mobile: safe-area bottom padding */
+      padding: 6px
+               max(10px, var(--safe-r))
+               max(10px, calc(6px + var(--safe-b)))
+               max(10px, var(--safe-l));
+      display: flex;
+      align-items: flex-end;
+      gap: 8px;
+      position: relative;
+      z-index: 3;
+      scroll-margin-bottom: calc(16px + var(--vk-offset));
+    }
+
+    .plus-btn {
+      width: 44px; height: 44px;
+      border: 0; border-radius: 50%;
+      background: transparent;
+      color: var(--wa-subtle);
+      display: grid; place-items: center;
+      cursor: default;
+      flex: none;
+      -webkit-tap-highlight-color: transparent;
+      transition: background-color 120ms;
+    }
+
+    .plus-btn:active { background: rgba(134,150,160,.14); }
+    .plus-btn svg { width: 26px; height: 26px; }
+
+    /* hide extra desktop tools on mobile */
+    .composer-tools-desktop { display: none; }
+
+    .composer-form {
+      flex: 1;
+      display: flex;
+      align-items: flex-end;
+      gap: 8px;
+    }
+
+    .input-shell {
+      flex: 1;
+      display: flex;
+      align-items: flex-end;
+      background: var(--wa-input);
+      border-radius: 24px;
+      padding: 4px 6px 4px 12px;
+      min-height: 44px;
+    }
+
+    .emoji-btn-inner {
+      width: 38px; height: 38px;
+      border: 0; border-radius: 50%;
+      background: transparent;
+      color: var(--wa-muted);
+      display: grid; place-items: center;
+      flex: none; cursor: default;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .emoji-btn-inner svg { width: 22px; height: 22px; }
+
+    .composer textarea {
+      flex: 1;
+      min-height: 24px;
+      max-height: 128px;
+      overflow: hidden;
+      resize: none;
+      border: 0; outline: 0;
+      border-radius: 0;
+      background: transparent;
+      color: var(--wa-text);
+      padding: 10px 2px 10px 4px;
+      font: inherit;
+      font-size: 15.5px;
+      line-height: 1.4;
+      align-self: center;
+    }
+
+    .composer textarea::placeholder { color: var(--wa-muted); }
+
+    .send-btn {
+      width: 46px; height: 46px;
+      border: 0; border-radius: 50%;
+      background: transparent;
+      color: var(--wa-subtle);
+      cursor: pointer;
+      display: grid; place-items: center;
+      flex: none;
+      transition: background-color 140ms, color 120ms, transform 120ms;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .send-btn:active  { transform: scale(.93); background: rgba(134,150,160,.14); }
+    .send-btn svg     { width: 26px; height: 26px; }
+    .send-btn:disabled { opacity: .6; cursor: wait; }
+
+    /* hidden on mobile — desktop only */
+    .helper { display: none; }
+
+    /* =============================================
+       REDUCED MOTION
+       ============================================= */
+    @media (prefers-reduced-motion: reduce) {
+      .typing-dots span { animation: none; }
+      .send-btn          { transition: none; }
+    }
+
+    /* ==============================================
+       DESKTOP LAYER  (min-width: 921px)
+       Overrides only what needs to change.
+       ============================================= */
+    @media (min-width: 921px) {
+
+      body {
+        background: linear-gradient(180deg, #00a884 0 127px, var(--wa-page) 127px 100%);
+      }
+
+      /* 3-column grid */
+      .shell {
+        flex-direction: unset;
+        display: grid;
+        grid-template-columns: 64px minmax(380px, 31%) 1fr;
+        width:  min(1600px, calc(100vw - 36px));
+        height: min(calc(100dvh - 36px), 940px);
+        margin: 18px auto;
+        box-shadow: 0 12px 32px rgba(0,0,0,.35);
+        background: var(--wa-page);
+        overflow: hidden;
+      }
+
+      /* ---- RAIL ---- */
+      .rail {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 14px 0 12px;
+        background: var(--wa-rail);
+        border-right: 1px solid rgba(0,0,0,.4);
+      }
+
+      .rail-section {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+
+      .rail-section.bottom { margin-top: auto; gap: 12px; }
+
+      .rail-btn {
+        width: 40px; height: 40px;
+        border: 0; border-radius: 8px;
+        background: transparent;
+        color: var(--wa-subtle);
+        display: grid; place-items: center;
+        cursor: default; position: relative;
+        transition: background-color 120ms, color 120ms;
+      }
+
+      .rail-btn:hover  { background: rgba(134,150,160,.12); color: var(--wa-text); }
+      .rail-btn.active { background: rgba(134,150,160,.12); color: var(--wa-text); }
+      .rail-btn svg    { width: 24px; height: 24px; }
+
+      .rail-badge {
+        position: absolute; top: 4px; right: 4px;
+        min-width: 16px; height: 16px;
+        padding: 0 4px; border-radius: 10px;
+        background: var(--wa-accent2);
+        color: #0b141a;
+        font-size: 10.5px; font-weight: 700;
+        display: grid; place-items: center;
+      }
+
+      .rail-dot {
+        position: absolute; top: 6px; right: 8px;
+        width: 9px; height: 9px;
+        border-radius: 50%;
+        background: var(--wa-accent2);
+        border: 2px solid var(--wa-rail);
+      }
+
+      .rail-avatar {
+        width: 28px; height: 28px;
+        border-radius: 50%;
+        background: linear-gradient(135deg,#00a884,#008f72);
+        color: #fff;
+        display: grid; place-items: center;
+        font-weight: 600; font-size: 11px; letter-spacing: .4px;
+      }
+
+      /* ---- SIDEBAR ---- */
+      .sidebar {
+        display: flex;
+        flex-direction: column;
+        background: var(--wa-sidebar);
+        min-width: 0;
+      }
+
+      .sidebar-header {
+        padding: 12px 16px 10px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: var(--wa-sidebar);
+      }
+
+      .sidebar-title {
+        font-size: 24px; font-weight: 600;
+        color: var(--wa-text); letter-spacing: -.01em;
+      }
+
+      .sidebar-actions {
+        display: flex; gap: 4px; color: var(--wa-subtle);
+      }
+
+      .icon-btn.rounded {
+        border-radius: 8px;
+        background: var(--wa-input);
+      }
+      .icon-btn.rounded:hover { background: #344048; }
+
+      /* search */
+      .search-wrap {
+        padding: 4px 12px 8px;
+        background: var(--wa-sidebar);
+        display: flex;
+      }
+
+      .search-shell {
+        flex: 1;
+        position: relative;
+        display: flex;
+        align-items: center;
+        background: var(--wa-search-bg);
+        border-radius: 999px;
+        height: 36px;
+        padding: 0 14px 0 46px;
+      }
+
+      .search-icon {
+        position: absolute; left: 18px;
+        width: 20px; height: 20px;
+        color: var(--wa-muted);
+        display: grid; place-items: center;
+      }
+
+      .search-input {
+        flex: 1; border: 0; outline: 0;
+        background: transparent;
+        color: var(--wa-text);
+        font-size: 14.5px; height: 100%;
+      }
+
+      .search-input::placeholder { color: var(--wa-muted); }
+
+      /* filters */
+      .filters {
+        display: flex; gap: 8px;
+        padding: 6px 14px 10px;
+        background: var(--wa-sidebar);
+        overflow-x: auto; scrollbar-width: none;
+      }
+
+      .filters::-webkit-scrollbar { display: none; }
+
+      .chip {
+        flex: none; padding: 6px 14px;
+        border-radius: 999px;
+        font-size: 13.5px; color: var(--wa-subtle);
+        background: var(--wa-search-bg);
+        cursor: default; white-space: nowrap;
+        display: inline-flex; align-items: center;
+        gap: 6px; height: 30px; border: 0;
+        transition: background-color 120ms;
+      }
+
+      .chip:hover  { background: #2a3942; }
+
+      .chip.active {
+        background: rgba(0,168,132,.22);
+        color: #d1f4cc;
+      }
+
+      .chip-arrow {
+        width: 30px; height: 30px;
+        padding: 0; justify-content: center;
+      }
+
+      .chip-arrow svg { width: 16px; height: 16px; }
+
+      /* notification banner */
+      .notif-banner {
+        margin: 4px 12px 8px;
+        background: rgba(0,168,132,.1);
+        border-radius: 12px;
+        padding: 10px 12px;
+        display: grid;
+        grid-template-columns: 36px 1fr auto;
+        align-items: center;
+        gap: 10px;
+        font-size: 13.5px; line-height: 1.35;
+      }
+
+      .notif-icon {
+        width: 36px; height: 36px;
+        border-radius: 50%;
+        background: rgba(0,168,132,.16);
+        color: var(--wa-accent2);
+        display: grid; place-items: center;
+      }
+
+      .notif-icon svg { width: 20px; height: 20px; }
+
+      .notif-text strong { font-weight: 400; color: var(--wa-text); }
+
+      .notif-link {
+        color: var(--wa-accent2);
+        text-decoration: none;
+        margin-left: 4px;
+      }
+
+      .notif-close {
+        width: 30px; height: 30px;
+        border: 0; background: transparent;
+        color: var(--wa-muted);
+        border-radius: 50%;
+        display: grid; place-items: center;
+        cursor: default;
+      }
+
+      .notif-close:hover { background: rgba(134,150,160,.12); }
+      .notif-close svg { width: 18px; height: 18px; }
+
+      /* chat list */
+      .chat-list {
+        flex: 1; overflow-y: auto; overflow-x: hidden;
+        padding-bottom: 12px;
+        scrollbar-width: thin;
+        scrollbar-color: rgba(134,150,160,.2) transparent;
+      }
+
+      .archived-row {
+        display: grid;
+        grid-template-columns: 49px 1fr auto;
+        gap: 12px;
+        padding: 10px 14px 10px 18px;
+        align-items: center;
+        cursor: default; position: relative;
+      }
+
+      .archived-row::after {
+        content: "";
+        position: absolute;
+        left: 75px; right: 0; bottom: 0;
+        height: 1px; background: var(--wa-divider);
+      }
+
+      .archived-icon {
+        width: 49px; height: 49px;
+        display: grid; place-items: center;
+        color: var(--wa-accent2);
+      }
+
+      .archived-icon svg { width: 22px; height: 22px; }
+      .archived-row strong { font-size: 15px; font-weight: 400; color: var(--wa-text); }
+      .archived-row .count { color: var(--wa-accent2); font-size: 12px; font-weight: 500; }
+      .archived-row:hover  { background: var(--wa-sidebar-hov); }
+
+      .chat-item {
+        display: grid;
+        grid-template-columns: 49px 1fr auto;
+        gap: 13px;
+        padding: 10px 14px 10px 18px;
+        align-items: center;
+        cursor: default; position: relative;
+      }
+
+      .chat-item.active      { background: var(--wa-sidebar-act); }
+      .chat-item:hover:not(.active) { background: var(--wa-sidebar-hov); }
+
+      .chat-item::after {
+        content: "";
+        position: absolute;
+        left: 75px; right: 0; bottom: 0;
+        height: 1px; background: var(--wa-divider);
+      }
+
+      .chat-item .avatar { width: 49px; height: 49px; font-size: 16px; }
+      .chat-item-body    { min-width: 0; }
+
+      .chat-item-row {
+        display: flex; justify-content: space-between;
+        align-items: baseline; gap: 8px;
+      }
+
+      .chat-item strong {
+        font-size: 16px; font-weight: 400;
+        color: var(--wa-text);
+        white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+      }
+
+      .chat-item time { color: var(--wa-muted); font-size: 12px; flex: none; }
+
+      .chat-item p {
+        margin: 3px 0 0;
+        color: var(--wa-muted); font-size: 13.5px;
+        white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        display: flex; align-items: center; gap: 4px;
+      }
+
+      /* sidebar footer */
+      .sidebar-foot {
+        padding: 8px 12px 12px;
+        background: linear-gradient(180deg, transparent, rgba(0,168,132,.07));
+      }
+
+      .sidebar-foot-pill {
+        display: flex; align-items: center; gap: 12px;
+        padding: 10px 14px;
+        background: rgba(0,168,132,.16);
+        border-radius: 999px;
+        font-size: 14px; cursor: default;
+      }
+
+      .sidebar-foot-pill .wa-bubble {
+        width: 28px; height: 28px;
+        border-radius: 50%;
+        background: var(--wa-accent2);
+        display: grid; place-items: center;
+        color: #0b141a;
+      }
+
+      .sidebar-foot-pill .wa-bubble svg { width: 16px; height: 16px; }
+
+      /* ---- CHAT PANE (desktop overrides) ---- */
+      .mobile-statusbar { display: none; }
+
+      .chat-header {
+        height: 60px;
+        padding: 0 16px;
+        gap: 0;
+      }
+
+      .chat-header .avatar { width: 40px; height: 40px; }
+
+      /* Call pill: desktop only */
+      .call-pill {
+        display: inline-flex;
+        align-items: center; gap: 6px;
+        padding: 7px 8px 7px 12px;
+        border-radius: 999px;
+        border: 1px solid rgba(134,150,160,.32);
+        background: transparent;
+        color: var(--wa-text);
+        font-size: 14px; cursor: default;
+        transition: background-color 120ms;
+        white-space: nowrap;
+      }
+
+      .call-pill:hover { background: rgba(134,150,160,.1); }
+      .call-pill svg   { width: 18px; height: 18px; }
+      .call-pill .caret { width: 14px; height: 14px; opacity: .7; }
+
+      .chat-stage { padding: 16px 5% 8px; }
+
+      .messages { max-width: 920px; margin: 0 auto; }
+
+      .message { max-width: min(82%, 570px); }
+
+      /* desktop composer */
+      .composer-tools-desktop {
+        display: flex;
+        align-items: center; gap: 4px;
+        color: var(--wa-subtle);
+        padding-bottom: 4px;
+      }
+
+      .input-shell {
+        border-radius: 8px;
+        padding: 9px 12px;
+      }
+
+      .emoji-btn-inner { display: none; }
+
+      .composer { padding: 5px 16px 8px; gap: 10px; }
+
+      .helper {
+        display: block;
+        max-width: 920px;
+        margin: 0 auto;
+        padding: 4px 5% 6px;
+        font-size: 11px;
+        color: var(--wa-muted);
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+
+    <!-- ========== RAIL (desktop only) ========== -->
+    <nav class="rail" aria-label="Navegación">
+      <div class="rail-section">
+        <button class="rail-btn active" type="button" tabindex="-1" aria-label="Chats">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3C6.5 3 2 6.9 2 11.7c0 2.6 1.4 5 3.6 6.6L4.5 22l4.6-1.5c.9.2 1.8.3 2.9.3 5.5 0 10-3.9 10-8.7S17.5 3 12 3z"/></svg>
+          <span class="rail-badge">2</span>
+        </button>
+        <button class="rail-btn" type="button" tabindex="-1" aria-label="Estados">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9" stroke-dasharray="2 3"/><circle cx="12" cy="12" r="4" fill="currentColor" stroke="none"/></svg>
+          <span class="rail-dot"></span>
+        </button>
+        <button class="rail-btn" type="button" tabindex="-1" aria-label="Canales">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 11v2c0 1.1.9 2 2 2h1l3 4h2l-3-10H6c-1.7 0-3 1-3 2zm15-6L8 9l3 10 7-4c1.7-.9 3-3 3-5s-1.3-4-3-5z"/></svg>
+        </button>
+        <button class="rail-btn" type="button" tabindex="-1" aria-label="Comunidades">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 4a3 3 0 1 1 0 6 3 3 0 0 1 0-6zM8 6a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zm0 6c-2.7 0-5 1.4-5 3v2h7v-1.5c0-1.3.6-2.4 1.6-3.2C10.6 12.1 9.4 12 8 12zm8 0c-1 0-1.9.1-2.7.3-.7.2-1.3.6-1.7 1.1-.4.5-.6 1-.6 1.6V17h11v-2c0-1.6-2.7-3-6-3z"/></svg>
+        </button>
+      </div>
+      <div class="rail-section bottom">
+        <button class="rail-btn" type="button" tabindex="-1" aria-label="Configuración">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.4 13a7.7 7.7 0 0 0 0-2l2.1-1.6a.5.5 0 0 0 .1-.6l-2-3.5a.5.5 0 0 0-.6-.2l-2.5 1a7.5 7.5 0 0 0-1.7-1L14.5 2a.5.5 0 0 0-.5-.4h-4a.5.5 0 0 0-.5.4l-.4 2.7a7.5 7.5 0 0 0-1.7 1L5 4.7a.5.5 0 0 0-.6.2l-2 3.5a.5.5 0 0 0 .1.6L4.6 11a7.7 7.7 0 0 0 0 2l-2.1 1.6a.5.5 0 0 0-.1.6l2 3.5a.5.5 0 0 0 .6.2l2.5-1a7.5 7.5 0 0 0 1.7 1l.4 2.7a.5.5 0 0 0 .5.4h4a.5.5 0 0 0 .5-.4l.4-2.7a7.5 7.5 0 0 0 1.7-1l2.5 1a.5.5 0 0 0 .6-.2l2-3.5a.5.5 0 0 0-.1-.6L19.4 13zM12 15.5a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7z"/></svg>
+        </button>
+        <div class="rail-avatar" aria-label="Tu perfil">DC</div>
+      </div>
+    </nav>
+
+    <!-- ========== SIDEBAR (desktop only) ========== -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-title">WhatsApp</div>
+        <div class="sidebar-actions">
+          <button class="icon-btn rounded" type="button" tabindex="-1" aria-label="Nuevo chat">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.005 3.175H4.674C3.642 3.175 3 3.789 3 4.821V21.02l3.544-3.514h12.461c1.033 0 2.064-1.06 2.064-2.093V4.821c-.001-1.032-1.032-1.646-2.064-1.646zm-4.989 9.869H7.041V11.1h6.975v1.944zm3-4H7.041V7.1h9.975v1.944z"/></svg>
+          </button>
+          <button class="icon-btn" type="button" tabindex="-1" aria-label="Menú">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm0 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm0 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="search-wrap">
+        <div class="search-shell">
+          <span class="search-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 1 0-.7.7l.27.28v.79l5 5 1.49-1.49-5-5zm-6 0A4.5 4.5 0 1 1 14 9.5 4.5 4.5 0 0 1 9.5 14z"/></svg>
+          </span>
+          <input class="search-input" type="text" placeholder="Buscar o iniciar un chat nuevo" aria-label="Buscar">
+        </div>
+      </div>
+
+      <div class="filters" role="tablist">
+        <button class="chip active" role="tab" type="button" tabindex="-1">Todos</button>
+        <button class="chip"        role="tab" type="button" tabindex="-1">No leídos 3</button>
+        <button class="chip"        role="tab" type="button" tabindex="-1">Favoritos</button>
+        <button class="chip chip-arrow" role="tab" type="button" tabindex="-1" aria-label="Más filtros">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg>
+        </button>
+      </div>
+
+      <div class="notif-banner" id="notifBanner" role="status">
+        <div class="notif-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 22a2 2 0 0 0 2-2H10a2 2 0 0 0 2 2zm6.7-5.3-.7-.7v-3a6 6 0 0 0-4.5-5.8V6a1.5 1.5 0 1 0-3 0v1.2A6 6 0 0 0 6 13v3l-.7.7a1 1 0 0 0 .7 1.7h12a1 1 0 0 0 .7-1.7zM3.3 3.3a1 1 0 0 0-1.4 1.4l16.4 16.4a1 1 0 0 0 1.4-1.4z"/></svg>
+        </div>
+        <div class="notif-text">
+          <strong>Las notificaciones están desactivadas.</strong>
+          <a href="#" class="notif-link" onclick="event.preventDefault()">Activar</a>
+        </div>
+        <button class="notif-close" type="button" tabindex="-1" aria-label="Cerrar"
+          onclick="document.getElementById('notifBanner').style.display='none'">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.4 17.6 5 12 10.6 6.4 5 5 6.4 10.6 12 5 17.6 6.4 19 12 13.4 17.6 19 19 17.6 13.4 12z"/></svg>
+        </button>
+      </div>
+
+      <div class="chat-list">
+        <div class="archived-row" aria-label="Archivados">
+          <div class="archived-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 5h18v3H3V5zm1 4h16v11a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V9zm5 4h6v2H9v-2z"/></svg>
+          </div>
+          <strong>Archivados</strong>
+          <span class="count">36</span>
+        </div>
+
+        <article class="chat-item active" aria-current="true">
+          <div class="avatar">ED</div>
+          <div class="chat-item-body">
+            <div class="chat-item-row">
+              <strong>Escalia Dental</strong>
+              <time id="sidebarTime"></time>
+            </div>
+            <p>Bienvenido a Escalia Dental, ¿es tu primera visita con nosotros?</p>
+          </div>
+        </article>
+      </div>
+
+      <div class="sidebar-foot">
+        <div class="sidebar-foot-pill" role="note">
+          <div class="wa-bubble" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.7 14.9L2 22l5.2-1.3A10 10 0 1 0 12 2zm5.5 14c-.2.6-1.3 1.2-1.8 1.3-.4 0-.9.1-1.5-.1l-1.4-.6a10 10 0 0 1-4-3.5c-.6-.7-1-1.6-1-2.5 0-.9.4-1.7 1-2.2.2-.2.4-.2.5-.2h.4c.1 0 .3 0 .4.3l.6 1.4c0 .1.1.3 0 .4l-.2.4-.4.4c-.1.1-.2.2-.1.4l1 1.5a4.5 4.5 0 0 0 1.7 1.1c.2.1.3 0 .4-.1l.5-.6c.1-.2.2-.2.4-.1l1.4.6c.2.1.3.1.4.2 0 .2 0 .8-.3 1.4z"/></svg>
+          </div>
+          <span>Descarga WhatsApp para Mac</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ========== CHAT PANE ========== -->
+    <section class="chat-pane">
+
+      <!-- Mobile OS status bar -->
+      <div class="mobile-statusbar" aria-hidden="true">
+        <span id="mobileClock">9:41</span>
+        <div class="mobile-status-icons">
+          <svg width="16" height="12" viewBox="0 0 16 12" fill="currentColor"><rect x="0" y="3" width="3" height="9" rx="1"/><rect x="4.5" y="2" width="3" height="10" rx="1"/><rect x="9" y="0" width="3" height="12" rx="1"/><rect x="13.5" y="0" width="2.5" height="12" rx="1" opacity=".4"/></svg>
+          <span>4G</span>
+          <svg width="25" height="12" viewBox="0 0 25 12" fill="currentColor"><rect x="0" y="1" width="21" height="10" rx="2" stroke="currentColor" stroke-width="1.2" fill="none" opacity=".6"/><rect x="21" y="3.5" width="2" height="5" rx="1" opacity=".6"/><rect x="1.5" y="2.5" width="16" height="7" rx="1.5"/></svg>
+        </div>
+      </div>
+
+      <!-- Header -->
+      <header class="chat-header">
+        <div class="chat-contact">
+          <div class="avatar">ED</div>
+          <div class="contact-copy">
+            <strong>Escalia Dental</strong>
+            <span id="contactStatus">en línea</span>
+          </div>
+        </div>
+        <div class="chat-actions" aria-hidden="true">
+          <button class="call-pill" type="button" tabindex="-1" aria-label="Llamar">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17 10.5V7a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-3.5l4 4v-11l-4 4z"/></svg>
+            <span>Llamar</span>
+            <svg class="caret" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg>
+          </button>
+          <button class="icon-btn" type="button" tabindex="-1" aria-label="Buscar">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 1 0-.7.7l.27.28v.79l5 5 1.49-1.49-5-5zm-6 0A4.5 4.5 0 1 1 14 9.5 4.5 4.5 0 0 1 9.5 14z"/></svg>
+          </button>
+          <button class="icon-btn" type="button" tabindex="-1" aria-label="Menú">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm0 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm0 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"/></svg>
+          </button>
+        </div>
+      </header>
+
+      <!-- Messages -->
+      <div class="chat-stage" id="chatStage">
+        <div class="messages" id="messages">
+          <div class="encrypt-banner" role="note">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 1a5 5 0 0 0-5 5v3H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-9a2 2 0 0 0-2-2h-2V6a5 5 0 0 0-5-5zm0 2a3 3 0 0 1 3 3v3H9V6a3 3 0 0 1 3-3z"/></svg>
+            <span>Los mensajes están cifrados de extremo a extremo. Nadie fuera de este chat puede leerlos.</span>
+          </div>
+          <div class="day-divider">Hoy</div>
+        </div>
+      </div>
+
+      <!-- Composer -->
+      <div class="composer">
+        <!-- Desktop extra tools -->
+        <div class="composer-tools-desktop" aria-hidden="true">
+          <button class="plus-btn" type="button" tabindex="-1" aria-label="Adjuntar">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>
+          </button>
+          <button class="icon-btn" type="button" tabindex="-1" aria-label="Emoji">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm0 18c-4.4 0-8-3.6-8-8s3.6-8 8-8 8 3.6 8 8-3.6 8-8 8zM8.5 11A1.5 1.5 0 1 1 10 9.5 1.5 1.5 0 0 1 8.5 11zm7 0A1.5 1.5 0 1 1 17 9.5a1.5 1.5 0 0 1-1.5 1.5zm.76 3a4.992 4.992 0 0 1-8.52 0z"/></svg>
+          </button>
+        </div>
+
+        <form class="composer-form" id="chatForm">
+          <div class="input-shell">
+            <!-- Emoji button inside input (mobile) -->
+            <button class="emoji-btn-inner" type="button" tabindex="-1" aria-label="Emoji" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm0 18c-4.4 0-8-3.6-8-8s3.6-8 8-8 8 3.6 8 8-3.6 8-8 8zM8.5 11A1.5 1.5 0 1 1 10 9.5 1.5 1.5 0 0 1 8.5 11zm7 0A1.5 1.5 0 1 1 17 9.5a1.5 1.5 0 0 1-1.5 1.5zm.76 3a4.992 4.992 0 0 1-8.52 0z"/></svg>
+            </button>
+            <textarea id="messageInput" rows="1" placeholder="Escribe un mensaje"></textarea>
+          </div>
+          <button class="send-btn" id="sendButton" type="submit" aria-label="Grabar audio">
+            <svg id="sendIcon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M12 14a3 3 0 0 0 3-3V6a3 3 0 1 0-6 0v5a3 3 0 0 0 3 3zm5-3a1 1 0 1 1 2 0 7 7 0 0 1-6 6.92V21h2a1 1 0 1 1 0 2H9a1 1 0 1 1 0-2h2v-3.08A7 7 0 0 1 5 11a1 1 0 1 1 2 0 5 5 0 1 0 10 0z"/>
+            </svg>
+          </button>
+        </form>
+      </div>
+
+      <div class="helper">La primera respuesta del usuario se envía al sistema de Escalia Dental.</div>
+    </section>
+  </main>
+
+  <script>
+    const webhookUrl       = 'https://n8n.cambiatearemoto.com/webhook/escalia-dental';
+    const initialMessage   = 'Bienvenido a Escalia Dental, ¿es tu primera visita con nosotros?';
+    const sessionStorageKey = 'escalia-dental-session-id';
+
+    const messagesEl    = document.getElementById('messages');
+    const formEl        = document.getElementById('chatForm');
+    const inputEl       = document.getElementById('messageInput');
+    const sendButtonEl  = document.getElementById('sendButton');
+    const sendIconEl    = document.getElementById('sendIcon');
+    const chatStageEl   = document.getElementById('chatStage');
+    const sidebarTimeEl = document.getElementById('sidebarTime');
+    const statusEl      = document.getElementById('contactStatus');
+    const clockEl       = document.getElementById('mobileClock');
+
+    const TZ = 'America/Bogota';
+
+    const SEND_PATH = '<path d="M1.101 21.757 23.8 12.028 1.101 2.3l.011 7.912 13.623 1.816-13.623 1.817-.011 7.912z"/>';
+    const MIC_PATH  = '<path d="M12 14a3 3 0 0 0 3-3V6a3 3 0 1 0-6 0v5a3 3 0 0 0 3 3zm5-3a1 1 0 1 1 2 0 7 7 0 0 1-6 6.92V21h2a1 1 0 1 1 0 2H9a1 1 0 1 1 0-2h2v-3.08A7 7 0 0 1 5 11a1 1 0 1 1 2 0 5 5 0 1 0 10 0z"/>';
+    const TICK_SVG  = '<svg viewBox="0 0 16 11" fill="currentColor"><path d="M11.071.653L4.5 7.224 2.929 5.653 1.515 7.067 4.5 10.052l8-8L11.071.653zm4 0L8.5 7.224l-.707-.707L7.086 7.224l1.414 1.414 8-8L15.071.653z"/></svg>';
+
+    /* ---- helpers ---- */
+    function nowLabel() {
+      return new Date().toLocaleTimeString('es-CO', { timeZone: TZ, hour: 'numeric', minute: '2-digit', hour12: true });
+    }
+
+    function clockLabel() {
+      return new Date().toLocaleTimeString('es-CO', { timeZone: TZ, hour: 'numeric', minute: '2-digit', hour12: false });
+    }
+
+    function fmtDateTime() {
+      return new Date().toLocaleString('es-CO', { timeZone: TZ, weekday: 'long', day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit', hour12: false });
+    }
+
+    function isoNow() {
+      const f = new Intl.DateTimeFormat('en-CA', { timeZone: TZ, year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false });
+      const p = f.formatToParts(new Date()).reduce((a, x) => { if (x.type !== 'literal') a[x.type] = x.value; return a; }, {});
+      return `${p.year}-${p.month}-${p.day}T${p.hour}:${p.minute}:${p.second}-05:00`;
+    }
+
+    function agendaWindow() {
+      const now = new Date();
+      return [0, 1, 2].map(d => {
+        const dt = new Date(now);
+        dt.setDate(now.getDate() + d);
+        return dt.toLocaleDateString('es-CO', { timeZone: TZ, weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+      }).join(' | ');
+    }
+
+    function buildContext(msg) {
+      return [
+        'CONTEXTO_SISTEMA: Asistente virtual de WhatsApp para Escalia Dental.',
+        '',
+        'IDENTIDAD Y ROL:',
+        '- Eres "EscalIA", asistente de admisiones de Escalia Dental, clínica odontológica en Colombia.',
+        '- Tu función es orientar al paciente, resolver dudas básicas y agendar citas. No diagnosticas ni recetas.',
+        '- Tono cálido, cercano, profesional y breve. Español colombiano neutro. Tratamiento de "tú".',
+        '',
+        'FECHA Y HORA OPERATIVA:',
+        `- Fecha y hora actual en Colombia: ${fmtDateTime()}.`,
+        `- Fecha y hora ISO Colombia: ${isoNow()}.`,
+        '- Zona horaria operativa: America/Bogota.',
+        `- Ventana prioritaria de agenda: ${agendaWindow()}.`,
+        '',
+        'OBJETIVOS DE LA CONVERSACIÓN (en orden):',
+        '1. Saludar y confirmar si es primera visita o paciente recurrente.',
+        '2. Identificar el motivo de consulta: revisión, dolor, ortodoncia, blanqueamiento, limpieza, implantes, urgencia, etc.',
+        '3. Recolectar datos mínimos: nombre completo, teléfono, EPS o particular, preferencia de fecha y franja.',
+        '4. Proponer hasta 2 horarios disponibles validando cruces reales del calendario.',
+        '5. Confirmar la cita con resumen: fecha, hora, sede, recordatorio de llegar 10 min antes con documento.',
+        '',
+        'REGLAS CRÍTICAS DE AGENDA:',
+        '- Verifica cruces reales del calendario para hoy y los próximos 2 días.',
+        '- Si hay un evento a las 10:30, las 10:00 no es viable (la cita dura 1 hora y se cruzaría).',
+        '- No confirmes si algún evento ocupado toca cualquier minuto del bloque propuesto.',
+        '- Nunca confirmes sin nombre y teléfono del paciente.',
+        '',
+        'TONO Y FORMATO:',
+        '- Mensajes cortos, una idea por mensaje.',
+        '- Emojis con moderación (máx 1 cada 3-4 mensajes), nunca al inicio.',
+        '- Evita lenguaje técnico. No prometas precios; redirige a valoración.',
+        '- No inventes datos (profesionales, sedes, horarios). Si no sabes, deriva a humano.',
+        '',
+        'ESCALAMIENTO:',
+        '- Urgencias (sangrado, trauma, dolor severo): datos mínimos y avisa contacto en <15 min.',
+        '- Si pide humano o hay reclamo/queja: deriva siempre.',
+        '',
+        `MENSAJE_DEL_PACIENTE: ${msg}`
+      ].join('\n');
+    }
+
+    function tick() {
+      if (sidebarTimeEl) sidebarTimeEl.textContent = nowLabel();
+      if (clockEl) clockEl.textContent = clockLabel();
+    }
+
+    function setStatus(text, typing) {
+      statusEl.textContent = text;
+      statusEl.classList.toggle('typing', !!typing);
+    }
+
+    function updateBtn() {
+      const has = !!inputEl.value.trim();
+      sendButtonEl.setAttribute('aria-label', has ? 'Enviar mensaje' : 'Grabar audio');
+      sendIconEl.innerHTML = has ? SEND_PATH : MIC_PATH;
+      sendButtonEl.style.color = has ? '#00a884' : '#aebac1';
+    }
+
+    function scrollBottom() {
+      chatStageEl.scrollTop = chatStageEl.scrollHeight;
+    }
+
+    function syncViewportLayout() {
+      const vv = window.visualViewport;
+      const root = document.documentElement;
+      if (!vv) {
+        root.style.setProperty('--app-height', window.innerHeight + 'px');
+        root.style.setProperty('--vk-offset', '0px');
+        scrollBottom();
+        return;
+      }
+
+      const appHeight = Math.round(vv.height + vv.offsetTop);
+      const keyboardInset = Math.max(0, window.innerHeight - vv.height - vv.offsetTop);
+
+      root.style.setProperty('--app-height', appHeight + 'px');
+      root.style.setProperty('--vk-offset', keyboardInset + 'px');
+
+      requestAnimationFrame(scrollBottom);
+    }
+
+    function grow() {
+      inputEl.style.height = '24px';
+      inputEl.style.height = Math.min(inputEl.scrollHeight, 128) + 'px';
+    }
+
+    function isFirstOf(dir) {
+      const msgs = messagesEl.querySelectorAll('.message');
+      if (!msgs.length) return true;
+      return !msgs[msgs.length - 1].classList.contains(dir);
+    }
+
+    function addMessage(text, dir, opts = {}) {
+      const wrap = document.createElement('div');
+      const body = document.createElement('div');
+      const meta = document.createElement('div');
+      wrap.className = `message ${dir}${isFirstOf(dir) ? ' first' : ''}`;
+      body.className = 'message-text';
+      body.textContent = text;
+      meta.className  = 'meta';
+      const t = document.createElement('span');
+      t.textContent = opts.time || nowLabel();
+      meta.appendChild(t);
+      if (dir === 'out') {
+        const tick = document.createElement('span');
+        tick.className = 'tick';
+        tick.innerHTML = TICK_SVG;
+        meta.appendChild(tick);
+      }
+      wrap.appendChild(body);
+      wrap.appendChild(meta);
+      messagesEl.appendChild(wrap);
+      scrollBottom();
+      return wrap;
+    }
+
+    function addTyping() {
+      const wrap = document.createElement('div');
+      const body = document.createElement('div');
+      const dots = document.createElement('div');
+      wrap.className = `message in typing${isFirstOf('in') ? ' first' : ''}`;
+      body.className = 'message-text';
+      dots.className = 'typing-dots';
+      dots.innerHTML = '<span></span><span></span><span></span>';
+      body.appendChild(dots);
+      wrap.appendChild(body);
+      messagesEl.appendChild(wrap);
+      scrollBottom();
+      return wrap;
+    }
+
+    function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+    function replyDelay(text) {
+      return Math.min(2600, 850 + (text || '').trim().length * 18);
+    }
+
+    function getSession() {
+      let id = localStorage.getItem(sessionStorageKey);
+      if (!id) {
+        id = `escalia_dental_${Date.now()}_${Math.random().toString(36).slice(2, 10)}`;
+        localStorage.setItem(sessionStorageKey, id);
+      }
+      return id;
+    }
+
+    function extractReply(data) {
+      if (!data) return '';
+      if (typeof data === 'string') return data;
+      return data.reply || data.output || data.text || data.response || data.message || '';
+    }
+
+    async function post(payload) {
+      const body = new URLSearchParams();
+      Object.entries(payload).forEach(([k, v]) => body.append(k, String(v)));
+      const res = await fetch(webhookUrl, {
+        method: 'POST', mode: 'cors',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
+        body: body.toString()
+      });
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      return { raw: await res.json() };
+    }
+
+    /* ---- init ---- */
+    addMessage(initialMessage, 'in', { time: nowLabel() });
+    tick();
+    setStatus('en línea', false);
+    grow();
+    updateBtn();
+    syncViewportLayout();
+    inputEl.focus();
+
+    if ('virtualKeyboard' in navigator) navigator.virtualKeyboard.overlaysContent = false;
+
+    setInterval(tick, 30000);
+
+    window.addEventListener('resize', syncViewportLayout);
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener('resize', syncViewportLayout);
+      window.visualViewport.addEventListener('scroll', syncViewportLayout);
+    }
+
+    inputEl.addEventListener('input', () => { grow(); updateBtn(); });
+    inputEl.addEventListener('focus', () => requestAnimationFrame(syncViewportLayout));
+    inputEl.addEventListener('blur', () => setTimeout(syncViewportLayout, 50));
+
+    inputEl.addEventListener('keydown', e => {
+      if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); formEl.requestSubmit(); }
+    });
+
+    formEl.addEventListener('submit', async e => {
+      e.preventDefault();
+      const msg = inputEl.value.trim();
+      if (!msg) return;
+
+      addMessage(msg, 'out');
+      inputEl.value = '';
+      grow(); updateBtn();
+      inputEl.disabled = true;
+      sendButtonEl.disabled = true;
+
+      const payload = {
+        clinic: 'Escalia Dental', agent: 'Agente_EscalIA', source: 'Escalia-WhatsApp',
+        question: initialMessage, message: msg, chatInput: msg,
+        agentContext: buildContext(msg),
+        currentDateTimeDisplay: fmtDateTime(), currentDateTimeISO: isoNow(),
+        calendarReviewWindow: agendaWindow(), timezone: TZ,
+        sessionId: getSession(), page: location.href,
+        timestamp: new Date().toISOString(), userAgent: navigator.userAgent
+      };
+
+      try {
+        const typing  = addTyping();
+        const t0      = Date.now();
+        setStatus('escribiendo...', true);
+        const result  = await post(payload);
+        const reply   = extractReply(result.raw);
+        const wait    = Math.max(0, replyDelay(reply) - (Date.now() - t0));
+        if (wait > 0) await sleep(wait);
+        typing.remove();
+        setStatus('en línea', false);
+        addMessage(reply || 'Recibimos tu mensaje, pero no llegó respuesta del asistente.', 'in');
+      } catch {
+        messagesEl.querySelector('.typing')?.remove();
+        setStatus('en línea', false);
+        addMessage('No pudimos enviar tu mensaje en este momento. Intenta de nuevo.', 'in');
+      } finally {
+        inputEl.disabled = false;
+        sendButtonEl.disabled = false;
+        updateBtn();
+        inputEl.focus();
+      }
+    });
+  </script>
+</body>
+</html>

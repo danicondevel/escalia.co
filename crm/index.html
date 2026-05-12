@@ -1,0 +1,2299 @@
+<div class="ghl-card-site" id="ghl-card-top">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap');
+
+    .ghl-card-site,
+    .ghl-card-site * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    .ghl-card-site {
+      --ghl-card-black: #000000;
+      --ghl-card-black-soft: #070707;
+      --ghl-card-surface: rgba(255, 255, 255, 0.05);
+      --ghl-card-surface-2: rgba(255, 255, 255, 0.03);
+      --ghl-card-surface-3: rgba(255, 255, 255, 0.02);
+      --ghl-card-gold-1: #d4af37;
+      --ghl-card-gold-2: #f9e27e;
+      --ghl-card-amber: #ffbf00;
+      --ghl-card-blue: #2e9aff;
+      --ghl-card-text: #f6f1e3;
+      --ghl-card-muted: rgba(246, 241, 227, 0.74);
+      --ghl-card-fine: rgba(246, 241, 227, 0.56);
+      --ghl-card-border: rgba(249, 226, 126, 0.2);
+      --ghl-card-border-strong: rgba(249, 226, 126, 0.38);
+      position: relative !important;
+      z-index: 1 !important;
+      width: 100vw !important;
+      max-width: 100vw !important;
+      min-height: 100vh !important;
+      min-height: 100svh !important;
+      margin-left: calc(50% - 50vw) !important;
+      margin-right: calc(50% - 50vw) !important;
+      margin-top: 0 !important;
+      margin-bottom: 0 !important;
+      padding: 0 !important;
+      display: block !important;
+      overflow: clip !important;
+      font-family: 'Montserrat', sans-serif !important;
+      color: var(--ghl-card-text) !important;
+      background:
+        radial-gradient(circle at 10% 10%, rgba(249, 226, 126, 0.14), transparent 24%),
+        radial-gradient(circle at 90% 12%, rgba(46, 154, 255, 0.16), transparent 24%),
+        radial-gradient(circle at 50% 90%, rgba(255, 191, 0, 0.1), transparent 28%),
+        linear-gradient(180deg, #070707 0%, #000000 100%) !important;
+      isolation: isolate;
+    }
+
+    .ghl-card-site a,
+    .ghl-card-site button,
+    .ghl-card-site p,
+    .ghl-card-site li,
+    .ghl-card-site h1,
+    .ghl-card-site h2,
+    .ghl-card-site h3,
+    .ghl-card-site span {
+      font-family: 'Montserrat', sans-serif !important;
+    }
+
+    .ghl-card-container {
+      width: min(1240px, calc(100vw - 32px));
+      margin: 0 auto;
+    }
+
+    .ghl-card-no-overflow {
+      overflow: visible;
+    }
+
+    .ghl-card-sticky-nav {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      background: rgba(0, 0, 0, 0.72);
+      border-bottom: 1px solid rgba(249, 226, 126, 0.12);
+      box-shadow: 0 14px 34px rgba(0, 0, 0, 0.32);
+    }
+
+    .ghl-card-nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      min-height: 74px;
+      width: min(1240px, calc(100vw - 32px));
+      margin: 0 auto;
+    }
+
+    .ghl-card-brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: #ffffff;
+      white-space: nowrap;
+    }
+
+    .ghl-card-brand-mark {
+      width: 38px;
+      height: 38px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--ghl-card-gold-1), var(--ghl-card-gold-2));
+      color: #120d00;
+      font-size: 15px;
+      font-weight: 900;
+      box-shadow: 0 14px 28px rgba(212, 175, 55, 0.2);
+    }
+
+    .ghl-card-brand-copy strong {
+      display: block;
+      font-size: 13px;
+      line-height: 1.15;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #ffffff;
+    }
+
+    .ghl-card-brand-copy span {
+      display: block;
+      margin-top: 2px;
+      font-size: 11px;
+      color: var(--ghl-card-fine);
+    }
+
+    .ghl-card-nav-links {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-left: auto;
+      margin-right: 8px;
+    }
+
+    .ghl-card-nav-links a {
+      padding: 10px 12px;
+      border-radius: 999px;
+      text-decoration: none;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--ghl-card-muted);
+      transition: color 0.25s ease, background 0.25s ease;
+    }
+
+    .ghl-card-nav-links a:hover,
+    .ghl-card-nav-links a:focus {
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.05);
+      outline: none;
+    }
+
+    .ghl-card-nav-cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 46px;
+      padding: 12px 18px;
+      border-radius: 14px;
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #120d00;
+      background: linear-gradient(135deg, var(--ghl-card-gold-1), var(--ghl-card-gold-2) 62%, var(--ghl-card-amber));
+      box-shadow: 0 14px 34px rgba(212, 175, 55, 0.24);
+      transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
+    }
+
+    .ghl-card-nav-cta:hover,
+    .ghl-card-nav-cta:focus {
+      transform: translateY(-2px);
+      filter: brightness(1.04);
+      box-shadow: 0 18px 38px rgba(212, 175, 55, 0.32);
+      outline: none;
+    }
+
+    .ghl-card-chat {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      z-index: 60;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 12px;
+      pointer-events: none;
+    }
+
+    .ghl-card-chat * {
+      pointer-events: auto;
+    }
+
+    .ghl-card-chat-nudge {
+      max-width: min(290px, calc(100vw - 32px));
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 14px 14px 14px 16px;
+      border: 1px solid rgba(249, 226, 126, 0.18);
+      border-radius: 20px;
+      background: rgba(10, 10, 10, 0.94);
+      color: #fff7de;
+      box-shadow: 0 18px 46px rgba(0, 0, 0, 0.32);
+      opacity: 0;
+      transform: translateY(8px) scale(0.98);
+      visibility: hidden;
+      transition: opacity 0.26s ease, transform 0.26s ease;
+    }
+
+    .ghl-card-chat.show-nudge .ghl-card-chat-nudge {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      visibility: visible;
+    }
+
+    .ghl-card-chat-nudge-copy {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .ghl-card-chat-nudge-copy strong {
+      display: block;
+      font-size: 13px;
+      line-height: 1.35;
+      color: #ffffff;
+    }
+
+    .ghl-card-chat-nudge-copy span {
+      display: block;
+      margin-top: 4px;
+      color: var(--ghl-card-muted);
+      font-size: 11px;
+      line-height: 1.5;
+    }
+
+    .ghl-card-chat-nudge-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .ghl-card-chat-nudge-open,
+    .ghl-card-chat-nudge-dismiss {
+      border: 0;
+      cursor: pointer;
+      font: inherit;
+    }
+
+    .ghl-card-chat-nudge-open {
+      min-height: 34px;
+      padding: 0 12px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--ghl-card-gold-1), var(--ghl-card-gold-2));
+      color: #120d00;
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .ghl-card-chat-nudge-dismiss {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.08);
+      color: #ffffff;
+      font-size: 16px;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+
+    .ghl-card-chat-nudge-dismiss:hover,
+    .ghl-card-chat-nudge-dismiss:focus,
+    .ghl-card-chat-nudge-open:hover,
+    .ghl-card-chat-nudge-open:focus {
+      outline: none;
+      filter: brightness(1.05);
+    }
+
+    .ghl-card-chat-window {
+      width: min(360px, calc(100vw - 24px));
+      border: 1px solid rgba(249, 226, 126, 0.22);
+      border-radius: 24px;
+      background: rgba(7, 7, 7, 0.96);
+      box-shadow: 0 24px 70px rgba(0, 0, 0, 0.4);
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(10px) scale(0.98);
+      transition: opacity 0.28s ease, transform 0.28s ease;
+      visibility: hidden;
+    }
+
+    .ghl-card-chat.is-open .ghl-card-chat-window {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      visibility: visible;
+    }
+
+    .ghl-card-chat-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 16px 18px;
+      background: linear-gradient(135deg, rgba(212, 175, 55, 0.18), rgba(46, 154, 255, 0.16));
+      border-bottom: 1px solid rgba(249, 226, 126, 0.14);
+    }
+
+    .ghl-card-chat-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+    }
+
+    .ghl-card-chat-title strong {
+      display: block;
+      color: #ffffff;
+      font-size: 14px;
+      line-height: 1.2;
+    }
+
+    .ghl-card-chat-title span {
+      display: block;
+      margin-top: 2px;
+      color: var(--ghl-card-muted);
+      font-size: 11px;
+    }
+
+    .ghl-card-chat-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #2bd576;
+      box-shadow: 0 0 0 6px rgba(43, 213, 118, 0.12);
+      flex-shrink: 0;
+    }
+
+    .ghl-card-chat-close {
+      border: 0;
+      background: rgba(255, 255, 255, 0.08);
+      color: #ffffff;
+      width: 34px;
+      height: 34px;
+      border-radius: 12px;
+      font-size: 18px;
+      line-height: 1;
+      cursor: pointer;
+    }
+
+    .ghl-card-chat-close:hover,
+    .ghl-card-chat-close:focus {
+      background: rgba(255, 255, 255, 0.14);
+      outline: none;
+    }
+
+    .ghl-card-chat-body {
+      padding: 16px;
+      max-height: 360px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .ghl-card-chat-msg {
+      max-width: 88%;
+      padding: 12px 14px;
+      border-radius: 18px;
+      font-size: 13px;
+      line-height: 1.55;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+      white-space: pre-wrap;
+    }
+
+    .ghl-card-chat-msg.bot {
+      align-self: flex-start;
+      background: rgba(255, 255, 255, 0.06);
+      color: #fff7de;
+      border-top-left-radius: 8px;
+    }
+
+    .ghl-card-chat-msg.user {
+      align-self: flex-end;
+      background: linear-gradient(135deg, var(--ghl-card-gold-1), var(--ghl-card-gold-2));
+      color: #120d00;
+      border-top-right-radius: 8px;
+      font-weight: 600;
+    }
+
+    .ghl-card-chat-msg.status {
+      align-self: center;
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--ghl-card-fine);
+      font-size: 11px;
+      text-align: center;
+      box-shadow: none;
+    }
+
+    .ghl-card-chat-typing {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .ghl-card-chat-typing span {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.8);
+      animation: ghl-card-chat-bounce 1s infinite ease-in-out;
+    }
+
+    .ghl-card-chat-typing span:nth-child(2) {
+      animation-delay: 0.15s;
+    }
+
+    .ghl-card-chat-typing span:nth-child(3) {
+      animation-delay: 0.3s;
+    }
+
+    @keyframes ghl-card-chat-bounce {
+      0%,
+      80%,
+      100% {
+        transform: translateY(0);
+        opacity: 0.45;
+      }
+
+      40% {
+        transform: translateY(-3px);
+        opacity: 1;
+      }
+    }
+
+    .ghl-card-chat-form {
+      display: flex;
+      align-items: flex-end;
+      gap: 10px;
+      padding: 0 16px 16px;
+    }
+
+    .ghl-card-chat-input {
+      flex: 1;
+      min-height: 56px;
+      max-height: 140px;
+      padding: 13px 14px;
+      border: 1px solid rgba(249, 226, 126, 0.18);
+      border-radius: 16px;
+      resize: vertical;
+      background: rgba(255, 255, 255, 0.05);
+      color: #ffffff;
+      font: inherit;
+    }
+
+    .ghl-card-chat-input::placeholder {
+      color: rgba(246, 241, 227, 0.48);
+    }
+
+    .ghl-card-chat-input:focus {
+      outline: 1px solid rgba(249, 226, 126, 0.36);
+      border-color: rgba(249, 226, 126, 0.36);
+    }
+
+    .ghl-card-chat-submit,
+    .ghl-card-chat-toggle {
+      border: 0;
+      cursor: pointer;
+      font: inherit;
+    }
+
+    .ghl-card-chat-submit {
+      width: 52px;
+      min-width: 52px;
+      height: 52px;
+      padding: 0;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--ghl-card-gold-1), var(--ghl-card-gold-2) 62%, var(--ghl-card-amber));
+      color: #120d00;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 14px 26px rgba(212, 175, 55, 0.2);
+    }
+
+    .ghl-card-chat-submit svg {
+      width: 20px;
+      height: 20px;
+      stroke: currentColor;
+      stroke-width: 2.2;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .ghl-card-chat-submit:disabled {
+      opacity: 0.68;
+      cursor: wait;
+    }
+
+    .ghl-card-chat-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      position: relative;
+      min-height: 60px;
+      padding: 14px 18px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--ghl-card-gold-1), var(--ghl-card-gold-2) 62%, var(--ghl-card-amber));
+      color: #120d00;
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      box-shadow: 0 22px 38px rgba(212, 175, 55, 0.28);
+      isolation: isolate;
+    }
+
+    .ghl-card-chat-toggle::before,
+    .ghl-card-chat-toggle::after {
+      content: '';
+      position: absolute;
+      inset: -8px;
+      border-radius: 999px;
+      border: 1px solid rgba(249, 226, 126, 0.22);
+      opacity: 0;
+      z-index: -1;
+      animation: ghl-card-chat-ring 3s infinite ease-out;
+    }
+
+    .ghl-card-chat-toggle::after {
+      animation-delay: 1.2s;
+    }
+
+    @keyframes ghl-card-chat-ring {
+      0% {
+        transform: scale(0.96);
+        opacity: 0;
+      }
+
+      18% {
+        opacity: 0.28;
+      }
+
+      100% {
+        transform: scale(1.22);
+        opacity: 0;
+      }
+    }
+
+    .ghl-card-chat-toggle small {
+      display: block;
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      opacity: 0.8;
+    }
+
+    .ghl-card-chat-toggle-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(18, 13, 0, 0.12);
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+
+    .ghl-card-hero {
+      position: relative;
+      padding: 34px 0 72px;
+      min-height: calc(100vh - 74px);
+      min-height: calc(100svh - 74px);
+      display: flex;
+      align-items: center;
+    }
+
+    .ghl-card-hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.06fr) minmax(430px, 0.94fr);
+      gap: 34px;
+      align-items: center;
+    }
+
+    .ghl-card-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(249, 226, 126, 0.18);
+      box-shadow: 0 10px 26px rgba(0, 0, 0, 0.18);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+      color: #fef5c7;
+    }
+
+    .ghl-card-eyebrow-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--ghl-card-gold-1), var(--ghl-card-gold-2));
+      box-shadow: 0 0 12px rgba(249, 226, 126, 0.65);
+      flex-shrink: 0;
+    }
+
+    .ghl-card-hero h1 {
+      margin: 0;
+      font-size: clamp(38px, 5.2vw, 72px);
+      line-height: 0.98;
+      letter-spacing: -0.05em;
+      font-weight: 900;
+      color: #fffdf6;
+      text-wrap: balance;
+    }
+
+    .ghl-card-hero h1 span {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--ghl-card-gold-1), var(--ghl-card-gold-2), var(--ghl-card-amber));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .ghl-card-lead {
+      max-width: 690px;
+      margin: 20px 0 0;
+      font-size: 17px;
+      line-height: 1.8;
+      color: var(--ghl-card-muted);
+    }
+
+    .ghl-card-hero-points {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin: 26px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .ghl-card-hero-points li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 14px 16px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      font-size: 13px;
+      line-height: 1.6;
+      color: var(--ghl-card-muted);
+    }
+
+    .ghl-card-check {
+      width: 22px;
+      height: 22px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      flex-shrink: 0;
+      color: #120d00;
+      background: linear-gradient(135deg, var(--ghl-card-gold-1), var(--ghl-card-gold-2));
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .ghl-card-hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-top: 30px;
+    }
+
+    .ghl-card-hero-cta,
+    .ghl-card-ghost-link {
+      min-height: 58px;
+      padding: 16px 24px;
+      border-radius: 18px;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 900;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease, background 0.25s ease;
+    }
+
+    .ghl-card-hero-cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #120d00;
+      background: linear-gradient(135deg, var(--ghl-card-gold-1) 0%, var(--ghl-card-gold-2) 60%, var(--ghl-card-amber) 100%);
+      box-shadow: 0 18px 40px rgba(212, 175, 55, 0.28), 0 0 20px rgba(255, 191, 0, 0.18);
+      animation: ghl-card-pulse-gold 2.6s infinite;
+    }
+
+    .ghl-card-ghost-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .ghl-card-hero-cta:hover,
+    .ghl-card-hero-cta:focus,
+    .ghl-card-ghost-link:hover,
+    .ghl-card-ghost-link:focus {
+      transform: translateY(-2px);
+      outline: none;
+    }
+
+    .ghl-card-proofbar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 18px;
+      font-size: 12px;
+      color: var(--ghl-card-fine);
+    }
+
+    .ghl-card-proofbar strong {
+      color: #ffffff;
+    }
+
+    .ghl-card-proof-sep {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.22);
+    }
+
+    .ghl-card-pricing-stage {
+      position: relative;
+      min-height: 720px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .ghl-card-side-card,
+    .ghl-card-main-card {
+      border-radius: 30px;
+      border: 1px solid var(--ghl-card-border);
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.025));
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      box-shadow: 0 24px 70px rgba(0, 0, 0, 0.62);
+    }
+
+    .ghl-card-side-card {
+      position: absolute;
+      top: 54%;
+      width: 280px;
+      padding: 28px 24px;
+      transform: translateY(-50%);
+      opacity: 0.42;
+      filter: blur(2.8px) saturate(0.8);
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .ghl-card-side-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(145deg, rgba(249,226,126,0.08), rgba(46,154,255,0.04));
+      pointer-events: none;
+    }
+
+    .ghl-card-side-left {
+      left: -32px;
+      transform: translateY(-50%) rotate(-9deg);
+    }
+
+    .ghl-card-side-right {
+      right: -32px;
+      transform: translateY(-50%) rotate(9deg);
+    }
+
+    .ghl-card-side-plan {
+      position: relative;
+      z-index: 1;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.86);
+    }
+
+    .ghl-card-side-price {
+      position: relative;
+      z-index: 1;
+      margin-top: 8px;
+      font-size: 50px;
+      line-height: 1;
+      font-weight: 900;
+      letter-spacing: -0.05em;
+      color: #ffffff;
+      text-shadow: 0 0 18px rgba(255, 255, 255, 0.2);
+    }
+
+    .ghl-card-side-copy {
+      position: relative;
+      z-index: 1;
+      margin-top: 10px;
+      font-size: 12px;
+      line-height: 1.7;
+      color: rgba(255,255,255,0.52);
+    }
+
+    .ghl-card-main-card {
+      position: relative;
+      z-index: 2;
+      width: min(100%, 510px);
+      padding: 34px;
+      overflow: hidden;
+      transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+    }
+
+    .ghl-card-main-card::before,
+    .ghl-card-main-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .ghl-card-main-card::before {
+      background:
+        radial-gradient(circle at 14% 0%, rgba(249, 226, 126, 0.14), transparent 24%),
+        radial-gradient(circle at 100% 12%, rgba(46, 154, 255, 0.14), transparent 25%),
+        radial-gradient(circle at 50% 120%, rgba(255, 191, 0, 0.1), transparent 34%);
+    }
+
+    .ghl-card-main-card::after {
+      background: linear-gradient(135deg, rgba(255,255,255,0.08), transparent 20%, transparent 80%, rgba(249,226,126,0.04));
+      opacity: 0.5;
+      mix-blend-mode: screen;
+    }
+
+    .ghl-card-main-card:hover {
+      transform: translateY(-8px) scale(1.01);
+      border-color: var(--ghl-card-border-strong);
+      box-shadow:
+        0 36px 100px rgba(0, 0, 0, 0.78),
+        0 0 36px rgba(255, 191, 0, 0.16),
+        0 0 54px rgba(46, 154, 255, 0.1);
+    }
+
+    .ghl-card-main-glow {
+      position: absolute;
+      inset: -30%;
+      background: radial-gradient(circle at var(--ghl-card-mx, 50%) var(--ghl-card-my, 50%), rgba(249, 226, 126, 0.18), transparent 18%);
+      opacity: 0;
+      transition: opacity 0.25s ease;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .ghl-card-main-card:hover .ghl-card-main-glow {
+      opacity: 1;
+    }
+
+    .ghl-card-main-inner {
+      position: relative;
+      z-index: 1;
+    }
+
+    .ghl-card-topline {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 16px;
+      padding: 9px 13px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #120d00;
+      background: linear-gradient(135deg, var(--ghl-card-gold-1), var(--ghl-card-gold-2));
+      box-shadow: 0 12px 28px rgba(212, 175, 55, 0.22);
+    }
+
+    .ghl-card-main-title {
+      margin: 0;
+      font-size: 34px;
+      line-height: 1.05;
+      letter-spacing: -0.04em;
+      font-weight: 900;
+      color: #fffdf7;
+    }
+
+    .ghl-card-main-copy {
+      margin: 12px 0 0;
+      font-size: 14px;
+      line-height: 1.72;
+      color: var(--ghl-card-muted);
+    }
+
+    .ghl-card-price-wrap {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 14px;
+      margin: 22px 0 18px;
+      padding: 18px 18px 16px;
+      border-radius: 20px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+      border: 1px solid rgba(255,255,255,0.07);
+    }
+
+    .ghl-card-price-main {
+      display: block;
+      font-size: 44px;
+      line-height: 0.95;
+      letter-spacing: -0.05em;
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--ghl-card-gold-1) 0%, var(--ghl-card-gold-2) 58%, var(--ghl-card-amber) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .ghl-card-price-sub {
+      display: block;
+      margin-top: 6px;
+      font-size: 12px;
+      color: var(--ghl-card-fine);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 700;
+    }
+
+    .ghl-card-price-pill {
+      flex-shrink: 0;
+      padding: 9px 12px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #120d00;
+      background: linear-gradient(135deg, var(--ghl-card-gold-1), var(--ghl-card-gold-2));
+      box-shadow: 0 10px 24px rgba(212, 175, 55, 0.18);
+    }
+
+    .ghl-card-feature-list {
+      display: grid;
+      gap: 12px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .ghl-card-feature-item {
+      display: grid;
+      grid-template-columns: 48px minmax(0, 1fr);
+      gap: 12px;
+      align-items: start;
+      padding: 14px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+      transition: background 0.25s ease, transform 0.25s ease, border-color 0.25s ease;
+    }
+
+    .ghl-card-feature-item:hover {
+      transform: translateX(4px);
+      background: rgba(255,255,255,0.045);
+      border-color: rgba(249, 226, 126, 0.14);
+    }
+
+    .ghl-card-icon {
+      width: 48px;
+      height: 48px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 16px;
+      color: var(--ghl-card-gold-2);
+      background:
+        linear-gradient(180deg, rgba(255,191,0,0.14), rgba(46,154,255,0.08)),
+        rgba(255,255,255,0.03);
+      border: 1px solid rgba(212, 175, 55, 0.22);
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.24), inset 0 0 12px rgba(255,255,255,0.03);
+    }
+
+    .ghl-card-icon svg {
+      width: 20px;
+      height: 20px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .ghl-card-feature-item strong {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 14px;
+      font-weight: 800;
+      line-height: 1.35;
+      color: #ffffff;
+    }
+
+    .ghl-card-feature-item span {
+      display: block;
+      font-size: 12.5px;
+      line-height: 1.62;
+      color: var(--ghl-card-muted);
+    }
+
+    .ghl-card-objection {
+      margin-top: 18px;
+      padding: 16px;
+      border-radius: 18px;
+      background: linear-gradient(180deg, rgba(46,154,255,0.08), rgba(255,255,255,0.025));
+      border: 1px solid rgba(46,154,255,0.18);
+    }
+
+    .ghl-card-objection strong {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #9fd0ff;
+    }
+
+    .ghl-card-objection p {
+      margin: 0;
+      font-size: 12.5px;
+      line-height: 1.68;
+      color: rgba(255,255,255,0.86);
+    }
+
+    .ghl-card-fineprint {
+      margin-top: 18px;
+      padding-top: 16px;
+      border-top: 1px solid rgba(249, 226, 126, 0.14);
+    }
+
+    .ghl-card-fineprint p {
+      margin: 0 0 8px;
+      font-size: 11.5px;
+      line-height: 1.55;
+      color: var(--ghl-card-fine);
+    }
+
+    .ghl-card-fineprint p:last-child {
+      margin-bottom: 0;
+    }
+
+    .ghl-card-cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      min-height: 58px;
+      margin-top: 20px;
+      padding: 16px 18px;
+      border-radius: 18px;
+      text-decoration: none;
+      text-align: center;
+      font-size: 15px;
+      font-weight: 900;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: #120d00;
+      background: linear-gradient(135deg, var(--ghl-card-gold-1), var(--ghl-card-gold-2) 60%, var(--ghl-card-amber));
+      box-shadow:
+        0 18px 38px rgba(212, 175, 55, 0.28),
+        0 0 18px rgba(255, 191, 0, 0.16);
+      transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
+      animation: ghl-card-pulse-gold 2.6s infinite;
+    }
+
+    .ghl-card-cta:hover,
+    .ghl-card-cta:focus {
+      transform: translateY(-2px) scale(1.01);
+      filter: brightness(1.04);
+      box-shadow:
+        0 22px 42px rgba(212, 175, 55, 0.34),
+        0 0 24px rgba(255, 191, 0, 0.24);
+      outline: none;
+    }
+
+    .ghl-card-microtrust {
+      margin-top: 12px;
+      text-align: center;
+      font-size: 11px;
+      line-height: 1.6;
+      color: var(--ghl-card-fine);
+    }
+
+    .ghl-card-section {
+      position: relative;
+      padding: 28px 0 70px;
+    }
+
+    .ghl-card-section-title {
+      margin: 0 0 10px;
+      font-size: clamp(28px, 3.2vw, 46px);
+      line-height: 1.05;
+      letter-spacing: -0.04em;
+      font-weight: 900;
+      color: #fffdf7;
+      text-wrap: balance;
+    }
+
+    .ghl-card-section-copy {
+      max-width: 820px;
+      margin: 0;
+      font-size: 15px;
+      line-height: 1.85;
+      color: var(--ghl-card-muted);
+    }
+
+    .ghl-card-grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+      margin-top: 26px;
+    }
+
+    .ghl-card-value-card,
+    .ghl-card-detail-card,
+    .ghl-card-ui-card,
+    .ghl-card-integration-card,
+    .ghl-card-seo-card {
+      position: relative;
+      padding: 22px;
+      border-radius: 24px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+      border: 1px solid rgba(255,255,255,0.07);
+      box-shadow: 0 22px 60px rgba(0, 0, 0, 0.34);
+      overflow: hidden;
+    }
+
+    .ghl-card-value-card::before,
+    .ghl-card-detail-card::before,
+    .ghl-card-ui-card::before,
+    .ghl-card-integration-card::before,
+    .ghl-card-seo-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(145deg, rgba(249,226,126,0.06), rgba(46,154,255,0.02));
+      pointer-events: none;
+    }
+
+    .ghl-card-value-card strong,
+    .ghl-card-detail-card strong,
+    .ghl-card-ui-header strong,
+    .ghl-card-integration-card strong,
+    .ghl-card-seo-card strong {
+      position: relative;
+      z-index: 1;
+      display: block;
+      margin-bottom: 10px;
+      font-size: 18px;
+      line-height: 1.2;
+      font-weight: 800;
+      color: #ffffff;
+    }
+
+    .ghl-card-value-card p,
+    .ghl-card-detail-card p,
+    .ghl-card-integration-card p,
+    .ghl-card-seo-card p {
+      position: relative;
+      z-index: 1;
+      margin: 0;
+      font-size: 13px;
+      line-height: 1.7;
+      color: var(--ghl-card-muted);
+    }
+
+    .ghl-card-value-amount {
+      position: relative;
+      z-index: 1;
+      margin-bottom: 10px;
+      font-size: 34px;
+      line-height: 1;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      background: linear-gradient(135deg, var(--ghl-card-gold-1), var(--ghl-card-gold-2), var(--ghl-card-amber));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .ghl-card-detail-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 18px;
+      margin-top: 26px;
+    }
+
+    .ghl-card-detail-list {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      gap: 12px;
+      margin: 16px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .ghl-card-detail-list li {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      font-size: 13px;
+      line-height: 1.68;
+      color: var(--ghl-card-muted);
+    }
+
+    .ghl-card-ui-card {
+      display: grid;
+      gap: 16px;
+      min-height: 100%;
+      background:
+        radial-gradient(circle at 80% 0%, rgba(46,154,255,0.12), transparent 32%),
+        linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+    }
+
+    .ghl-card-ui-header {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+    }
+
+    .ghl-card-ui-badge {
+      padding: 8px 10px;
+      border-radius: 999px;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #9fd0ff;
+      background: rgba(46, 154, 255, 0.1);
+      border: 1px solid rgba(46, 154, 255, 0.18);
+    }
+
+    .ghl-card-ui-shell {
+      position: relative;
+      z-index: 1;
+      padding: 14px;
+      border-radius: 20px;
+      background: rgba(2, 7, 12, 0.88);
+      border: 1px solid rgba(255,255,255,0.06);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.03);
+    }
+
+    .ghl-card-ui-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .ghl-card-ui-dots {
+      display: inline-flex;
+      gap: 6px;
+      align-items: center;
+    }
+
+    .ghl-card-ui-dots span {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.24);
+    }
+
+    .ghl-card-ui-dots span:nth-child(1) { background: #ff5f57; }
+    .ghl-card-ui-dots span:nth-child(2) { background: #febc2e; }
+    .ghl-card-ui-dots span:nth-child(3) { background: #28c840; }
+
+    .ghl-card-ui-search {
+      width: 52%;
+      height: 30px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.04);
+    }
+
+    .ghl-card-ui-layout {
+      display: grid;
+      grid-template-columns: 92px minmax(0, 1fr);
+      gap: 12px;
+    }
+
+    .ghl-card-ui-sidebar {
+      padding: 10px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.04);
+    }
+
+    .ghl-card-ui-sidebar div {
+      height: 10px;
+      margin-bottom: 10px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, rgba(249,226,126,0.18), rgba(255,255,255,0.05));
+    }
+
+    .ghl-card-ui-sidebar div:nth-child(1) { width: 72%; }
+    .ghl-card-ui-sidebar div:nth-child(2) { width: 86%; }
+    .ghl-card-ui-sidebar div:nth-child(3) { width: 64%; }
+    .ghl-card-ui-sidebar div:nth-child(4) { width: 80%; margin-bottom: 0; }
+
+    .ghl-card-ui-main {
+      display: grid;
+      gap: 12px;
+    }
+
+    .ghl-card-ui-stat-row {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .ghl-card-ui-stat {
+      padding: 12px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.04);
+    }
+
+    .ghl-card-ui-stat span,
+    .ghl-card-ui-chart span,
+    .ghl-card-ui-list span {
+      display: block;
+      border-radius: 999px;
+    }
+
+    .ghl-card-ui-stat span:nth-child(1) {
+      width: 44%;
+      height: 8px;
+      background: rgba(255,255,255,0.22);
+    }
+
+    .ghl-card-ui-stat span:nth-child(2) {
+      width: 74%;
+      height: 18px;
+      margin-top: 10px;
+      background: linear-gradient(90deg, rgba(249,226,126,0.44), rgba(255,191,0,0.18));
+    }
+
+    .ghl-card-ui-chart,
+    .ghl-card-ui-list {
+      padding: 14px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.04);
+    }
+
+    .ghl-card-ui-chart span:nth-child(1) {
+      width: 34%;
+      height: 8px;
+      background: rgba(255,255,255,0.22);
+    }
+
+    .ghl-card-ui-chart span:nth-child(2) {
+      width: 100%;
+      height: 132px;
+      margin-top: 12px;
+      border-radius: 18px;
+      background:
+        linear-gradient(180deg, rgba(46,154,255,0.2), rgba(46,154,255,0.02)),
+        linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px),
+        linear-gradient(180deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+      background-size: auto, 34px 100%, 100% 28px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .ghl-card-ui-chart span:nth-child(2)::after {
+      content: "";
+      position: absolute;
+      inset: auto 10px 18px 10px;
+      height: 54px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, rgba(249,226,126,0.25), rgba(46,154,255,0.7), rgba(255,191,0,0.35));
+      clip-path: polygon(0% 80%, 12% 70%, 24% 74%, 37% 36%, 49% 48%, 63% 22%, 77% 34%, 89% 6%, 100% 18%, 100% 100%, 0% 100%);
+      box-shadow: 0 0 24px rgba(46,154,255,0.34);
+    }
+
+    .ghl-card-ui-list span:nth-child(1) {
+      width: 40%;
+      height: 8px;
+      background: rgba(255,255,255,0.22);
+    }
+
+    .ghl-card-ui-list span:nth-child(2),
+    .ghl-card-ui-list span:nth-child(3),
+    .ghl-card-ui-list span:nth-child(4) {
+      width: 100%;
+      height: 38px;
+      margin-top: 10px;
+      border-radius: 14px;
+      background: linear-gradient(90deg, rgba(255,255,255,0.06), rgba(249,226,126,0.04));
+      border: 1px solid rgba(255,255,255,0.04);
+    }
+
+    .ghl-card-integration-grid,
+    .ghl-card-seo-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+      margin-top: 26px;
+    }
+
+    .ghl-card-logo-row {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .ghl-card-logo-pill {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 52px;
+      padding: 12px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.05);
+      font-size: 12px;
+      font-weight: 800;
+      color: #ffffff;
+      letter-spacing: 0.02em;
+    }
+
+    .ghl-card-anchor-offset {
+      position: relative;
+      top: -92px;
+      display: block;
+      visibility: hidden;
+    }
+
+    .ghl-card-footer-cta {
+      padding: 10px 0 80px;
+    }
+
+    .ghl-card-footer-panel {
+      display: grid;
+      grid-template-columns: 1.1fr auto;
+      gap: 20px;
+      align-items: center;
+      padding: 28px;
+      border-radius: 28px;
+      background:
+        radial-gradient(circle at 85% 50%, rgba(255,191,0,0.1), transparent 22%),
+        linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+      border: 1px solid rgba(249, 226, 126, 0.18);
+      box-shadow: 0 28px 70px rgba(0, 0, 0, 0.45);
+    }
+
+    .ghl-card-footer-panel h2 {
+      margin: 0 0 8px;
+      font-size: clamp(28px, 3vw, 42px);
+      line-height: 1.02;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      color: #fffdf7;
+    }
+
+    .ghl-card-footer-panel p {
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.75;
+      color: var(--ghl-card-muted);
+    }
+
+    .ghl-card-legal-note {
+      margin-top: 14px;
+      text-align: center;
+      font-size: 10px;
+      line-height: 1.6;
+      color: rgba(246, 241, 227, 0.42);
+    }
+
+    @keyframes ghl-card-pulse-gold {
+      0%, 100% {
+        box-shadow:
+          0 18px 40px rgba(212, 175, 55, 0.28),
+          0 0 0 0 rgba(249, 226, 126, 0.2);
+      }
+      50% {
+        box-shadow:
+          0 22px 44px rgba(212, 175, 55, 0.36),
+          0 0 0 14px rgba(249, 226, 126, 0);
+      }
+    }
+
+    @media (max-width: 1180px) {
+      .ghl-card-side-left {
+        left: -18px;
+      }
+
+      .ghl-card-side-right {
+        right: -18px;
+      }
+
+      .ghl-card-side-card {
+        width: 244px;
+      }
+
+      .ghl-card-hero-grid,
+      .ghl-card-detail-grid,
+      .ghl-card-footer-panel,
+      .ghl-card-integration-grid,
+      .ghl-card-seo-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 980px) {
+      .ghl-card-nav-inner {
+        min-height: 68px;
+      }
+
+      .ghl-card-nav-links {
+        display: none;
+      }
+
+      .ghl-card-pricing-stage {
+        min-height: auto;
+        padding-top: 10px;
+      }
+
+      .ghl-card-side-card {
+        display: none;
+      }
+
+      .ghl-card-grid-3,
+      .ghl-card-hero-points,
+      .ghl-card-logo-row {
+        grid-template-columns: 1fr;
+      }
+
+      .ghl-card-ui-layout,
+      .ghl-card-ui-stat-row {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 767px) {
+      .ghl-card-site {
+        width: 100vw !important;
+        max-width: 100vw !important;
+        min-height: 100vh !important;
+        min-height: 100svh !important;
+        margin-left: calc(50% - 50vw) !important;
+        margin-right: calc(50% - 50vw) !important;
+      }
+
+      .ghl-card-container,
+      .ghl-card-nav-inner {
+        width: min(100vw - 20px, 100% - 20px);
+      }
+
+      .ghl-card-sticky-nav {
+        top: 0;
+      }
+
+      .ghl-card-brand-copy span {
+        display: none;
+      }
+
+      .ghl-card-nav-cta {
+        min-height: 42px;
+        padding: 10px 12px;
+        font-size: 11px;
+      }
+
+      .ghl-card-hero {
+        padding: 24px 0 54px;
+        min-height: calc(100vh - 68px);
+        min-height: calc(100svh - 68px);
+      }
+
+      .ghl-card-hero h1 {
+        font-size: clamp(34px, 11vw, 52px);
+      }
+
+      .ghl-card-lead {
+        font-size: 15px;
+        line-height: 1.78;
+      }
+
+      .ghl-card-main-card {
+        padding: 22px 18px;
+        border-radius: 22px;
+      }
+
+      .ghl-card-main-title {
+        font-size: 28px;
+      }
+
+      .ghl-card-price-main {
+        font-size: 36px;
+      }
+
+      .ghl-card-price-wrap {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .ghl-card-feature-item {
+        grid-template-columns: 42px minmax(0, 1fr);
+        padding: 12px;
+      }
+
+      .ghl-card-icon {
+        width: 42px;
+        height: 42px;
+        border-radius: 14px;
+      }
+
+      .ghl-card-value-card,
+      .ghl-card-detail-card,
+      .ghl-card-ui-card,
+      .ghl-card-integration-card,
+      .ghl-card-seo-card,
+      .ghl-card-footer-panel {
+        padding: 20px 16px;
+        border-radius: 20px;
+      }
+
+      .ghl-card-footer-panel {
+        gap: 16px;
+      }
+
+      .ghl-card-logo-row {
+        display: none;
+      }
+
+      .ghl-card-chat {
+        right: 12px;
+        bottom: 12px;
+      }
+
+      .ghl-card-chat-window {
+        width: min(100vw - 16px, 360px);
+      }
+
+      .ghl-card-chat-nudge {
+        max-width: min(100vw - 16px, 320px);
+      }
+
+      .ghl-card-chat-form {
+        flex-direction: column;
+      }
+
+      .ghl-card-chat-submit {
+        width: 48px;
+        min-width: 48px;
+        height: 48px;
+        align-self: flex-end;
+      }
+
+      .ghl-card-chat-toggle {
+        min-height: 56px;
+        padding: 12px 16px;
+      }
+    }
+  </style>
+
+  <nav class="ghl-card-sticky-nav" aria-label="Navegación principal del CRM">
+    <div class="ghl-card-nav-inner">
+      <a class="ghl-card-brand" href="#ghl-card-top" aria-label="Ir al inicio de la sección">
+        <span class="ghl-card-brand-mark">E</span>
+        <span class="ghl-card-brand-copy">
+          <strong>Escalia CRM</strong>
+          <span>GHL Edition</span>
+        </span>
+      </a>
+
+      <div class="ghl-card-nav-links">
+        <a href="#ghl-card-valor">Valor</a>
+        <a href="#ghl-card-interfaz">Interfaz</a>
+        <a href="#ghl-card-integraciones">Integraciones</a>
+        <a href="#ghl-card-precio">Precio</a>
+      </div>
+
+      <a class="ghl-card-nav-cta" href="https://buy.stripe.com/4gMcN6bdU5O90sRaZl8bS1K" target="_blank" rel="noopener noreferrer">Comenzar ahora</a>
+    </div>
+  </nav>
+
+  <header class="ghl-card-hero">
+    <div class="ghl-card-container ghl-card-hero-grid ghl-card-no-overflow">
+      <div>
+        <div class="ghl-card-eyebrow"><span class="ghl-card-eyebrow-dot"></span> CRM premium para marketing, ventas y automatización inteligente</div>
+        <h1>Convierte tu operación comercial en <span>una sola experiencia</span> de alto nivel.</h1>
+        <p class="ghl-card-lead">Diseñado para equipos que quieren vender con más orden, responder más rápido y crecer con una estructura sólida, elegante y lista para automatizar cada etapa del recorrido comercial.</p>
+
+        <ul class="ghl-card-hero-points" aria-label="Beneficios principales">
+          <li><span class="ghl-card-check">✓</span><span>Reduce costos y complejidad al consolidar embudos, CRM, flujos, IA, mensajería y seguimiento.</span></li>
+          <li><span class="ghl-card-check">✓</span><span>Inspira más confianza con una experiencia premium lista para soportar marketing, ventas y retención.</span></li>
+          <li><span class="ghl-card-check">✓</span><span>Te ayuda a capturar, nutrir y cerrar sin perder visibilidad del pipeline ni del valor generado.</span></li>
+          <li><span class="ghl-card-check">✓</span><span>Integra WhatsApp, emails, calendarios, pagos y automatización para operar con más velocidad.</span></li>
+        </ul>
+
+        <div class="ghl-card-hero-actions">
+          <a class="ghl-card-hero-cta" href="https://buy.stripe.com/4gMcN6bdU5O90sRaZl8bS1K" target="_blank" rel="noopener noreferrer">Reservar mi acceso ahora</a>
+          <a class="ghl-card-ghost-link" href="#ghl-card-precio">Ver el plan</a>
+        </div>
+
+        <div class="ghl-card-proofbar" aria-label="Elementos de confianza">
+          <strong>Captura</strong><span class="ghl-card-proof-sep"></span>
+          <strong>Nutre</strong><span class="ghl-card-proof-sep"></span>
+          <strong>Cierra</strong><span class="ghl-card-proof-sep"></span>
+          <strong>Automatiza</strong><span class="ghl-card-proof-sep"></span>
+          <strong>Escala</strong>
+        </div>
+      </div>
+
+      <div class="ghl-card-pricing-stage" id="ghl-card-precio">
+        <span class="ghl-card-anchor-offset" aria-hidden="true"></span>
+
+        <aside class="ghl-card-side-card ghl-card-side-left" aria-hidden="true">
+          <div class="ghl-card-side-plan">Starter</div>
+          <div class="ghl-card-side-price">$97</div>
+          <div class="ghl-card-side-copy">Todo para capturar más leads, nutrir y cerrar clientes con online booking, pipeline, builder y hasta 3 sub-accounts.</div>
+        </aside>
+
+        <article class="ghl-card-main-card" itemscope itemtype="https://schema.org/SoftwareApplication">
+          <div class="ghl-card-main-glow"></div>
+          <div class="ghl-card-main-inner">
+            <div class="ghl-card-topline">Escalia CRM - GHL Edition</div>
+            <h2 class="ghl-card-main-title" itemprop="name">La forma más elegante de centralizar ventas, seguimiento, automatización e IA</h2>
+            <p class="ghl-card-main-copy" itemprop="description">Si hoy operas con varias herramientas para captar leads, hacer seguimiento y cerrar ventas, ESCALIA CRM reúne automatización, IA y gestión comercial en una sola experiencia más clara, más ágil y mucho más convincente.</p>
+
+            <div class="ghl-card-price-wrap">
+              <div>
+                <span class="ghl-card-price-main">$200 USD</span>
+                <span class="ghl-card-price-sub">por mes</span>
+              </div>
+              <div class="ghl-card-price-pill">Valor premium</div>
+            </div>
+
+            <ul class="ghl-card-feature-list">
+              <li class="ghl-card-feature-item">
+                <div class="ghl-card-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2"></path><circle cx="9.5" cy="7" r="4"></circle><path d="M20 8v6"></path><path d="M23 11h-6"></path></svg>
+                </div>
+                <div>
+                  <strong>Contactos ilimitados</strong>
+                  <span>Centraliza prospectos, clientes y oportunidades sin frenar el crecimiento de tu base ni sacrificar visibilidad.</span>
+                </div>
+              </li>
+
+              <li class="ghl-card-feature-item">
+                <div class="ghl-card-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24"><path d="M18.18 8.04a4 4 0 0 0-5.66 0l-6.36 6.37a4 4 0 1 0 5.66 5.66l1.41-1.41"></path><path d="M5.82 15.96a4 4 0 0 0 5.66 0l6.36-6.37a4 4 0 0 0-5.66-5.66L10.77 5.34"></path></svg>
+                </div>
+                <div>
+                  <strong>Workflows ilimitados</strong>
+                  <span>Automatiza seguimiento, nutrición, recordatorios, respuestas y procesos de ventas sin tener que comprar módulos extra.</span>
+                </div>
+              </li>
+
+              <li class="ghl-card-feature-item">
+                <div class="ghl-card-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                </div>
+                <div>
+                  <strong>Acceso a integracion con WhatsApp</strong>
+                  <span>Deja habilitada la conexion con WhatsApp para seguimiento, soporte y operacion comercial segun la configuracion aprobada en cada cuenta.</span>
+                </div>
+              </li>
+
+              <li class="ghl-card-feature-item">
+                <div class="ghl-card-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24"><path d="M12 2l1.8 4.6L18 8.4l-3.3 2.8 1 4.8L12 13.7 8.3 16l1-4.8L6 8.4l4.2-1.8L12 2z"></path></svg>
+                </div>
+                <div>
+                  <strong>AI Employee Unlimited incluido*</strong>
+                  <span>Incluye acceso a IA para productividad y automatizacion dentro de politicas de uso razonable y fair use del proveedor.</span>
+                </div>
+              </li>
+            </ul>
+
+            <div class="ghl-card-objection">
+              <strong>Lo que realmente estás comprando</strong>
+              <p>No es solo un CRM. Es una operación comercial más precisa, más rápida y más rentable: menos fricción, más control, mejor seguimiento y una experiencia que eleva la percepción de valor de todo tu servicio.</p>
+            </div>
+
+            <div class="ghl-card-fineprint">
+              <p>Incluye hasta 5.000 emails mensuales por subcuenta. Luego, $1 USD por cada 1.000 emails adicionales.</p>
+              <p>La conexion de WhatsApp esta incluida, pero los mensajes de utilidad se cobran desde $0.006 USD por mensaje; las conversaciones de marketing tienen un valor mas alto y deben consultarse segun la tarifa vigente de GHL.</p>
+              <p>AI Employee Unlimited esta incluido bajo politicas de fair use de GoHighLevel y no cubre servicios como Agent Studio, Voice AI Widget o Voice AI Outbound.</p>
+              <p>Verificacion de correos: $3 USD por cada 1.000 correos verificados, solo si decides activar esta funcion.</p>
+              <p>No incluye SMS, telefonia, numeros, A2P, dominios, hosting, IP dedicada ni otros add-ons o servicios de terceros no descritos expresamente en esta oferta.</p>
+              <p>El cliente es responsable de consentimientos, politicas de envio y cumplimiento aplicable para email, WhatsApp, automatizaciones y comunicaciones comerciales.</p>
+            </div>
+
+            <a class="ghl-card-cta" href="https://buy.stripe.com/4gMcN6bdU5O90sRaZl8bS1K" target="_blank" rel="noopener noreferrer" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
+              <span itemprop="priceCurrency" content="USD"></span>
+              <span itemprop="price" content="200"></span>
+              Reservar mi acceso ahora
+            </a>
+
+            <div class="ghl-card-microtrust">Una tarifa clara para operar con más control, más velocidad y una percepción de marca mucho más premium.</div>
+          </div>
+        </article>
+
+        <aside class="ghl-card-side-card ghl-card-side-right" aria-hidden="true">
+          <div class="ghl-card-side-plan">Unlimited</div>
+          <div class="ghl-card-side-price">$297</div>
+          <div class="ghl-card-side-copy">Todo lo del Starter, más API, sub-accounts ilimitadas y app desktop con branding y control de experiencia.</div>
+        </aside>
+      </div>
+    </div>
+  </header>
+
+  <section class="ghl-card-section">
+    <span class="ghl-card-anchor-offset" id="ghl-card-valor" aria-hidden="true"></span>
+    <div class="ghl-card-container">
+      <h2 class="ghl-card-section-title">Por qué un CRM así sí justifica la inversión</h2>
+      <p class="ghl-card-section-copy">Cuando dejas de depender de herramientas sueltas y pasas a una estructura centralizada, el marketing se vuelve más rápido, la operación más clara y las oportunidades mucho más fáciles de convertir y escalar.</p>
+
+      <div class="ghl-card-grid-3">
+        <article class="ghl-card-value-card">
+          <div class="ghl-card-value-amount">Menos fuga</div>
+          <strong>Seguimiento más consistente</strong>
+          <p>Cuando embudos, CRM, automatizaciones y mensajería viven en el mismo lugar, se pierden menos leads y se sostienen mejor las oportunidades hasta el cierre.</p>
+        </article>
+
+        <article class="ghl-card-value-card">
+          <div class="ghl-card-value-amount">Más margen</div>
+          <strong>Consolidas costo operativo</strong>
+          <p>Un stack centralizado suele reducir licencias, integraciones frágiles y tiempo muerto entre equipos, lo que vuelve el marketing mucho más rentable.</p>
+        </article>
+
+        <article class="ghl-card-value-card">
+          <div class="ghl-card-value-amount">Más control</div>
+          <strong>Datos y pipeline visibles</strong>
+          <p>Desde captación hasta cierre, el equipo ve conversaciones, estados, automatizaciones y resultados sin cambiar entre plataformas todo el día.</p>
+        </article>
+      </div>
+
+      <div class="ghl-card-detail-grid">
+        <article class="ghl-card-detail-card">
+          <strong>Todo conectado para vender mejor</strong>
+          <p>Una sola base operativa para capturar leads, automatizar seguimiento, coordinar conversaciones, agendar, cobrar y sostener el crecimiento con más claridad comercial.</p>
+          <ul class="ghl-card-detail-list">
+            <li><span class="ghl-card-check">✓</span><span><strong>Captura:</strong> páginas, formularios, encuestas, calendarios y canales listos para convertir tráfico en leads.</span></li>
+            <li><span class="ghl-card-check">✓</span><span><strong>Nutre:</strong> secuencias, mensajes, IA y follow-up para sostener el interés sin depender de seguimiento manual.</span></li>
+            <li><span class="ghl-card-check">✓</span><span><strong>Cierra:</strong> pipeline, citas, cobros e información comercial integrada para acelerar decisiones.</span></li>
+            <li><span class="ghl-card-check">✓</span><span><strong>Escala:</strong> una estructura más consistente para marketing, ventas, servicio y analítica.</span></li>
+          </ul>
+        </article>
+
+        <article class="ghl-card-detail-card">
+          <strong>Para quienes ya usan varias herramientas</strong>
+          <p>“Ya tengo herramientas para eso.”</p>
+          <p style="margin-top:12px;">Perfecto. Precisamente ahí suele aparecer el mayor costo oculto: integraciones frágiles, seguimiento desigual, visibilidad rota y más tiempo operativo. Unificar no solo se ve mejor: suele vender mejor y gestionar mejor.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="ghl-card-section">
+    <span class="ghl-card-anchor-offset" id="ghl-card-interfaz" aria-hidden="true"></span>
+    <div class="ghl-card-container">
+      <h2 class="ghl-card-section-title">Visualiza una interfaz pensada para marketing, ventas y automatización</h2>
+      <p class="ghl-card-section-copy">No se trata solo de funciones sueltas. La sensación de valor sube cuando la experiencia se percibe clara, centralizada y lista para operar. Por eso esta sección suma una representación visual de dashboard para comunicar orden, control y acción.</p>
+
+      <div class="ghl-card-detail-grid">
+        <article class="ghl-card-ui-card" aria-label="Vista conceptual de interfaz CRM">
+          <div class="ghl-card-ui-header">
+            <strong>Centro de control CRM</strong>
+            <span class="ghl-card-ui-badge">UI Premium</span>
+          </div>
+
+          <div class="ghl-card-ui-shell">
+            <div class="ghl-card-ui-toolbar">
+              <div class="ghl-card-ui-dots"><span></span><span></span><span></span></div>
+              <div class="ghl-card-ui-search"></div>
+            </div>
+
+            <div class="ghl-card-ui-layout">
+              <div class="ghl-card-ui-sidebar">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+              </div>
+
+              <div class="ghl-card-ui-main">
+                <div class="ghl-card-ui-stat-row">
+                  <div class="ghl-card-ui-stat"><span></span><span></span></div>
+                  <div class="ghl-card-ui-stat"><span></span><span></span></div>
+                  <div class="ghl-card-ui-stat"><span></span><span></span></div>
+                </div>
+                <div class="ghl-card-ui-chart"><span></span><span></span></div>
+                <div class="ghl-card-ui-list"><span></span><span></span><span></span><span></span></div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="ghl-card-detail-card">
+          <strong>Lo que comunica esta interfaz</strong>
+          <ul class="ghl-card-detail-list">
+            <li><span class="ghl-card-check">✓</span><span>Pipeline y oportunidades visibles en tiempo real.</span></li>
+            <li><span class="ghl-card-check">✓</span><span>KPIs y conversiones en un dashboard fácil de leer para marketing y ventas.</span></li>
+            <li><span class="ghl-card-check">✓</span><span>Automatizaciones y seguimientos ejecutándose sin perder trazabilidad.</span></li>
+            <li><span class="ghl-card-check">✓</span><span>Una interfaz sobria y premium mejora la percepción de valor y seriedad de la oferta.</span></li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="ghl-card-section">
+    <span class="ghl-card-anchor-offset" id="ghl-card-integraciones" aria-hidden="true"></span>
+    <div class="ghl-card-container">
+      <h2 class="ghl-card-section-title">Integración real con el ecosistema de marketing</h2>
+      <p class="ghl-card-section-copy">Esta oferta no se siente aislada: se integra con canales, cobros y herramientas clave del stack moderno para que la operación comercial fluya con más continuidad.</p>
+
+      <div class="ghl-card-integration-grid">
+        <article class="ghl-card-integration-card">
+          <strong>Canales y herramientas que importan</strong>
+          <p>El valor se vuelve evidente cuando todo conversa entre sí: automatización, mensajería, cobros y adquisición conectados en un mismo flujo comercial.</p>
+          <div class="ghl-card-logo-row" aria-label="Integraciones destacadas">
+            <div class="ghl-card-logo-pill">WhatsApp</div>
+            <div class="ghl-card-logo-pill">Stripe</div>
+            <div class="ghl-card-logo-pill">Google</div>
+            <div class="ghl-card-logo-pill">Facebook</div>
+            <div class="ghl-card-logo-pill">Instagram</div>
+            <div class="ghl-card-logo-pill">Zapier</div>
+            <div class="ghl-card-logo-pill">TikTok</div>
+            <div class="ghl-card-logo-pill">LinkedIn</div>
+          </div>
+        </article>
+
+        <article class="ghl-card-integration-card">
+          <strong>Lo que esto significa para tu marketing</strong>
+          <p>No solo lanzas campañas. Construyes un sistema donde el lead entra, se clasifica, se nutre, agenda, compra y vuelve a ser impactado con mucha menos fricción. Eso es justamente lo que hace que un CRM así tenga tanto sentido estratégico.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="ghl-card-section">
+    <div class="ghl-card-container">
+      <h2 class="ghl-card-section-title">Más claridad, más control, mejor experiencia comercial</h2>
+      <p class="ghl-card-section-copy">Un CRM premium no solo organiza contactos. También ordena seguimiento, lectura de datos, experiencia del equipo y velocidad de respuesta para que marketing y ventas trabajen como un solo sistema.</p>
+
+      <div class="ghl-card-seo-grid">
+        <article class="ghl-card-seo-card">
+          <strong>Lectura comercial más rápida</strong>
+          <p>Jerarquía visual clara, navegación directa y mensajes enfocados hacen que el visitante entienda antes el valor, reduzca objeciones y llegue al CTA con mayor confianza.</p>
+        </article>
+
+        <article class="ghl-card-seo-card">
+          <strong>Operación y percepción premium</strong>
+          <p>Una experiencia centralizada transmite orden, control y seriedad. Eso eleva la percepción de valor del servicio y ayuda a justificar una inversión mensual más alta.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="ghl-card-footer-cta">
+    <div class="ghl-card-container">
+      <div class="ghl-card-footer-panel">
+        <div>
+          <h2>Si quieres un CRM que ayude a vender mejor, esta es la clase de oferta que se siente seria desde el primer vistazo.</h2>
+          <p>Una experiencia premium, clara y lista para integrarse a tu marketing, automatización y conversión. Ideal para equipos que quieren operar con más control y más velocidad.</p>
+        </div>
+
+        <a class="ghl-card-hero-cta" href="https://buy.stripe.com/4gMcN6bdU5O90sRaZl8bS1K" target="_blank" rel="noopener noreferrer">Reservar mi acceso ahora</a>
+      </div>
+      <div class="ghl-card-legal-note">ESCALIA CRM es una marca comercial gestionada por Digital Tech Holding. Este servicio premium es una oferta propia operada sobre infraestructura de GoHighLevel para potenciar marketing, automatizacion y gestion comercial en una sola experiencia. Los cargos variables por servicios complementarios como WhatsApp, incluidos mensajes de utilidad desde $0.006 USD por mensaje y conversaciones de marketing con tarifa superior segun GHL, verificacion de correos, email, telefonia, IA, acciones premium, integraciones o funciones de uso pueden aplicar segun activacion, consumo, pais, proveedor, politicas vigentes y configuracion de la cuenta. Las referencias a funciones ilimitadas describen acceso a producto y estan sujetas a fair use y a las condiciones del proveedor.</div>
+    </div>
+  </section>
+
+  <div class="ghl-card-chat" data-chat-widget>
+    <div class="ghl-card-chat-nudge" data-chat-nudge aria-live="polite">
+      <div class="ghl-card-chat-nudge-copy">
+        <strong>¿Tienes dudas? Aqui te las resuelvo.</strong>
+        <span>Te acompaño durante el recorrido y puedes cerrar este aviso cuando quieras.</span>
+        <div class="ghl-card-chat-nudge-actions">
+          <button class="ghl-card-chat-nudge-open" type="button">Abrir chat</button>
+        </div>
+      </div>
+      <button class="ghl-card-chat-nudge-dismiss" type="button" aria-label="Cerrar aviso">×</button>
+    </div>
+    <div class="ghl-card-chat-window" aria-live="polite" aria-label="Chat en vivo con Escalia CRM">
+      <div class="ghl-card-chat-header">
+        <div class="ghl-card-chat-title">
+          <span class="ghl-card-chat-dot" aria-hidden="true"></span>
+          <div>
+            <strong>Escalia CRM</strong>
+            <span>Chat live</span>
+          </div>
+        </div>
+        <button class="ghl-card-chat-close" type="button" aria-label="Cerrar chat">×</button>
+      </div>
+      <div class="ghl-card-chat-body" data-chat-messages></div>
+      <form class="ghl-card-chat-form" data-chat-form>
+        <textarea class="ghl-card-chat-input" name="message" rows="2" placeholder="Escribe tu mensaje..."></textarea>
+        <button class="ghl-card-chat-submit" type="submit" aria-label="Enviar mensaje">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 2L11 13"></path><path d="M22 2L15 22L11 13L2 9L22 2Z"></path></svg>
+        </button>
+      </form>
+    </div>
+    <button class="ghl-card-chat-toggle" type="button" aria-expanded="false" aria-label="Abrir chat live">
+      <span class="ghl-card-chat-toggle-icon" aria-hidden="true">✦</span>
+      <span>
+        Chat live
+        <small>Escalia CRM</small>
+      </span>
+    </button>
+  </div>
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "ESCALIA CRM - GHL Edition",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Web",
+      "description": "CRM premium para centralizar marketing, ventas, automatización, IA y WhatsApp en una sola experiencia comercial.",
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": "USD",
+        "price": "200",
+        "url": "https://buy.stripe.com/4gMcN6bdU5O90sRaZl8bS1K",
+        "availability": "https://schema.org/InStock"
+      }
+    }
+  </script>
+
+  <script>
+    (function () {
+      var script = document.currentScript;
+      var root = script ? script.parentNode : null;
+      if (!root) return;
+
+      var card = root.querySelector('.ghl-card-main-card');
+      if (card) {
+        card.addEventListener('mousemove', function (event) {
+          var rect = card.getBoundingClientRect();
+          var x = ((event.clientX - rect.left) / rect.width) * 100;
+          var y = ((event.clientY - rect.top) / rect.height) * 100;
+          card.style.setProperty('--ghl-card-mx', x + '%');
+          card.style.setProperty('--ghl-card-my', y + '%');
+        });
+      }
+
+      var navLinks = root.querySelectorAll('.ghl-card-nav-links a[href^="#"]');
+      for (var i = 0; i < navLinks.length; i++) {
+        navLinks[i].addEventListener('click', function (event) {
+          var targetId = this.getAttribute('href');
+          var target = targetId ? root.querySelector(targetId) : null;
+          if (!target) return;
+          event.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+      }
+
+      var chat = root.querySelector('[data-chat-widget]');
+      if (!chat) return;
+
+      var chatToggle = chat.querySelector('.ghl-card-chat-toggle');
+      var chatClose = chat.querySelector('.ghl-card-chat-close');
+      var chatNudge = chat.querySelector('[data-chat-nudge]');
+      var chatNudgeOpen = chat.querySelector('.ghl-card-chat-nudge-open');
+      var chatNudgeDismiss = chat.querySelector('.ghl-card-chat-nudge-dismiss');
+      var chatBody = chat.querySelector('[data-chat-messages]');
+      var chatForm = chat.querySelector('[data-chat-form]');
+      var chatInput = chat.querySelector('.ghl-card-chat-input');
+      var chatSubmit = chat.querySelector('.ghl-card-chat-submit');
+      var welcomeShown = false;
+      var nudgeDismissed = false;
+      var nudgeActivated = false;
+      var typingNode = null;
+      var sessionId = 'escalia-crm-' + Date.now() + '-' + Math.random().toString(36).slice(2, 10);
+      var welcomeMessage = 'Hola, bienvenido a Escalia CRM. ¿Tienes dudas sobre el producto? O cuentame como te podemos ayudar?';
+
+      function scrollChatToBottom() {
+        chatBody.scrollTop = chatBody.scrollHeight;
+      }
+
+      function appendMessage(text, type) {
+        var message = document.createElement('div');
+        message.className = 'ghl-card-chat-msg ' + type;
+        message.textContent = text;
+        chatBody.appendChild(message);
+        scrollChatToBottom();
+        return message;
+      }
+
+      function removeTyping() {
+        if (!typingNode || !typingNode.parentNode) return;
+        typingNode.parentNode.removeChild(typingNode);
+        typingNode = null;
+      }
+
+      function showTyping() {
+        if (typingNode) return;
+        typingNode = document.createElement('div');
+        typingNode.className = 'ghl-card-chat-msg bot';
+        typingNode.innerHTML = '<span class="ghl-card-chat-typing" aria-label="Escribiendo"><span></span><span></span><span></span></span>';
+        chatBody.appendChild(typingNode);
+        scrollChatToBottom();
+      }
+
+      function showWelcomeMessage() {
+        if (welcomeShown) return;
+        welcomeShown = true;
+        showTyping();
+        window.setTimeout(function () {
+          removeTyping();
+          appendMessage(welcomeMessage, 'bot');
+        }, 1400);
+      }
+
+      function normalizeWebhookReply(payload, fallbackText) {
+        if (!payload) return fallbackText;
+        if (typeof payload === 'string') return payload;
+        if (payload.reply) return payload.reply;
+        if (payload.message) return payload.message;
+        if (payload.response) return payload.response;
+        if (payload.text) return payload.text;
+        return fallbackText;
+      }
+
+      function setNudgeVisible(isVisible) {
+        if (!chatNudge || nudgeDismissed) return;
+        chat.classList.toggle('show-nudge', isVisible);
+      }
+
+      function evaluateNudgeVisibility() {
+        if (!chatNudge || nudgeDismissed || nudgeActivated || chat.classList.contains('is-open')) {
+          setNudgeVisible(false);
+          return;
+        }
+
+        var scrollTop = window.pageYOffset || document.documentElement.scrollTop || 0;
+        var viewportHeight = window.innerHeight || document.documentElement.clientHeight || 0;
+        var documentHeight = Math.max(
+          document.body.scrollHeight,
+          document.documentElement.scrollHeight,
+          document.body.offsetHeight,
+          document.documentElement.offsetHeight,
+          document.body.clientHeight,
+          document.documentElement.clientHeight
+        );
+        var progress = documentHeight > viewportHeight ? scrollTop / (documentHeight - viewportHeight) : 0;
+        setNudgeVisible(progress >= 0.34 && progress <= 0.75);
+      }
+
+      function setChatOpen(isOpen) {
+        chat.classList.toggle('is-open', isOpen);
+        chatToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        if (isOpen) {
+          nudgeActivated = true;
+          setNudgeVisible(false);
+        }
+        if (isOpen) {
+          showWelcomeMessage();
+          window.setTimeout(function () {
+            chatInput.focus();
+          }, 180);
+        } else {
+          evaluateNudgeVisibility();
+        }
+      }
+
+      chatToggle.addEventListener('click', function () {
+        setChatOpen(!chat.classList.contains('is-open'));
+      });
+
+      chatClose.addEventListener('click', function () {
+        setChatOpen(false);
+      });
+
+      if (chatNudgeOpen) {
+        chatNudgeOpen.addEventListener('click', function () {
+          setChatOpen(true);
+        });
+      }
+
+      if (chatNudgeDismiss) {
+        chatNudgeDismiss.addEventListener('click', function () {
+          nudgeDismissed = true;
+          setNudgeVisible(false);
+        });
+      }
+
+      window.addEventListener('scroll', evaluateNudgeVisibility, { passive: true });
+      window.addEventListener('resize', evaluateNudgeVisibility);
+      window.setTimeout(evaluateNudgeVisibility, 900);
+
+      chatInput.addEventListener('keydown', function (event) {
+        if (event.key !== 'Enter' || event.shiftKey) return;
+        event.preventDefault();
+        chatForm.requestSubmit();
+      });
+
+      chatForm.addEventListener('submit', function (event) {
+        event.preventDefault();
+        var message = chatInput.value.replace(/\s+/g, ' ').trim();
+        if (!message) return;
+
+        appendMessage(message, 'user');
+        chatInput.value = '';
+        chatSubmit.disabled = true;
+        showTyping();
+
+        fetch('https://n8n.cambiatearemoto.com/webhook/escalia-CRM', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            sessionId: sessionId,
+            source: 'elite-crm-gohighlevel-card-200USD',
+            brand: 'Escalia CRM',
+            pageUrl: window.location.href,
+            userAgent: window.navigator.userAgent,
+            message: message,
+            sentAt: new Date().toISOString()
+          })
+        }).then(function (response) {
+          if (!response.ok) {
+            throw new Error('Webhook request failed');
+          }
+
+          return response.text().then(function (text) {
+            if (!text) return null;
+            try {
+              return JSON.parse(text);
+            } catch (error) {
+              return text;
+            }
+          });
+        }).then(function (payload) {
+          var reply = normalizeWebhookReply(
+            payload,
+            'Gracias por escribirnos. En este momento ya recibimos tu mensaje y seguimos atentos para ayudarte con Escalia CRM.'
+          );
+
+          window.setTimeout(function () {
+            removeTyping();
+            appendMessage(reply, 'bot');
+          }, 900);
+        }).catch(function () {
+          removeTyping();
+          appendMessage('No pudimos enviar tu mensaje en este momento. Intentalo de nuevo en unos segundos.', 'status');
+        }).finally(function () {
+          chatSubmit.disabled = false;
+          scrollChatToBottom();
+        });
+      });
+    })();
+  </script>
+</div>
