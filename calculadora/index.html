@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="es-CO">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora de Sillas-Vacias | Escalia Dental</title>
+  <meta name="description" content="Calculadora personalizada para estimar cuanto pierde un consultorio odontologico al mes por citas canceladas o pacientes que no se presentan.">
+  <style>
+    :root {
+      --navy: #0f2a4a;
+      --navy2: #1a3d66;
+      --cyan: #0891b2;
+      --cyan2: rgba(8,145,178,0.10);
+      --cyan3: rgba(8,145,178,0.18);
+      --white: #ffffff;
+      --off: #f5f7fa;
+      --off2: #e8edf4;
+      --line: #d6dde8;
+      --ink: #0d1b2a;
+      --ink2: #243b55;
+      --ink3: #4e6880;
+      --success: #0f766e;
+      --warn: #b45309;
+      --r: Raleway, Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: var(--r);
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 18% 8%, rgba(8,145,178,.08), transparent 28%),
+        linear-gradient(180deg, #ffffff 0%, #f6f9fc 58%, #eef5f9 100%);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: inherit; }
+
+    .page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .topbar {
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: min(1120px, calc(100% - 40px));
+      margin: 0 auto;
+    }
+
+    .logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      text-decoration: none;
+      font-weight: 800;
+      color: var(--navy);
+      letter-spacing: -0.02em;
+    }
+
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--cyan);
+      box-shadow: 0 0 0 5px var(--cyan2);
+    }
+
+    .top-note {
+      color: var(--ink3);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    main {
+      flex: 1;
+      display: grid;
+      align-items: center;
+      padding: 24px 0 68px;
+    }
+
+    .wrap {
+      width: min(1040px, calc(100% - 40px));
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: minmax(0, 0.88fr) minmax(380px, 1fr);
+      gap: 46px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--white);
+      color: var(--ink3);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      margin-bottom: 22px;
+    }
+
+    h1 {
+      margin: 0;
+      color: var(--navy);
+      font-size: clamp(2.05rem, 4.2vw, 3.9rem);
+      line-height: 1.03;
+      letter-spacing: -0.04em;
+      max-width: 700px;
+    }
+
+    .lead {
+      margin: 22px 0 0;
+      max-width: 610px;
+      color: var(--ink2);
+      font-size: 16.5px;
+      line-height: 1.8;
+    }
+
+    .personal {
+      margin-top: 26px;
+      display: grid;
+      gap: 8px;
+      color: var(--ink2);
+      font-size: 15px;
+      line-height: 1.7;
+    }
+
+    .personal strong { color: var(--navy); }
+
+    .calculator {
+      background: var(--white);
+      border: 1px solid rgba(15,42,74,.12);
+      border-radius: 8px;
+      box-shadow: 0 18px 54px rgba(15,42,74,.13);
+      overflow: hidden;
+    }
+
+    .calc-head {
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--line);
+      background: linear-gradient(135deg, var(--navy), var(--navy2));
+      color: var(--white);
+    }
+
+    .calc-head span {
+      display: block;
+      opacity: .68;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .calc-head h2 {
+      margin: 0;
+      font-size: 23px;
+      line-height: 1.18;
+      letter-spacing: -0.025em;
+    }
+
+    .calc-body {
+      padding: 22px 24px 24px;
+    }
+
+    .fields {
+      display: grid;
+      gap: 15px;
+    }
+
+    .field label {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 7px;
+      color: var(--ink2);
+      font-size: 12.8px;
+      font-weight: 800;
+    }
+
+    .field label span {
+      color: var(--ink3);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .input-shell {
+      display: flex;
+      align-items: center;
+      border: 1.5px solid var(--line);
+      border-radius: 8px;
+      background: #f8fafc;
+      overflow: hidden;
+      transition: border-color .18s ease, box-shadow .18s ease, background .18s ease;
+    }
+
+    .input-shell:focus-within {
+      border-color: var(--cyan);
+      box-shadow: 0 0 0 4px var(--cyan2);
+      background: var(--white);
+    }
+
+    .prefix, .suffix {
+      flex: none;
+      color: var(--ink3);
+      font-weight: 800;
+      font-size: 14px;
+      padding: 0 13px;
+    }
+
+    input {
+      width: 100%;
+      min-width: 0;
+      border: 0;
+      outline: 0;
+      background: transparent;
+      color: var(--ink);
+      font: 750 16px/1 var(--r);
+      padding: 15px 13px;
+    }
+
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button {
+      opacity: .45;
+    }
+
+    .input-shell .prefix + input { padding-left: 0; }
+    .input-shell input + .suffix { padding-left: 0; }
+
+    .actions {
+      display: grid;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    button, .calendar-link {
+      min-height: 52px;
+      border-radius: 8px;
+      font: 800 15px/1 var(--r);
+      cursor: pointer;
+      transition: transform .15s ease, opacity .15s ease, background .15s ease;
+    }
+
+    button {
+      border: 0;
+      background: var(--cyan);
+      color: var(--white);
+    }
+
+    button:hover, .calendar-link:hover { transform: translateY(-1px); }
+
+    .calendar-link {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      border: 1.5px solid var(--navy);
+      color: var(--navy);
+      background: var(--white);
+      margin-top: 12px;
+      text-align: center;
+      padding: 0 18px;
+    }
+
+    .calendar-link.visible { display: flex; }
+
+    .result {
+      margin-top: 20px;
+      padding: 18px;
+      border: 1.5px solid var(--cyan3);
+      border-radius: 8px;
+      background: linear-gradient(180deg, rgba(8,145,178,.11), rgba(8,145,178,.045));
+      display: none;
+    }
+
+    .result.visible { display: block; }
+
+    .result-label {
+      color: var(--ink3);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .money {
+      color: var(--navy);
+      font-size: clamp(2rem, 4vw, 3rem);
+      line-height: 1;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      overflow-wrap: anywhere;
+    }
+
+    .result-copy {
+      margin: 13px 0 0;
+      color: var(--ink2);
+      font-size: 15px;
+      line-height: 1.65;
+    }
+
+    .annual {
+      margin-top: 13px;
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      padding-top: 14px;
+      border-top: 1px solid rgba(15,42,74,.12);
+      color: var(--ink2);
+      font-size: 14px;
+    }
+
+    .annual strong {
+      color: var(--navy);
+      white-space: nowrap;
+    }
+
+    .fine {
+      margin: 12px 0 0;
+      color: var(--ink3);
+      font-size: 12px;
+      line-height: 1.55;
+    }
+
+    footer {
+      border-top: 1px solid var(--line);
+      padding: 20px;
+      text-align: center;
+      color: var(--ink3);
+      font-size: 12px;
+      background: rgba(255,255,255,.7);
+    }
+
+    @media (max-width: 900px) {
+      .topbar { width: min(100% - 28px, 680px); }
+      .top-note { display: none; }
+      main { align-items: start; padding: 14px 0 44px; }
+      .wrap {
+        width: min(100% - 28px, 680px);
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+      .eyebrow { margin-bottom: 16px; }
+      h1 { font-size: clamp(2rem, 10vw, 3.25rem); }
+      .lead { font-size: 15.5px; line-height: 1.72; }
+      .personal { margin-top: 20px; }
+      .calc-head, .calc-body { padding: 20px; }
+      .calc-head h2 { font-size: 21px; }
+      .field label { display: grid; gap: 3px; }
+      .suffix { font-size: 13px; padding-right: 11px; }
+      input { font-size: 16px; }
+      .annual { display: grid; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="topbar">
+      <a class="logo" href="/escaliadental" aria-label="Escalia Dental">
+        <span class="dot"></span>
+        Escalia Dental
+      </a>
+      <div class="top-note">Calculadora personalizada</div>
+    </header>
+
+    <main>
+      <div class="wrap">
+        <section>
+          <div class="eyebrow"><span class="dot"></span> Sillas-Vacias</div>
+          <h1 id="heroTitle">Calcula cuánto pierde tu consultorio cada mes.</h1>
+          <p class="lead">
+            Cuando una cita se cancela o el paciente no se presenta, no solo se pierde una consulta:
+            se pierde tiempo clínico, agenda disponible y oportunidad de tratamiento.
+          </p>
+          <div class="personal">
+            <div><strong id="doctorName">Doctor/a</strong>, usa tus propios números para estimar el impacto mensual.</div>
+          </div>
+        </section>
+
+        <section class="calculator" aria-label="Calculadora de perdida por cancelaciones">
+          <div class="calc-head">
+            <span>Calculadora Escalia Dental</span>
+            <h2>Pérdida estimada por pacientes que cancelan o no asisten</h2>
+          </div>
+
+          <div class="calc-body">
+            <form id="lossForm">
+              <div class="fields">
+                <div class="field">
+                  <label for="specialists">Número de especialistas <span>Referencia interna</span></label>
+                  <div class="input-shell">
+                    <input id="specialists" name="specialists" type="number" min="1" step="1" inputmode="numeric" value="2" required>
+                    <span class="suffix">especialistas</span>
+                  </div>
+                </div>
+
+                <div class="field">
+                  <label for="cancellations">Pacientes que cancelan al día <span>Promedio del consultorio</span></label>
+                  <div class="input-shell">
+                    <input id="cancellations" name="cancellations" type="text" inputmode="numeric" pattern="[0-9]*" value="3" required>
+                    <span class="suffix">pacientes</span>
+                  </div>
+                </div>
+
+                <div class="field">
+                  <label for="ticket">Valor cita promedio <span>COP</span></label>
+                  <div class="input-shell">
+                    <span class="prefix">$</span>
+                    <input id="ticket" name="ticket" type="text" inputmode="numeric" autocomplete="off" value="150.000" required>
+                    <span class="suffix">COP</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="actions">
+                <button type="submit">Calcular pérdida mensual</button>
+              </div>
+            </form>
+
+            <div id="result" class="result" aria-live="polite">
+              <div class="result-label">Pérdida mensual estimada</div>
+              <div id="monthlyLoss" class="money">$0 COP</div>
+              <p id="resultCopy" class="result-copy"></p>
+              <div class="annual">
+                <span>Proyección anual si nada cambia</span>
+                <strong id="annualLoss">$0 COP</strong>
+              </div>
+              <p class="fine">
+                Cálculo estimado: pacientes cancelados al día x valor cita promedio x 22 días hábiles.
+                El número de especialistas se muestra para contexto, pero no multiplica el resultado.
+              </p>
+            </div>
+            <a id="calendarCta" class="calendar-link" href="https://calendar.app.google/DuJ5YFNuGLyDG2g76" target="_blank" rel="noopener">Agendar 20 mins de diagnóstico para eliminar esta pérdida</a>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer>
+      Escalia Dental · Gestion inteligente de pacientes · Habeas Data Ley 1581/2012
+    </footer>
+  </div>
+
+  <script>
+    const DAYS_PER_MONTH = 22;
+    const calendarUrl = 'https://calendar.app.google/DuJ5YFNuGLyDG2g76';
+
+    const params = new URLSearchParams(window.location.search);
+    const doctor = cleanText(params.get('doctor')) || cleanText(params.get('odontologo')) || 'Doctor/a';
+
+    const heroTitle = document.getElementById('heroTitle');
+    const doctorName = document.getElementById('doctorName');
+    const form = document.getElementById('lossForm');
+    const ticketInput = document.getElementById('ticket');
+    const cancellationsInput = document.getElementById('cancellations');
+    const result = document.getElementById('result');
+    const monthlyLoss = document.getElementById('monthlyLoss');
+    const annualLoss = document.getElementById('annualLoss');
+    const resultCopy = document.getElementById('resultCopy');
+    const calendarCta = document.getElementById('calendarCta');
+
+    heroTitle.textContent = `${doctor}, calcula cuánto pierde tu consultorio cada mes.`;
+    doctorName.textContent = doctor;
+    calendarCta.href = calendarUrl;
+
+    ticketInput.addEventListener('input', () => {
+      const value = parseCurrency(ticketInput.value);
+      ticketInput.value = value ? formatPlainNumber(value) : '';
+    });
+
+    cancellationsInput.addEventListener('input', () => {
+      cancellationsInput.value = cancellationsInput.value.replace(/[^\d]/g, '');
+    });
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+
+      const cancellations = Math.max(0, Number(cancellationsInput.value) || 0);
+      cancellationsInput.value = String(cancellations);
+      const ticket = parseCurrency(ticketInput.value);
+      const monthly = Math.round(cancellations * ticket * DAYS_PER_MONTH);
+      const annual = monthly * 12;
+
+      monthlyLoss.textContent = formatCOP(monthly);
+      annualLoss.textContent = formatCOP(annual);
+      resultCopy.textContent = `${doctor}, tu consultorio podría estar perdiendo cerca de ${formatCOP(monthly)} al mes por citas que no se concretan.`;
+      result.classList.add('visible');
+      calendarCta.classList.add('visible');
+    });
+
+    function cleanText(value) {
+      if (!value) return '';
+      return value.replace(/\+/g, ' ').trim().slice(0, 80);
+    }
+
+    function parseCurrency(value) {
+      return Number(String(value || '').replace(/[^\d]/g, '')) || 0;
+    }
+
+    function formatPlainNumber(value) {
+      return new Intl.NumberFormat('es-CO', { maximumFractionDigits: 0 }).format(value);
+    }
+
+    function formatCOP(value) {
+      return new Intl.NumberFormat('es-CO', {
+        style: 'currency',
+        currency: 'COP',
+        maximumFractionDigits: 0
+      }).format(value);
+    }
+  </script>
+</body>
+</html>
