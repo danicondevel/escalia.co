@@ -1,0 +1,1283 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Descubra qué tanto está aprovechando la IA en su firma - Escalia</title>
+    
+    <!-- Google Fonts: Raleway (Display) and Roboto (Body) — Escalia Brand v2.0 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700;800&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome for Premium Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* Design Tokens based on Paleta color-Dani-Conde */
+        :root {
+            --color-bg-dark: #353B3C;
+            --color-card-dark: rgba(42, 47, 48, 0.65);
+            --color-card-border: rgba(46, 216, 203, 0.2);
+            --color-turquoise: #2ED8CB;
+            --color-pink: #F61067;
+            --color-lime: #E7FE68;
+            --color-offwhite: #F5F7F6;
+            --color-gray: #8b9299;
+
+            --font-titles: 'Raleway', sans-serif;
+            --font-body: 'Roboto', sans-serif;
+
+            --gradient-1: linear-gradient(135deg, #2ED8CB 0%, #E7FE68 100%);
+            --gradient-2: linear-gradient(135deg, #F61067 0%, #E7FE68 100%);
+            --gradient-3: linear-gradient(135deg, #F61067 0%, #2ED8CB 100%);
+            --gradient-bg: radial-gradient(circle at top right, #3E4546 0%, #2A2F30 100%);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: var(--gradient-bg);
+            color: var(--color-offwhite);
+            font-family: var(--font-body);
+            line-height: 1.6;
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        /* Container & Glassmorphism */
+        .container {
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .logo {
+            font-family: var(--font-titles);
+            font-size: 2.2rem;
+            font-weight: 900;
+            letter-spacing: -1px;
+            display: inline-block;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+            text-shadow: 0 4px 20px rgba(46, 216, 203, 0.15);
+        }
+
+        .logo-subtitle {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            color: var(--color-offwhite);
+            opacity: 0.8;
+            font-weight: 500;
+        }
+
+        .card {
+            background: var(--color-card-dark);
+            border: 1px solid var(--color-card-border);
+            border-radius: 24px;
+            padding: 50px 40px;
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--gradient-1);
+        }
+
+        /* Typography styling */
+        h1, h2, h3 {
+            font-family: var(--font-titles);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        h1 {
+            font-size: 2.6rem;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .gradient-text-1 {
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .gradient-text-2 {
+            background: var(--gradient-2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .lead {
+            font-size: 1.1rem;
+            color: var(--color-gray);
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 40px auto;
+            font-weight: 400;
+        }
+
+        /* Inputs & Forms */
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--color-offwhite);
+            letter-spacing: 0.5px;
+        }
+
+        input {
+            width: 100%;
+            background: rgba(18, 20, 21, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 16px 20px;
+            color: var(--color-offwhite);
+            font-family: var(--font-body);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--color-turquoise);
+            box-shadow: 0 0 15px rgba(46, 216, 203, 0.25);
+            background: rgba(18, 20, 21, 0.8);
+        }
+
+        /* Premium Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 18px 32px;
+            font-family: var(--font-titles);
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--color-bg-dark);
+            background: var(--gradient-1);
+            border: none;
+            border-radius: 16px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 10px 25px rgba(46, 216, 203, 0.3);
+            text-decoration: none;
+            margin-top: 20px;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(46, 216, 203, 0.45);
+        }
+
+        .btn:active {
+            transform: translateY(-1px);
+        }
+
+        .btn-pink {
+            background: var(--gradient-2);
+            color: var(--color-offwhite);
+            box-shadow: 0 10px 25px rgba(246, 16, 103, 0.3);
+        }
+
+        .btn-pink:hover {
+            box-shadow: 0 15px 35px rgba(246, 16, 103, 0.45);
+        }
+
+        .btn i {
+            margin-left: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .btn:hover i {
+            transform: translateX(5px);
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            margin-bottom: 40px;
+        }
+
+        .progress-bar-bg {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: var(--gradient-1);
+            border-radius: 10px;
+            transition: width 0.4s ease;
+        }
+
+        .progress-text {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            color: var(--color-gray);
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        /* Screen States */
+        .screen {
+            display: none;
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        .screen.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Quiz Styling */
+        .question-title {
+            font-size: 1.8rem;
+            line-height: 1.3;
+            margin-bottom: 30px;
+            color: var(--color-offwhite);
+        }
+
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .option-card {
+            background: rgba(18, 20, 21, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 20px 24px;
+            cursor: pointer;
+            transition: all 0.25s cubic-bezier(0.165, 0.84, 0.44, 1);
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .option-card:hover {
+            background: rgba(53, 59, 60, 0.6);
+            border-color: var(--color-turquoise);
+            transform: translateX(5px);
+        }
+
+        .option-card.selected {
+            background: rgba(46, 216, 203, 0.1);
+            border-color: var(--color-turquoise);
+            box-shadow: 0 0 15px rgba(46, 216, 203, 0.15);
+        }
+
+        .option-marker {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .option-card:hover .option-marker {
+            border-color: var(--color-turquoise);
+            color: var(--color-turquoise);
+        }
+
+        .option-card.selected .option-marker {
+            background: var(--color-turquoise);
+            border-color: var(--color-turquoise);
+            color: var(--color-bg-dark);
+        }
+
+        .option-text {
+            font-size: 1rem;
+            font-weight: 500;
+            color: rgba(245, 247, 246, 0.9);
+        }
+
+        /* Loading / Processing Screen */
+        .loading-container {
+            text-align: center;
+            padding: 40px 0;
+        }
+
+        .spinner {
+            width: 80px;
+            height: 80px;
+            border: 4px solid rgba(255, 255, 255, 0.05);
+            border-top-color: var(--color-turquoise);
+            border-bottom-color: var(--color-pink);
+            border-radius: 50%;
+            animation: spin 1.5s linear infinite;
+            margin: 0 auto 30px auto;
+            box-shadow: 0 0 20px rgba(46, 216, 203, 0.2);
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading-title {
+            font-size: 1.8rem;
+            margin-bottom: 12px;
+        }
+
+        .loading-text {
+            color: var(--color-gray);
+            font-size: 1.05rem;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        /* Results / Diagnostic Dashboard */
+        .results-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .maturity-tag {
+            display: inline-block;
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-weight: 800;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 16px;
+            background: rgba(231, 254, 104, 0.1);
+            border: 1px solid var(--color-lime);
+            color: var(--color-lime);
+        }
+        
+        .maturity-tag.Traditional {
+            background: rgba(246, 16, 103, 0.1);
+            border-color: var(--color-pink);
+            color: var(--color-pink);
+        }
+
+        .maturity-title {
+            font-size: 2.8rem;
+            line-height: 1.1;
+            margin-bottom: 16px;
+        }
+
+        .diag-resumen {
+            font-size: 1.15rem;
+            color: var(--color-offwhite);
+            opacity: 0.95;
+            max-width: 750px;
+            margin: 0 auto 30px auto;
+            text-align: center;
+        }
+
+        /* Cost of Opportunity Calculator Grid */
+        .roi-card {
+            background: rgba(246, 16, 103, 0.08);
+            border: 1px solid rgba(246, 16, 103, 0.25);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 40px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: inset 0 0 20px rgba(246, 16, 103, 0.05);
+        }
+
+        .roi-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--gradient-2);
+        }
+
+        .roi-title {
+            text-align: center;
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--color-pink);
+            margin-bottom: 24px;
+            font-weight: 700;
+        }
+
+        .roi-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            text-align: center;
+        }
+
+        @media (max-width: 600px) {
+            .roi-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .roi-metric {
+            padding: 10px;
+        }
+
+        .roi-val {
+            font-family: var(--font-titles);
+            font-size: 3rem;
+            font-weight: 900;
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+        
+        .roi-val.pink {
+            color: var(--color-pink);
+            text-shadow: 0 0 15px rgba(246, 16, 103, 0.2);
+        }
+        
+        .roi-val.lime {
+            color: var(--color-lime);
+            text-shadow: 0 0 15px rgba(231, 254, 104, 0.2);
+        }
+
+        .roi-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--color-gray);
+        }
+
+        .roi-footer {
+            text-align: center;
+            margin-top: 24px;
+            font-size: 0.95rem;
+            color: var(--color-offwhite);
+            opacity: 0.85;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Detailed AI Process Diagnosis */
+        .process-section-title {
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--color-turquoise);
+        }
+
+        .process-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .process-card {
+            background: rgba(18, 20, 21, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+        }
+
+        .process-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+            color: var(--color-turquoise);
+            font-weight: 700;
+            font-size: 1.15rem;
+        }
+
+        .process-header i {
+            font-size: 1.2rem;
+        }
+
+        .process-block {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .process-block {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+        }
+
+        .p-block {
+            padding: 12px 16px;
+            border-radius: 12px;
+            font-size: 0.95rem;
+        }
+
+        .p-block.actual {
+            background: rgba(246, 16, 103, 0.03);
+            border-left: 3px solid var(--color-pink);
+        }
+
+        .p-block.op {
+            background: rgba(46, 216, 203, 0.03);
+            border-left: 3px solid var(--color-turquoise);
+        }
+
+        .p-block-title {
+            font-weight: 700;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 6px;
+        }
+        
+        .p-block.actual .p-block-title {
+            color: var(--color-pink);
+        }
+        
+        .p-block.op .p-block-title {
+            color: var(--color-turquoise);
+        }
+
+        /* CTA Section */
+        .cta-section {
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            padding-top: 40px;
+            margin-top: 40px;
+        }
+
+        .cta-title {
+            font-size: 2rem;
+            margin-bottom: 12px;
+        }
+
+        .cta-desc {
+            color: var(--color-gray);
+            font-size: 1.05rem;
+            max-width: 600px;
+            margin: 0 auto 30px auto;
+        }
+
+        /* Footer styling */
+        footer {
+            text-align: center;
+            padding: 30px 20px;
+            font-size: 0.8rem;
+            color: var(--color-gray);
+            opacity: 0.7;
+        }
+
+        /* Pulse Animation for Main CTA */
+        .pulse-btn {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(246, 16, 103, 0.4); }
+            70% { box-shadow: 0 0 0 15px rgba(246, 16, 103, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(246, 16, 103, 0); }
+        }
+
+        /* ==========================================================================
+           Mobile and Responsive Optimization (Harmonious & Sleek Layouts)
+           ========================================================================== */
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px 12px;
+            }
+
+            .header {
+                margin-bottom: 24px;
+            }
+
+            .logo {
+                font-size: 1.8rem;
+            }
+
+            .logo-subtitle {
+                font-size: 0.75rem;
+                letter-spacing: 3px;
+            }
+
+            .card {
+                padding: 28px 20px;
+                border-radius: 20px;
+            }
+
+            h1 {
+                font-size: 1.85rem;
+                margin-bottom: 16px;
+            }
+
+            .question-title {
+                font-size: 1.35rem;
+                line-height: 1.4;
+                margin-bottom: 20px;
+            }
+
+            .lead {
+                font-size: 0.95rem;
+                margin-bottom: 24px;
+            }
+
+            input {
+                padding: 14px 16px;
+                font-size: 0.95rem;
+            }
+
+            .btn {
+                padding: 16px 24px;
+                font-size: 1rem;
+                border-radius: 14px;
+            }
+
+            .option-card {
+                padding: 14px 16px;
+                gap: 12px;
+                border-radius: 12px;
+            }
+
+            .option-marker {
+                width: 24px;
+                height: 24px;
+                font-size: 0.8rem;
+            }
+
+            .option-text {
+                font-size: 0.9rem;
+                line-height: 1.4;
+            }
+
+            .progress-container {
+                margin-bottom: 24px;
+            }
+
+            .progress-text {
+                font-size: 0.75rem;
+            }
+
+            /* Dashboard Results Mobile */
+            .maturity-title {
+                font-size: 1.95rem;
+                line-height: 1.2;
+            }
+
+            .maturity-tag {
+                font-size: 0.75rem;
+                padding: 6px 14px;
+                margin-bottom: 12px;
+            }
+
+            .diag-resumen {
+                font-size: 0.95rem;
+                margin-bottom: 20px;
+                line-height: 1.5;
+            }
+
+            .roi-card {
+                padding: 20px 16px;
+                margin-bottom: 24px;
+            }
+
+            .roi-title {
+                font-size: 0.95rem;
+                margin-bottom: 16px;
+            }
+
+            .roi-val {
+                font-size: 2.1rem;
+            }
+
+            .roi-label {
+                font-size: 0.75rem;
+            }
+
+            .roi-footer {
+                font-size: 0.8rem;
+                margin-top: 16px;
+                line-height: 1.4;
+            }
+
+            .process-section-title {
+                font-size: 1.15rem;
+                margin-bottom: 16px;
+            }
+
+            .process-card {
+                padding: 16px;
+                border-radius: 14px;
+            }
+
+            .process-header {
+                font-size: 1.05rem;
+                margin-bottom: 12px;
+                gap: 10px;
+            }
+
+            .p-block {
+                padding: 10px 12px;
+                font-size: 0.85rem;
+                line-height: 1.45;
+            }
+
+            .p-block-title {
+                font-size: 0.75rem;
+                margin-bottom: 4px;
+            }
+
+            .cta-section {
+                padding-top: 24px;
+                margin-top: 24px;
+            }
+
+            .cta-title {
+                font-size: 1.5rem;
+            }
+
+            .cta-desc {
+                font-size: 0.9rem;
+                margin-bottom: 20px;
+            }
+
+            footer {
+                padding: 20px 12px;
+                font-size: 0.7rem;
+                line-height: 1.4;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <!-- Header -->
+        <div class="header">
+            <div class="logo">ESCALIA</div>
+            <div class="logo-subtitle">Implementación de IA para Empresas</div>
+        </div>
+
+        <!-- 1. SCREEN: WELCOME / INTRO -->
+        <div id="screen-intro" class="screen active">
+            <div class="card" style="text-align: center;">
+                <h1 style="font-size: 2.3rem; line-height: 1.25; margin-bottom: 24px;">La IA está transformando el Derecho.<br><span class="gradient-text-1">Descubra qué tan bien la está utilizando en su firma</span></h1>
+                <p class="lead" style="margin-bottom: 35px;">Identifique oportunidades reales de automatización en sus flujos jurídicos, elimine tareas repetitivas y obtenga una simulación instantánea del retorno financiero de la IA en su despacho.</p>
+                
+                <div style="max-width: 480px; margin: 0 auto 35px auto;">
+                    <div class="option-card" style="cursor: default; pointer-events: none; border-color: rgba(255,255,255,0.06); margin-bottom: 16px; padding: 16px 20px;">
+                        <div class="option-marker" style="background: var(--gradient-1); border: none; color: var(--color-bg-dark);"><i class="fa-solid fa-clock"></i></div>
+                        <div class="option-text" style="text-align: left; font-weight: 600;">Evaluación rápida de 90 segundos</div>
+                    </div>
+                    <div class="option-card" style="cursor: default; pointer-events: none; border-color: rgba(255,255,255,0.06); margin-bottom: 16px; padding: 16px 20px;">
+                        <div class="option-marker" style="background: var(--gradient-2); border: none; color: var(--color-offwhite);"><i class="fa-solid fa-calculator"></i></div>
+                        <div class="option-text" style="text-align: left; font-weight: 600;">Simulación de impacto financiero por abogado</div>
+                    </div>
+                </div>
+                
+                <button onclick="startQuizDirectly()" class="btn pulse-btn" style="max-width: 400px; margin-top: 10px;">Comenzar Diagnóstico Gratis <i class="fa-solid fa-circle-play"></i></button>
+            </div>
+        </div>
+
+        <!-- 2. SCREEN: QUIZ QUESTION -->
+        <div id="screen-quiz" class="screen">
+            <div class="progress-container">
+                <div class="progress-text" style="align-items: center;">
+                    <button id="btn-back" onclick="prevQuestion()" style="background: none; border: none; color: var(--color-gray); font-family: var(--font-body); font-size: 0.85rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 6px; padding: 4px 8px; border-radius: 6px; transition: color 0.2s;"><i class="fa-solid fa-arrow-left"></i> Anterior</button>
+                    <span id="question-number">Pregunta 1 de 7</span>
+                    <span id="progress-percentage">14% Completado</span>
+                </div>
+                <div class="progress-bar-bg">
+                    <div id="progress-bar" class="progress-bar"></div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h2 id="quiz-question-title" class="question-title">Cargando pregunta...</h2>
+                <div id="quiz-options" class="options-list">
+                    <!-- Options loaded dynamically -->
+                </div>
+            </div>
+        </div>
+
+        <!-- 2.5 SCREEN: LEAD CAPTURE (THE END) -->
+        <div id="screen-lead" class="screen">
+            <div class="card">
+                <h2 style="font-size: 2rem; margin-bottom: 16px; text-align: center;">¡Quiz Completado! 🎉</h2>
+                <p class="lead" style="margin-bottom: 30px;">Ingrese sus datos para que nuestra IA genere su diagnóstico estratégico y calcule el retorno financiero estimado.</p>
+                
+                <form id="lead-form" onsubmit="submitLeadForm(event)">
+                    <div class="form-group">
+                        <label for="nombre_contacto">Nombre</label>
+                        <input type="text" id="nombre_contacto" required placeholder="Ej. Alejandro Gómez">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="rol">Rol en la organización</label>
+                        <input type="text" id="rol" required placeholder="Ej. Socio Director, Gerente Legal, Abogado Senior">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="correo">Correo al que enviaremos los resultados</label>
+                        <input type="email" id="correo" required placeholder="Ej. agomez@firma.com">
+                    </div>
+
+                    <button type="submit" class="btn">Generar Diagnóstico Personalizado <i class="fa-solid fa-wand-magic-sparkles"></i></button>
+                </form>
+            </div>
+        </div>
+
+        <!-- 3. SCREEN: LOADING / AI PROCESSING -->
+        <div id="screen-loading" class="screen">
+            <div class="card">
+                <div class="loading-container">
+                    <div class="spinner"></div>
+                    <h2 class="loading-title">Procesando Diagnóstico</h2>
+                    <p class="loading-text" id="loading-message">Auditando respuestas y consultando con nuestra Inteligencia Artificial de integración legal...</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. SCREEN: RESULTS / DASHBOARD -->
+        <div id="screen-results" class="screen">
+            <div class="card">
+                
+                <div class="results-header">
+                    <span id="res-maturity-tag" class="maturity-tag">Firma Tradicional</span>
+                    <h1 class="maturity-title" id="res-maturity-title">Cargando...</h1>
+                    <p class="diag-resumen" id="res-resumen">Generando el análisis de su firma legal corporativa...</p>
+                    
+                    <!-- CTA Superior Duplicado -->
+                    <div style="margin-top: 24px; text-align: center;">
+                        <a href="https://api.leadconnectorhq.com/widget/booking/sccQrJ2HSq7l7AaHSMF6" target="_blank" class="btn btn-pink pulse-btn" style="max-width: 420px; width: auto; font-size: 1rem; padding: 14px 28px; border-radius: 12px; margin: 10px auto 0 auto;">Agendar Videollamada de Diagnóstico Gratis <i class="fa-solid fa-calendar-days"></i></a>
+                    </div>
+                </div>
+                
+                <!-- Calculadora Costo de Oportunidad -->
+                <div class="roi-card">
+                    <h3 class="roi-title">Costo de Oportunidad Estimado</h3>
+                    <div class="roi-grid">
+                        <div class="roi-metric">
+                            <div id="res-hours-lost" class="roi-val lime">--</div>
+                            <div class="roi-label">Horas Facturables Perdidas / Mes (Por Abogado)</div>
+                        </div>
+                        <div class="roi-metric">
+                            <div id="res-money-lost" class="roi-val pink">--</div>
+                            <div class="roi-label">Pérdida Mensual Estimada (Por Abogado)</div>
+                        </div>
+                    </div>
+                    <div class="roi-footer" id="res-roi-footer">
+                        Estas horas representan tareas administrativas repetitivas, clasificación de correos y redacción que hoy en día son automatizables mediante flujos estructurados de Inteligencia Artificial. Multiplique estos números por el tamaño de su firma para estimar la pérdida total del despacho.
+                    </div>
+                </div>
+                
+                <!-- AI Process Diagnosis -->
+                <h3 class="process-section-title">Análisis Específico de Procesos Jurídicos</h3>
+                <div id="res-process-grid" class="process-grid">
+                    <!-- Injected dynamically by AI response -->
+                </div>
+                
+                <!-- conclusion -->
+                <div class="diag-resumen" id="res-conclusion" style="margin-top: 30px; font-weight: 500;">
+                    --
+                </div>
+                
+                <!-- Call-to-Action -->
+                <div class="cta-section">
+                    <h2 class="cta-title">Diseñemos su Hoja de Ruta de IA</h2>
+                    <p class="cta-desc">Agende una sesión estratégica de diagnóstico gratuita (15 min) directamente con Dani Conde (Experto en implementación de IA) para revisar estos números, analizar la viabilidad de sus procesos y estructurar la automatización que libere sus horas facturables.</p>
+                    <a href="https://api.leadconnectorhq.com/widget/booking/sccQrJ2HSq7l7AaHSMF6" target="_blank" class="btn btn-pink pulse-btn">Agendar Sesión de Diagnóstico Gratis <i class="fa-solid fa-calendar-days"></i></a>
+                </div>
+                
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        &copy; 2026 Escalia. Todos los derechos reservados. Consultoría legal e implementación de IA para firmas corporativas en LATAM y España.
+    </footer>
+
+    <script>
+        const questions = [
+            {
+                title: "¿Cómo redacta su equipo los contratos y escritos legales del día a día?",
+                options: [
+                    { text: "Manual y Plantillas Tradicionales: Copiamos y pegamos de archivos Word antiguos y cambiamos nombres manualmente.", points: 0 },
+                    { text: "IA General Básica: Usamos ChatGPT/Claude de forma libre para redactar fragmentos o mejorar la redacción.", points: 1 },
+                    { text: "Prompts / GPTs Internos: Tenemos prompts estructurados o GPTs personalizados cargados con nuestras directrices.", points: 2 },
+                    { text: "Automatización Integrada: Generamos borradores a partir de formularios o integraciones automáticas que rellenan contratos.", points: 3 }
+                ]
+            },
+            {
+                title: "Cuando reciben un contrato largo de una contraparte o realizan una auditoría (Due Diligence), ¿cómo lo analizan?",
+                options: [
+                    { text: "Lectura Humana Tradicional: Un abogado lee línea por línea buscando riesgos, cláusulas problemáticas o inconsistencias de forma manual.", points: 0 },
+                    { text: "Búsqueda por IA Básica: Subimos el PDF a ChatGPT/Claude y le hacemos preguntas sueltas para que busque cláusulas.", points: 1 },
+                    { text: "Auditoría Semi-Automatizada: Usamos herramientas específicas de IA para generar tablas comparativas y checklist estándar.", points: 2 },
+                    { text: "Sistema de Análisis Predictivo: Contamos con flujos automatizados que auditan contratos frente a nuestras políticas internas en segundos.", points: 3 }
+                ]
+            },
+            {
+                title: "¿Cómo realiza su firma la investigación de jurisprudencia y precedentes para armar la estrategia de un caso?",
+                options: [
+                    { text: "Búsqueda Tradicional: Navegamos manualmente en bases de datos del gobierno (ej. Altas Cortes, Justia) o códigos impresos por horas.", points: 0 },
+                    { text: "Consulta en Chatbots: Le preguntamos a ChatGPT sobre leyes generales, asumiendo el riesgo de 'alucinaciones' de datos.", points: 1 },
+                    { text: "IA RAG / Herramientas Especializadas: Usamos IA conectada a bases jurídicas oficiales que nos cita las fuentes exactas sin error.", points: 2 },
+                    { text: "IA Semántica en Base Propia: Nuestra base histórica de casos está indexada vectorialmente, permitiendo buscar argumentos ganadores en segundos.", points: 3 }
+                ]
+            },
+            {
+                title: "¿De qué manera gestiona su firma la clasificación de correos, resúmenes de reuniones y tareas administrativas diarias?",
+                options: [
+                    { text: "100% Manual: Los abogados responden correos, programan reuniones y redactan minutas de forma tradicional.", points: 0 },
+                    { text: "Soporte de IA Básico: Usamos IA puntualmente para resumir correos largos o redactar respuestas difíciles.", points: 1 },
+                    { text: "Asistentes de Reuniones: Usamos bots de transcripción que generan minutas automáticas, pero la gestión de tareas sigue siendo manual.", points: 2 },
+                    { text: "Flujos de Trabajo Conectados: Un sistema centralizado (ej. n8n) extrae datos de correos, crea tareas en el CRM y agenda automáticamente.", points: 3 }
+                ]
+            },
+            {
+                title: "¿Cómo maneja la firma la confidencialidad de la información de los clientes al interactuar con herramientas de IA?",
+                options: [
+                    { text: "Sin Control / Desconocimiento: Los abogados suben cualquier documento de clientes a versiones gratuitas de ChatGPT sin protección.", points: 0 },
+                    { text: "Políticas de 'No Subir': Prohibimos subir datos sensibles, lo que limita enormemente la utilidad práctica de la IA para el equipo.", points: 1 },
+                    { text: "Cuentas de Pago con Opt-Out: Usamos planes Enterprise o configuramos el chat en modo privado para evitar el entrenamiento con nuestros datos.", points: 2 },
+                    { text: "API Privada Segura: Interactuamos con los modelos únicamente mediante una API segura y bases de datos locales protegidas.", points: 3 }
+                ]
+            },
+            {
+                title: "¿Cómo precalifican y registran a los nuevos clientes o casos que llegan a la firma?",
+                options: [
+                    { text: "Proceso 100% Manual: Atendemos llamadas o leemos correos, tomamos notas a mano o en un Word suelto y agendamos citas manualmente.", points: 0 },
+                    { text: "Formulario Web Básico: Usamos un formulario web básico (Google Forms) o recibimos correos, pero el análisis del caso y registro en el CRM es manual.", points: 1 },
+                    { text: "CRM con Registro Manual: Los leads entran a un CRM, pero la llamada de precalificación y el llenado de la ficha de cliente requiere intervención humana completa.", points: 2 },
+                    { text: "Calificación Inteligente: Un formulario inteligente o agente conversacional califica al cliente en caliente, descarta conflictos de interés básicos y agenda de inmediato.", points: 3 }
+                ]
+            },
+            {
+                title: "¿Qué nivel de capacitación y uso real de herramientas de IA tiene el equipo de abogados de su firma?",
+                options: [
+                    { text: "Sin Capacitación Formal: No hay directrices ni formación. Quienes usan IA lo hacen por su cuenta con versiones gratuitas no reguladas.", points: 0 },
+                    { text: "Autoaprendizaje Informal: Algunos abogados se forman de manera individual, pero no existen estándares de uso ni flujos de trabajo definidos.", points: 1 },
+                    { text: "Capacitación Básica de Firma: Hemos impartido talleres grupales sobre prompts de IA, pero carecemos de un programa continuo y métricas de adopción real.", points: 2 },
+                    { text: "IA como Sistema Operativo: Contamos con formación especializada continua, manuales de uso obligatorios y la IA está integrada y auditada en el día a día.", points: 3 }
+                ]
+            }
+        ];
+
+        let currentScreen = "intro";
+        let currentQuestionIdx = 0;
+        let selectedAnswers = [];
+        let userData = {};
+
+        const loadingMessages = [
+            "Analizando la brecha tecnológica de su firma...",
+            "Consultando con el Agente Consultor Senior de IA de Escalia...",
+            "Calculando pérdidas operativas y retorno de inversión...",
+            "Estructurando recomendaciones de automatización específicas..."
+        ];
+
+        function changeScreen(screenId) {
+            document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
+            document.getElementById(`screen-${screenId}`).classList.add("active");
+            currentScreen = screenId;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function startQuizDirectly() {
+            currentQuestionIdx = 0;
+            selectedAnswers = [];
+            changeScreen("quiz");
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            const q = questions[currentQuestionIdx];
+            const totalQ = questions.length;
+            const pct = Math.round((currentQuestionIdx / totalQ) * 100);
+            document.getElementById("question-number").innerText = `Pregunta ${currentQuestionIdx + 1} de ${totalQ}`;
+            document.getElementById("progress-percentage").innerText = `${pct}% Completado`;
+            document.getElementById("progress-bar").style.width = `${pct}%`;
+            document.getElementById("quiz-question-title").innerText = q.title;
+            
+            // Control de visibilidad del botón Anterior
+            const btnBack = document.getElementById("btn-back");
+            if (currentQuestionIdx === 0) {
+                btnBack.style.visibility = "hidden";
+            } else {
+                btnBack.style.visibility = "visible";
+            }
+
+            const optionsContainer = document.getElementById("quiz-options");
+            optionsContainer.innerHTML = "";
+            const markers = ["A", "B", "C", "D"];
+            
+            const previouslySelected = selectedAnswers[currentQuestionIdx];
+
+            q.options.forEach((opt, idx) => {
+                const optCard = document.createElement("div");
+                optCard.className = "option-card";
+                
+                // Si la opción ya fue seleccionada previamente, se resalta
+                if (previouslySelected && previouslySelected.text === opt.text) {
+                    optCard.classList.add("selected");
+                }
+                
+                optCard.onclick = () => selectOption(idx);
+                optCard.innerHTML = `<div class="option-marker">${markers[idx]}</div><div class="option-text">${opt.text}</div>`;
+                optionsContainer.appendChild(optCard);
+            });
+        }
+
+        function selectOption(optionIdx) {
+            const options = document.querySelectorAll(".option-card");
+            options.forEach(o => o.classList.remove("selected"));
+            options[optionIdx].classList.add("selected");
+            selectedAnswers[currentQuestionIdx] = questions[currentQuestionIdx].options[optionIdx];
+            setTimeout(() => { nextQuestion(); }, 300);
+        }
+
+        function prevQuestion() {
+            if (currentQuestionIdx > 0) {
+                currentQuestionIdx--;
+                loadQuestion();
+            }
+        }
+
+        function nextQuestion() {
+            if (currentQuestionIdx < questions.length - 1) {
+                currentQuestionIdx++;
+                loadQuestion();
+            } else {
+                // Al finalizar las preguntas, ir al formulario de captura de lead
+                changeScreen("lead");
+            }
+        }
+
+        function submitLeadForm(event) {
+            event.preventDefault();
+
+            const nombreCompleto = document.getElementById("nombre_contacto").value.trim();
+            userData.nombre_contacto = nombreCompleto;
+            userData.rol = document.getElementById("rol").value.trim();
+            userData.correo = document.getElementById("correo").value.trim();
+            userData.empresa = "";
+
+            userData.abogados = 1;
+            userData.tarifa = 50;
+
+            let primerNombre = nombreCompleto.split(" ")[0];
+            const prefijos = ["dr", "dr.", "dra", "dra.", "abg", "abg.", "abogado", "abogada", "lic", "lic.", "licenciado", "licenciada", "msc", "msc.", "phd", "phd."];
+            const partes = nombreCompleto.split(/\s+/);
+            if (partes.length > 1 && prefijos.includes(partes[0].toLowerCase())) {
+                primerNombre = partes[1];
+            }
+            userData.primer_nombre = primerNombre;
+
+            changeScreen("loading");
+            startLoadingTransitions();
+            submitDiagnostic();
+        }
+
+        function startLoadingTransitions() {
+            let msgIdx = 0;
+            const msgEl = document.getElementById("loading-message");
+            const interval = setInterval(() => {
+                if (currentScreen !== "loading") { clearInterval(interval); return; }
+                msgIdx = (msgIdx + 1) % loadingMessages.length;
+                msgEl.innerText = loadingMessages[msgIdx];
+            }, 2500);
+        }
+
+        async function submitDiagnostic() {
+            const payload = {
+                nombre_contacto: userData.nombre_contacto,
+                primer_nombre: userData.primer_nombre,
+                rol: userData.rol,
+                correo: userData.correo,
+                abogados: userData.abogados,
+                tarifa: userData.tarifa,
+                respuestas: {
+                    p1: selectedAnswers[0].text,
+                    p2: selectedAnswers[1].text,
+                    p3: selectedAnswers[2].text,
+                    p4: selectedAnswers[3].text,
+                    p5: selectedAnswers[4].text,
+                    p6: selectedAnswers[5].text,
+                    p7: selectedAnswers[6].text
+                }
+            };
+            try {
+                const response = await fetch("https://n8n.cambiatearemoto.com/webhook/encuesta-inicial-abogados", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(payload)
+                });
+                if (response.ok) {
+                    const rawResult = await response.json();
+                    const diagnosticResult = Array.isArray(rawResult) ? rawResult[0] : rawResult;
+                    if (diagnosticResult && (diagnosticResult.analisis_procesos || diagnosticResult.nivel)) {
+                        renderResults(diagnosticResult);
+                    } else { renderFallbackResults(); }
+                } else { renderFallbackResults(); }
+            } catch (error) { renderFallbackResults(); }
+        }
+
+        function calculateROI() {
+            const totalPoints = selectedAnswers.reduce((sum, current) => sum + current.points, 0);
+            let hoursLostPerAbogado = totalPoints <= 5 ? 2.5 : totalPoints <= 11 ? 1.5 : totalPoints <= 17 ? 0.8 : 0.2;
+            const monthlyHoursLost = Math.round(hoursLostPerAbogado * 20); // 20 días laborales al mes
+            const monthlyMoneyLost = monthlyHoursLost * 50; // $50 USD por hora
+            return { points: totalPoints, hoursLost: monthlyHoursLost, moneyLost: monthlyMoneyLost };
+        }
+
+        function renderResults(data) {
+            changeScreen("results");
+            const roi = calculateROI();
+            document.getElementById("res-hours-lost").innerText = roi.hoursLost.toLocaleString();
+            document.getElementById("res-money-lost").innerText = `$${roi.moneyLost.toLocaleString()}`;
+            const nivel = data.nivel || "Firma Tradicional";
+            const tagEl = document.getElementById("res-maturity-tag");
+            tagEl.innerText = nivel;
+            document.getElementById("res-maturity-title").innerText = nivel;
+            document.getElementById("res-resumen").innerText = data.resumen || "";
+            document.getElementById("res-conclusion").innerText = data.conclusion || "";
+            const processGrid = document.getElementById("res-process-grid");
+            processGrid.innerHTML = "";
+            const iconsMap = { "Redacción": "fa-file-signature", "Contratos": "fa-file-signature", "Revisión": "fa-file-shield", "Investigación": "fa-scale-balanced", "Jurisprudencia": "fa-scale-balanced", "Confidencialidad": "fa-user-shield", "Gestión": "fa-user-shield", "Admisión": "fa-user-check", "Intake": "fa-user-check", "Formación": "fa-graduation-cap", "Capacitación": "fa-graduation-cap", "Adopción": "fa-graduation-cap" };
+            const defaultIcons = ["fa-file-signature", "fa-scale-balanced", "fa-user-shield", "fa-user-check", "fa-graduation-cap"];
+            if (Array.isArray(data.analisis_procesos)) {
+                data.analisis_procesos.forEach((p, idx) => {
+                    const card = document.createElement("div");
+                    card.className = "process-card";
+                    let iconClass = defaultIcons[idx % defaultIcons.length];
+                    for (const key in iconsMap) { if (p.proceso.toLowerCase().includes(key.toLowerCase())) { iconClass = iconsMap[key]; break; } }
+                    card.innerHTML = `<div class="process-header"><i class="fa-solid ${iconClass}"></i><span>${p.proceso}</span></div><div class="process-block"><div class="p-block actual"><div class="p-block-title">Estado Actual</div><div>${p.actual}</div></div><div class="p-block op"><div class="p-block-title">Oportunidad con Escalia</div><div>${p.oportunidad}</div></div></div>`;
+                    processGrid.appendChild(card);
+                });
+            }
+        }
+
+        function renderFallbackResults() {
+            const roi = calculateROI();
+            const nombre = userData.primer_nombre || "Socio Administrador";
+            const firma = "su organización";
+            let nivel = "Firma Tradicional (Manual)";
+            let resumen = `Hola ${nombre}, tras evaluar las respuestas del cuestionario en Escalia, identificamos que ${firma} opera bajo un esquema tradicional basado en esfuerzo por hora. Su brecha tecnológica representa ineficiencias del 100% manuales.`;
+            let conclusion = `Estimado ${nombre}, los números demuestran que ${firma} está dejando sobre la mesa un margen de rentabilidad invaluable. En Escalia queremos ayudarle a estructurar la automatización y blindar sus horas facturables.`;
+            let procesos = [];
+            if (roi.points <= 5) {
+                nivel = "Firma Tradicional (Manual)";
+                resumen = `Hola ${nombre}, tras evaluar las respuestas del quiz, identificamos que ${firma} opera bajo procesos convencionales y dependientes del esfuerzo manual. Sus abogados pierden más de 2.5 horas diarias en tareas operativas de bajo valor.`;
+                conclusion = `Estimado ${nombre}, el costo de oportunidad de ${roi.hoursLost} horas mensuales es un freno invisible para el crecimiento de ${firma}. Le invito a que agendemos la sesión gratuita con Dani Conde para estructurar su hoja de ruta legal en IA.`;
+                procesos = [
+                    { proceso: "Redacción y Revisión de Contratos", actual: `Copiado y pegado manual de escritos Word antiguos en ${firma}, incrementando el riesgo de errores materiales y consumiendo valiosas horas del equipo de ${nombre}.`, oportunidad: `Implementar automatización de plantillas legales que genere borradores de contratos en segundos mediante integraciones en n8n a partir de metadatos del cliente, ahorrando hasta un 80% de tiempo.` },
+                    { proceso: "Investigación y Jurisprudencia", actual: `Búsqueda manual en bases gubernamentales y códigos por los abogados de ${firma}, lo cual consume valioso tiempo de análisis e investigación legal.`, oportunidad: `Indexación semántica RAG utilizando Supabase y bases vectoriales en PostgreSQL para consultar toda la jurisprudencia y casos ganados históricos de la firma de manera segura.` },
+                    { proceso: "Gestión y Confidencialidad", actual: `Uso informal de chatbots generales gratuitos (como ChatGPT libre), arriesgando la filtración de secretos profesionales de los clientes de ${firma} sin control formal.`, oportunidad: `Configurar una API privada segura en la firma (usando proxies seguros o modelos privados) que bloquee el entrenamiento, garantizando el secreto profesional al 100%.` },
+                    { proceso: "Admisión de Clientes e Intake", actual: `Registro manual de correos y llamadas, distrayendo a los abogados de ${firma} en agendamientos convencionales antes de evaluar la viabilidad de los casos.`, oportunidad: `Implementar un agente de precalificación legal integrado en GoHighLevel (o su CRM nativo vía API) para calificar prospectos y agendar citas en piloto automático.` },
+                    { proceso: "Formación y Adopción del Equipo", actual: `Inexistencia de capacitación formal sobre el uso de la Inteligencia Artificial en el equipo legal de ${firma}, limitando el uso a iniciativas individuales.`, oportunidad: `Estructurar el Programa de Formación B2B y Estandarización de Escalia para cerrar la brecha de uso y convertir la IA en el sistema operativo real de su despacho.` }
+                ];
+            } else if (roi.points <= 11) {
+                nivel = "Firma Exploradora de IA";
+                resumen = `Hola ${nombre}, tras evaluar las respuestas, vemos que en ${firma} ya exploran activamente con herramientas de IA, pero carecen de una estructura corporativa centralizada, lo que introduce riesgos de seguridad y asimetría en el equipo.`;
+                conclusion = `Estimado ${nombre}, estandarizar el uso de IA y conectarla mediante sistemas robustos en ${firma} liberará un promedio de ${roi.hoursLost} horas mensuales. Agende una sesión estratégica con Dani Conde para analizar sus flujos.`;
+                procesos = [
+                    { proceso: "Redacción y Revisión de Contratos", actual: `Uso informal de herramientas comerciales para redactar borradores en ${firma} sin flujos de control unificados, asumiendo inconsistencias de estilo que requieren revisión manual del equipo.`, oportunidad: `Crear un Asistente Corporativo Legal entrenado con las directrices específicas de ${firma}, orquestado en n8n para auditar contratos frente a sus políticas en segundos.` },
+                    { proceso: "Investigación y Jurisprudencia", actual: `Consultas de leyes al chatbot general que pueden incurrir en alucinaciones o citas de leyes inventadas, forzando a los abogados a validar doblemente la información.`, oportunidad: `Implementar una base vectorial en Supabase conectada a bases de datos oficiales de jurisprudencia para citar leyes y precedentes reales con total seguridad técnica.` },
+                    { proceso: "Gestión y Confidencialidad", actual: `Los abogados suben datos sensibles de clientes a ChatGPT sin control formal de privacidad ni políticas corporativas uniformes en ${firma}.`, oportunidad: `Estructurar cuentas corporativas con políticas explícitas de Opt-Out o utilizar pasarelas y APIs privadas para blindar los datos confidenciales de la firma.` },
+                    { process: "Admisión de Clientes e Intake", actual: `Formularios básicos que capturan contactos en el sitio web de ${firma}, pero el análisis inicial de viabilidad y el vaciado en el CRM sigue realizándose a mano.`, oportunidad: `Conectar formularios inteligentes e inteligencia conversacional a GoHighLevel para calificar el caso normativamente antes de la primera llamada.` },
+                    { proceso: "Formación y Adopción del Equipo", actual: `Uso aislado por autoaprendizaje de algunos abogados interesados, sin estándares uniformes ni flujos integrados en la operación legal diaria de ${firma}.`, oportunidad: `Implementar capacitaciones continuas en prompts especializados y estandarizar manuales de uso aprobados para nivelar la adopción en el 100% del despacho.` }
+                ];
+            } else if (roi.points <= 17) {
+                nivel = "Firma Digitalizada / Eficiente";
+                resumen = `Hola ${nombre}, felicitaciones. ${firma} cuenta con herramientas y procesos digitales estructurados. No obstante, identificamos micro-ineficiencias que al eliminarse multiplicarán el rendimiento operativo de inmediato.`;
+                conclusion = `Estimado ${nombre}, dar el salto del software tradicional al flujo autónomo integrado con IA es el siguiente paso lógico para ${firma}. Agendemos una corta llamada con Dani Conde para diseñar la integración.`;
+                procesos = [
+                    { proceso: "Redacción y Revisión de Contratos", actual: `Uso de sistemas de gestión de contratos pero con pasos manuales prolongados para el control de calidad de contratos complejos en ${firma}.`, oportunidad: `Integrar auditorías inteligentes automatizadas en n8n que señalen de inmediato desvíos respecto a las plantillas estándar aprobadas por la firma.` },
+                    { proceso: "Investigación y Jurisprudencia", actual: `Búsqueda digitalizada con herramientas jurídicas específicas pero aislada del conocimiento histórico y minutas previas de ${firma}.`, oportunidad: `Vincular el archivo de casos históricos de la firma de manera vectorial en Supabase/PostgreSQL para sugerir estrategias ganadoras aplicadas anteriormente por la firma.` },
+                    { proceso: "Gestión y Confidencialidad", actual: `Uso de cuentas corporativas privadas, pero los sistemas administrativos de facturación y CRM no están plenamente integrados con la IA.`, oportunidad: `Diseñar integraciones personalizadas con n8n que automaticen la facturación por horas y el reporte de tareas legales de forma automatizada al CRM de la firma.` },
+                    { proceso: "Admisión de Clientes e Intake", actual: `Uso de un CRM comercial bien configurado en ${firma}, pero sin precalificación inteligente automatizada del caso legal antes de la cita de diagnóstico.`, oportunidad: `Implementar inteligencia conversacional con IA en caliente conectada a GoHighLevel para calificar el caso normativamente y pre-llenar el expediente.` },
+                    { proceso: "Formación y Adopción del Equipo", actual: `Capacitación de prompts dada puntualmente, pero sin un plan estructurado continuo que mida el impacto real en la rentabilidad de ${firma}.`, oportunidad: `Auditoría de adopción mensual del equipo legal e incorporación de micro-capacitaciones continuas en soporte al cliente.` }
+                ];
+            } else {
+                nivel = "Firma Exponencial (Firma del Futuro)";
+                resumen = `Excelente, ${nombre}. En Escalia reconocemos el altísimo nivel de madurez tecnológica de ${firma}. Están en el percentil superior de innovación legal a nivel mundial.`;
+                conclusion = `Estimado ${nombre}, para una firma de su calibre, el reto es el refinamiento absoluto. Agendemos una sesión estratégica con Dani Conde para discutir arquitecturas avanzadas de agentes autónomos a la medida de ${firma}.`;
+                procesos = [
+                    { proceso: "Redacción y Revisión de Contratos", actual: `Procesos automatizados e integrados en ${firma}, optimizando la generación contractual pero requiriendo actualizaciones normativas frecuentes.`, oportunidad: `Refinar y optimizar las plantillas complejas e integrar un validador multimodelo para máxima seguridad contractual en ${firma}.` },
+                    { proceso: "Investigación y Jurisprudencia", actual: `Uso avanzado de IA semántica y RAG consolidado sobre bases históricas de ${firma}.`, oportunidad: `Desarrollar agentes autónomos de vigilancia normativa que notifiquen de inmediato cambios jurisprudenciales relevantes directamente a su equipo.` },
+                    { proceso: "Gestión y Confidencialidad", actual: `Seguridad robusta y APIs privadas implementadas para blindar la información de clientes.`, oportunidad: `Extender la automatización a flujos entre despachaos aliados y refinar el control de accesos por roles de forma totalmente autónoma con n8n.` },
+                    { proceso: "Admisión de Clientes e Intake", actual: `Precalificación y registro óptimo de leads en el CRM de ${firma} en piloto automático.`, oportunidad: `Personalizar la experiencia conversacional por área de práctica jurídica utilizando la IA para resumir el expediente previo a la primera llamada.` },
+                    { proceso: "Formación y Adopción del Equipo", actual: `Excelente adopción, manuales vigentes y capacitación activa en toda la plantilla de ${firma}.`, oportunidad: `Estandarizar la inducción de nuevos miembros y documentar las bibliotecas de prompts y flujos internos en un wiki inteligente corporativo.` }
+                ];
+            }
+            renderResults({ nivel, resumen, conclusion, analisis_procesos: procesos });
+        }
+    </script>
+</body>
+</html>
