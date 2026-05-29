@@ -1,0 +1,1106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encuesta previa al webinar | Escalia</title>
+    <meta name="description" content="Comparte qué quieres aprender y qué tareas te drenan más para que el webinar de Escalia sea más útil y relevante para ti.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #030404;
+            --bg-surface: #0a0d0e;
+            --bg-card: rgba(15, 19, 20, 0.85);
+            --card-border: rgba(40, 214, 179, 0.12);
+            --card-border-hover: rgba(40, 214, 179, 0.32);
+            --accent: #28d6b3;
+            --accent-dim: rgba(40, 214, 179, 0.08);
+            --accent-glow: rgba(40, 214, 179, 0.18);
+            --white: #f4f4f4;
+            --gray-text: #b8b8b8;
+            --gray-muted: #6e6e6e;
+            --gray-line: #222222;
+            --danger: #ff7d74;
+            --font-display: 'Poppins', sans-serif;
+            --font-mono: 'IBM Plex Mono', monospace;
+            --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+            --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        body {
+            min-height: 100vh;
+            background: var(--bg-primary);
+            color: var(--white);
+            font-family: var(--font-display);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: -36%;
+            right: -18%;
+            width: 82vw;
+            height: 82vw;
+            background: radial-gradient(circle, rgba(40, 214, 179, 0.05) 0%, transparent 65%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 820px;
+            min-height: 100vh;
+            margin: 0 auto;
+            padding: 40px 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 36px;
+        }
+
+        .logo-desktop {
+            height: 34px;
+            width: auto;
+            mix-blend-mode: screen;
+            filter: brightness(10);
+        }
+
+        .logo-mobile {
+            display: none;
+            height: 38px;
+            width: auto;
+            mix-blend-mode: screen;
+            filter: brightness(10);
+        }
+
+        .logo-subtitle {
+            margin-top: 10px;
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--gray-muted);
+        }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            padding: 48px 40px;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 1px 0 0 rgba(255,255,255,0.03) inset, 0 20px 60px rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent 0%, var(--accent) 50%, transparent 100%);
+            opacity: 0.6;
+        }
+
+        h1, h2, h3 {
+            font-family: var(--font-display);
+            font-weight: 900;
+            letter-spacing: -0.03em;
+            color: var(--white);
+        }
+
+        h1 {
+            font-size: clamp(1.95rem, 5vw, 2.9rem);
+            line-height: 1.08;
+            margin-bottom: 18px;
+            text-wrap: balance;
+        }
+
+        h2 {
+            font-size: clamp(1.35rem, 3vw, 1.8rem);
+            line-height: 1.18;
+            margin-bottom: 12px;
+            text-wrap: balance;
+        }
+
+        .accent-text {
+            color: var(--accent);
+        }
+
+        .lead {
+            font-size: 1rem;
+            color: var(--gray-text);
+            line-height: 1.75;
+            max-width: 60ch;
+            text-wrap: pretty;
+        }
+
+        .mono-label {
+            display: inline-block;
+            margin-bottom: 16px;
+            font-family: var(--font-mono);
+            font-size: 0.74rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.6px;
+            color: var(--gray-muted);
+        }
+
+        .feature-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            max-width: 470px;
+            margin: 28px 0 32px;
+        }
+
+        .feature-pill {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 18px;
+            background: rgba(40, 214, 179, 0.04);
+            border: 1px solid rgba(40, 214, 179, 0.08);
+            border-radius: 12px;
+        }
+
+        .feature-index {
+            width: 36px;
+            height: 36px;
+            flex-shrink: 0;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--accent-dim);
+            color: var(--accent);
+            font-family: var(--font-mono);
+            font-size: 0.82rem;
+            font-weight: 600;
+        }
+
+        .feature-label {
+            font-size: 0.94rem;
+            font-weight: 500;
+            color: rgba(244, 244, 244, 0.9);
+        }
+
+        .progress-container {
+            margin-bottom: 32px;
+        }
+
+        .progress-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 10px;
+        }
+
+        .progress-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            border: none;
+            background: transparent;
+            color: var(--gray-muted);
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            padding: 6px 8px;
+            border-radius: 8px;
+            transition: color 200ms ease, background 200ms ease;
+        }
+
+        .progress-back:hover {
+            color: var(--accent);
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .progress-back[hidden] {
+            visibility: hidden;
+        }
+
+        .progress-info {
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            font-weight: 600;
+            color: var(--gray-muted);
+        }
+
+        .progress-bar-track {
+            width: 100%;
+            height: 4px;
+            background: var(--gray-line);
+            border-radius: 999px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            width: 0%;
+            height: 100%;
+            background: var(--accent);
+            border-radius: inherit;
+            transition: width 320ms var(--ease-out);
+        }
+
+        .screen {
+            display: none;
+        }
+
+        .screen.active {
+            display: block;
+            animation: screenIn 380ms var(--ease-out) forwards;
+        }
+
+        @keyframes screenIn {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            padding: 18px 32px;
+            border: none;
+            border-radius: 14px;
+            cursor: pointer;
+            font-family: var(--font-display);
+            font-size: 1rem;
+            font-weight: 700;
+            text-decoration: none;
+            transition: transform 160ms var(--ease-out), box-shadow 200ms ease, background 200ms ease, border-color 200ms ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            color: var(--bg-primary);
+            background: var(--accent);
+            box-shadow: 0 8px 30px var(--accent-glow);
+        }
+
+        .btn-primary::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(255,255,255,0.15) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 1px solid var(--card-border-hover);
+            color: var(--accent);
+        }
+
+        @media (hover: hover) and (pointer: fine) {
+            .btn-primary:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 12px 40px rgba(40, 214, 179, 0.35);
+            }
+
+            .btn-secondary:hover {
+                background: var(--accent-dim);
+                box-shadow: 0 0 20px var(--accent-glow);
+            }
+        }
+
+        .btn:active {
+            transform: scale(0.97);
+        }
+
+        .question-title {
+            font-size: clamp(1.35rem, 3vw, 1.8rem);
+            line-height: 1.24;
+            margin-bottom: 12px;
+            text-wrap: balance;
+        }
+
+        .question-copy {
+            color: var(--gray-text);
+            font-size: 0.98rem;
+            line-height: 1.75;
+            margin-bottom: 26px;
+            max-width: 58ch;
+        }
+
+        .form-grid {
+            display: grid;
+            gap: 18px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .prompt-list {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .prompt-card {
+            background: rgba(10, 13, 14, 0.46);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 14px;
+            padding: 18px 18px 16px;
+            transition: border-color 180ms ease, background 180ms ease, transform 160ms var(--ease-out), box-shadow 180ms ease;
+        }
+
+        .prompt-card:focus-within {
+            border-color: var(--accent);
+            background: rgba(40, 214, 179, 0.04);
+            box-shadow: 0 0 22px rgba(40, 214, 179, 0.12);
+            transform: translateY(-1px);
+        }
+
+        .prompt-top {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .prompt-index {
+            width: 30px;
+            height: 30px;
+            min-width: 30px;
+            border-radius: 9px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: var(--gray-muted);
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .prompt-title {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: rgba(244, 244, 244, 0.9);
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--white);
+            opacity: 0.92;
+        }
+
+        .form-help {
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            font-weight: 500;
+            color: var(--gray-muted);
+            margin-bottom: 8px;
+        }
+
+        .form-input {
+            width: 100%;
+            background: rgba(10, 13, 14, 0.62);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 15px 18px;
+            color: var(--white);
+            font-family: var(--font-display);
+            font-size: 0.95rem;
+            transition: border-color 200ms ease, box-shadow 200ms ease, background 200ms ease;
+        }
+
+        .form-input::placeholder {
+            color: var(--gray-muted);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-glow);
+            background: rgba(10, 13, 14, 0.78);
+        }
+
+        .step-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 18px;
+            margin-top: 28px;
+        }
+
+        .step-note {
+            max-width: 42ch;
+            color: var(--gray-text);
+            font-size: 0.9rem;
+            line-height: 1.7;
+        }
+
+        .summary-box {
+            margin-top: 28px;
+            padding: 24px;
+            border-radius: 16px;
+            background: rgba(40, 214, 179, 0.04);
+            border: 1px solid rgba(40, 214, 179, 0.12);
+        }
+
+        .summary-title {
+            text-align: center;
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--accent);
+            margin-bottom: 20px;
+        }
+
+        .summary-grid {
+            display: grid;
+            gap: 18px;
+        }
+
+        .summary-card {
+            background: rgba(10, 13, 14, 0.42);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            border-radius: 14px;
+            padding: 18px;
+        }
+
+        .summary-card h3 {
+            font-size: 1rem;
+            margin-bottom: 10px;
+            color: var(--accent);
+        }
+
+        .summary-list {
+            display: grid;
+            gap: 10px;
+        }
+
+        .summary-item {
+            padding: 12px 14px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.02);
+            color: var(--gray-text);
+            font-size: 0.92rem;
+            line-height: 1.6;
+        }
+
+        .context-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 11px 14px;
+            border-radius: 999px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            background: rgba(255, 255, 255, 0.02);
+            color: var(--gray-text);
+            font-size: 0.88rem;
+            margin-top: 20px;
+        }
+
+        .context-chip strong {
+            color: var(--white);
+        }
+
+        .status-message {
+            min-height: 24px;
+            margin-top: 16px;
+            color: var(--danger);
+            font-size: 0.88rem;
+        }
+
+        .success-shell {
+            text-align: center;
+            padding: 26px 0 8px;
+        }
+
+        .success-mark {
+            width: 74px;
+            height: 74px;
+            margin: 0 auto 22px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(40, 214, 179, 0.09);
+            border: 1px solid rgba(40, 214, 179, 0.26);
+            color: var(--accent);
+            font-size: 1.85rem;
+            box-shadow: 0 0 0 12px rgba(40, 214, 179, 0.04);
+        }
+
+        .success-copy {
+            color: var(--gray-text);
+            max-width: 48ch;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        .loading-container {
+            text-align: center;
+            padding: 30px 0;
+        }
+
+        .spinner {
+            width: 56px;
+            height: 56px;
+            border: 3px solid var(--gray-line);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: spin 0.9s linear infinite;
+            margin: 0 auto 28px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loading-title {
+            font-size: 1.35rem;
+            margin-bottom: 10px;
+        }
+
+        .loading-text {
+            color: var(--gray-text);
+            font-size: 0.95rem;
+            max-width: 42ch;
+            margin: 0 auto;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px 16px;
+            }
+
+            .header {
+                margin-bottom: 24px;
+            }
+
+            .logo-desktop {
+                display: none;
+            }
+
+            .logo-mobile {
+                display: inline-block;
+            }
+
+            .logo-subtitle {
+                letter-spacing: 2px;
+            }
+
+            .card {
+                border-radius: 18px;
+                padding: 28px 20px;
+            }
+
+            h1 {
+                font-size: 1.85rem;
+                line-height: 1.1;
+            }
+
+            .lead,
+            .question-copy,
+            .step-note,
+            .success-copy {
+                font-size: 0.94rem;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .step-footer {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .progress-meta {
+                flex-wrap: wrap;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .screen.active {
+                animation: none;
+            }
+
+            *, *::before, *::after {
+                transition: none !important;
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main class="container">
+        <header class="header">
+            <img class="logo-desktop" src="https://aprende.escalia.co/wp-content/uploads/2026/05/Logo-Escalia-Escritorio-Fondo-blanco.webp" alt="Escalia" width="170" height="34">
+            <img class="logo-mobile" src="https://aprende.escalia.co/wp-content/uploads/2026/05/Logo-Escalia-movil-responsive-Fondo-blanco.webp" alt="Escalia" width="38" height="38">
+            <div class="logo-subtitle">Encuesta previa al webinar</div>
+        </header>
+
+        <section class="card">
+            <div class="progress-container" id="progressContainer" hidden>
+                <div class="progress-meta">
+                    <button type="button" class="progress-back" id="backButton" hidden>&larr; Atrás</button>
+                    <div class="progress-info" id="progressInfo">Paso 1 de 4</div>
+                </div>
+                <div class="progress-bar-track">
+                    <div class="progress-bar-fill" id="progressBar"></div>
+                </div>
+            </div>
+
+            <section class="screen active" id="screen-intro">
+                <span class="mono-label">Antes de entrar al webinar</span>
+                <h1>Queremos que esta sesión se sienta <span class="accent-text">hecha con criterio</span>, no genérica.</h1>
+                <p class="lead">Esta encuesta nos ayuda a decidir qué ejemplos usar, qué fricciones vale la pena resolver y qué aprendizajes tienen más sentido transmitirte. Te va a tomar menos de dos minutos.</p>
+
+                <div class="feature-list">
+                    <div class="feature-pill">
+                        <div class="feature-index">01</div>
+                        <div class="feature-label">Recogemos lo que realmente quieres aprender, no solo temas amplios.</div>
+                    </div>
+                    <div class="feature-pill">
+                        <div class="feature-index">02</div>
+                        <div class="feature-label">Entendemos qué tareas te drenan para enfocar soluciones más útiles.</div>
+                    </div>
+                </div>
+
+                <div class="hero-actions">
+                    <button type="button" class="btn btn-primary" data-next="screen-contexto">Comenzar encuesta</button>
+                </div>
+            </section>
+
+            <section class="screen" id="screen-contexto">
+                <span class="mono-label">Paso 1 · Contexto</span>
+                <h2 class="question-title">Primero, cuéntanos quién responde.</h2>
+                <div class="form-grid">
+                    <div class="form-row">
+                        <div>
+                            <label class="form-label" for="nombre">Nombre</label>
+                            <input class="form-input" type="text" id="nombre" maxlength="120" placeholder="Ejemplo: Laura Martínez" autocomplete="name">
+                        </div>
+                        <div>
+                            <label class="form-label" for="rol">Rol</label>
+                            <input class="form-input" type="text" id="rol" maxlength="120" placeholder="Ejemplo: Coordinador comercial">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="form-label" for="correo">Correo</label>
+                        <input class="form-input" type="email" id="correo" maxlength="160" placeholder="Ejemplo: laura@correo.com" autocomplete="email">
+                    </div>
+                </div>
+
+                <div class="step-footer">
+                    <button type="button" class="btn btn-primary" data-next="screen-aprendizajes">Continuar</button>
+                </div>
+            </section>
+
+            <section class="screen" id="screen-aprendizajes">
+                <span class="mono-label">Paso 2 · Aprendizaje</span>
+                <h2 class="question-title">Ahora sí, las 3 cosas que te gustaría aprender en el webinar.</h2>
+                <p class="question-copy">Piensa en habilidades, decisiones o mejoras concretas. Respuestas específicas nos permiten preparar ejemplos mucho mejores que un temario genérico.</p>
+
+                <div class="prompt-list">
+                    <div class="prompt-card">
+                        <div class="prompt-top">
+                            <div class="prompt-index">01</div>
+                            <div class="prompt-title">Aprendizaje prioritario uno</div>
+                        </div>
+                        <div class="form-help">Una mejora clara que hoy te ahorraría tiempo o te daría más criterio.</div>
+                        <input class="form-input" type="text" id="aprendizaje_1" maxlength="160" placeholder="Ejemplo: usar IA para responder mejor sin sonar genérico">
+                    </div>
+
+                    <div class="prompt-card">
+                        <div class="prompt-top">
+                            <div class="prompt-index">02</div>
+                            <div class="prompt-title">Aprendizaje prioritario dos</div>
+                        </div>
+                        <div class="form-help">Puede ser una tarea, un proceso o un tipo de decisión que hoy te cueste ordenar.</div>
+                        <input class="form-input" type="text" id="aprendizaje_2" maxlength="160" placeholder="Ejemplo: identificar qué procesos vale la pena automatizar primero">
+                    </div>
+
+                    <div class="prompt-card">
+                        <div class="prompt-top">
+                            <div class="prompt-index">03</div>
+                            <div class="prompt-title">Aprendizaje prioritario tres</div>
+                        </div>
+                        <div class="form-help">Busca algo que sí te gustaría ver aplicado en un caso real durante el webinar.</div>
+                        <input class="form-input" type="text" id="aprendizaje_3" maxlength="160" placeholder="Ejemplo: organizar seguimientos y pendientes con más consistencia">
+                    </div>
+                </div>
+
+                <div class="step-footer">
+                    <button type="button" class="btn btn-primary" data-next="screen-tareas">Continuar</button>
+                </div>
+            </section>
+
+            <section class="screen" id="screen-tareas">
+                <span class="mono-label">Paso 3 · Fricción diaria</span>
+                <h2 class="question-title">¿Cuáles son las 3 tareas que menos te gusta hacer en tu trabajo?</h2>
+                <p class="question-copy">No estamos buscando una respuesta elegante. Solo las tareas que te quitan energía, foco o tiempo. Ahí suele estar el mejor material para un webinar útil.</p>
+
+                <div class="prompt-list">
+                    <div class="prompt-card">
+                        <div class="prompt-top">
+                            <div class="prompt-index">01</div>
+                            <div class="prompt-title">Tarea que más te drena</div>
+                        </div>
+                        <div class="form-help">Algo repetitivo, lento o mentalmente desgastante.</div>
+                        <input class="form-input" type="text" id="tarea_1" maxlength="160" placeholder="Ejemplo: responder una y otra vez las mismas preguntas">
+                    </div>
+
+                    <div class="prompt-card">
+                        <div class="prompt-top">
+                            <div class="prompt-index">02</div>
+                            <div class="prompt-title">Otra tarea poco agradable</div>
+                        </div>
+                        <div class="form-help">Puede ser algo operativo, administrativo o de coordinación.</div>
+                        <input class="form-input" type="text" id="tarea_2" maxlength="160" placeholder="Ejemplo: consolidar información de distintos canales">
+                    </div>
+
+                    <div class="prompt-card">
+                        <div class="prompt-top">
+                            <div class="prompt-index">03</div>
+                            <div class="prompt-title">Una tarea que quisieras simplificar</div>
+                        </div>
+                        <div class="form-help">Algo que hoy sientes muy manual o difícil de sostener.</div>
+                        <input class="form-input" type="text" id="tarea_3" maxlength="160" placeholder="Ejemplo: hacer seguimiento manual a muchos pendientes">
+                    </div>
+                </div>
+
+                <div class="step-footer">
+                    <button type="button" class="btn btn-primary" data-next="screen-resumen">Ver resumen</button>
+                </div>
+            </section>
+
+            <section class="screen" id="screen-resumen">
+                <span class="mono-label">Paso 4 · Revisión final</span>
+                <h2 class="question-title">Revisa rápido tus respuestas antes de enviarlas.</h2>
+                <p class="question-copy">Si esto se ve bien, nosotros ya tenemos suficiente contexto para preparar una sesión mucho más relevante.</p>
+
+                <div class="context-chip" id="contextChip"><strong>Nombre:</strong> <span>-</span></div>
+
+                <div class="summary-box">
+                    <div class="summary-title">Resumen de tu aporte</div>
+                    <div class="summary-grid">
+                        <div class="summary-card">
+                            <h3>Lo que quieres aprender</h3>
+                            <div class="summary-list" id="summaryAprendizajes"></div>
+                        </div>
+                        <div class="summary-card">
+                            <h3>Lo que te gustaría simplificar</h3>
+                            <div class="summary-list" id="summaryTareas"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="step-footer">
+                    <p class="step-note">Usaremos esta información únicamente para entender mejor el contexto de los asistentes y mejorar el enfoque del webinar.</p>
+                    <button type="button" class="btn btn-primary" id="submitButton">Enviar respuestas</button>
+                </div>
+
+                <div class="status-message" id="statusMessage" aria-live="polite"></div>
+            </section>
+
+            <section class="screen" id="screen-loading">
+                <div class="loading-container">
+                    <div class="spinner"></div>
+                    <h2 class="loading-title">Enviando tu respuesta</h2>
+                    <p class="loading-text">Estamos llevando tus respuestas al flujo de Escalia para que el webinar tenga mejor contexto, mejores ejemplos y menos relleno.</p>
+                </div>
+            </section>
+
+            <section class="screen" id="screen-success">
+                <div class="success-shell">
+                    <div class="success-mark">✓</div>
+                    <span class="mono-label">Encuesta enviada</span>
+                    <h2>Tu aporte ya quedó guardado.</h2>
+                    <p class="success-copy">Gracias por responder con claridad. Esto nos ayuda a construir una sesión más útil, más concreta y mucho más alineada con lo que hoy te hace falta aprender.</p>
+                </div>
+            </section>
+        </section>
+    </main>
+
+    <script>
+        const WEBHOOK_URL = 'https://n8n.cambiatearemoto.com/webhook/encuesta-comunidades';
+        const STORAGE_KEY = 'escalia-encuesta-comunidades-v2';
+        const STEPS = ['screen-intro', 'screen-contexto', 'screen-aprendizajes', 'screen-tareas', 'screen-resumen', 'screen-loading', 'screen-success'];
+        const FORM_FIELDS = ['nombre', 'rol', 'correo', 'aprendizaje_1', 'aprendizaje_2', 'aprendizaje_3', 'tarea_1', 'tarea_2', 'tarea_3'];
+
+        let currentStepIndex = 0;
+
+        const progressContainer = document.getElementById('progressContainer');
+        const progressInfo = document.getElementById('progressInfo');
+        const progressBar = document.getElementById('progressBar');
+        const backButton = document.getElementById('backButton');
+        const statusMessage = document.getElementById('statusMessage');
+        const submitButton = document.getElementById('submitButton');
+        const contextChip = document.getElementById('contextChip');
+        const summaryAprendizajes = document.getElementById('summaryAprendizajes');
+        const summaryTareas = document.getElementById('summaryTareas');
+
+        function normalizeValue(value) {
+            return value.trim().replace(/\s+/g, ' ');
+        }
+
+        function getValue(id) {
+            return normalizeValue(document.getElementById(id).value);
+        }
+
+        function saveDraft() {
+            const draft = {};
+            FORM_FIELDS.forEach((field) => {
+                draft[field] = document.getElementById(field).value;
+            });
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(draft));
+        }
+
+        function restoreDraft() {
+            try {
+                const raw = localStorage.getItem(STORAGE_KEY);
+                if (!raw) return;
+                const draft = JSON.parse(raw);
+                FORM_FIELDS.forEach((field) => {
+                    if (typeof draft[field] === 'string') {
+                        document.getElementById(field).value = draft[field];
+                    }
+                });
+            } catch (error) {
+                console.error('No se pudo restaurar el borrador', error);
+            }
+        }
+
+        function setActiveScreen(screenId) {
+            document.querySelectorAll('.screen').forEach((screen) => {
+                screen.classList.toggle('active', screen.id === screenId);
+            });
+        }
+
+        function updateProgressUI() {
+            const visibleProgress = currentStepIndex >= 1 && currentStepIndex <= 4;
+            progressContainer.hidden = !visibleProgress;
+
+            if (!visibleProgress) return;
+
+            const stepNumber = currentStepIndex;
+            progressInfo.textContent = 'Paso ' + stepNumber + ' de 4';
+            progressBar.style.width = ((stepNumber / 4) * 100) + '%';
+            backButton.hidden = currentStepIndex <= 1;
+        }
+
+        function goToStep(screenId) {
+            currentStepIndex = STEPS.indexOf(screenId);
+            setActiveScreen(screenId);
+            updateProgressUI();
+            if (screenId === 'screen-resumen') {
+                renderSummary();
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function validateDistinct(values) {
+            const normalized = values.map((item) => item.toLowerCase());
+            return new Set(normalized).size === values.length;
+        }
+
+        function validateStep(stepId) {
+            if (stepId === 'screen-contexto') {
+                if (!getValue('nombre') || !getValue('rol') || !getValue('correo')) {
+                    statusMessage.textContent = 'Completa tu nombre, tu rol y tu correo antes de continuar.';
+                    if (!getValue('nombre')) document.getElementById('nombre').focus();
+                    else if (!getValue('rol')) document.getElementById('rol').focus();
+                    else document.getElementById('correo').focus();
+                    return false;
+                }
+
+                const email = getValue('correo');
+                if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                    statusMessage.textContent = 'Escribe un correo válido antes de continuar.';
+                    document.getElementById('correo').focus();
+                    return false;
+                }
+            }
+
+            if (stepId === 'screen-aprendizajes') {
+                const values = [getValue('aprendizaje_1'), getValue('aprendizaje_2'), getValue('aprendizaje_3')];
+                if (values.some((value) => !value)) {
+                    statusMessage.textContent = 'Completa los tres aprendizajes antes de continuar.';
+                    const firstMissing = ['aprendizaje_1', 'aprendizaje_2', 'aprendizaje_3'].find((id) => !getValue(id));
+                    document.getElementById(firstMissing).focus();
+                    return false;
+                }
+                if (!validateDistinct(values)) {
+                    statusMessage.textContent = 'Tus tres aprendizajes deben ser diferentes entre sí.';
+                    document.getElementById('aprendizaje_2').focus();
+                    return false;
+                }
+            }
+
+            if (stepId === 'screen-tareas') {
+                const values = [getValue('tarea_1'), getValue('tarea_2'), getValue('tarea_3')];
+                if (values.some((value) => !value)) {
+                    statusMessage.textContent = 'Completa las tres tareas antes de continuar.';
+                    const firstMissing = ['tarea_1', 'tarea_2', 'tarea_3'].find((id) => !getValue(id));
+                    document.getElementById(firstMissing).focus();
+                    return false;
+                }
+                if (!validateDistinct(values)) {
+                    statusMessage.textContent = 'Tus tres tareas deben ser diferentes entre sí.';
+                    document.getElementById('tarea_2').focus();
+                    return false;
+                }
+            }
+
+            statusMessage.textContent = '';
+            return true;
+        }
+
+        function renderList(container, items) {
+            container.innerHTML = '';
+            items.forEach((item) => {
+                const div = document.createElement('div');
+                div.className = 'summary-item';
+                div.textContent = item;
+                container.appendChild(div);
+            });
+        }
+
+        function renderSummary() {
+            const nombre = getValue('nombre') || '-';
+            const rol = getValue('rol') || '-';
+            contextChip.innerHTML = '<strong>' + nombre + '</strong><span>· ' + rol + '</span>';
+            renderList(summaryAprendizajes, [getValue('aprendizaje_1'), getValue('aprendizaje_2'), getValue('aprendizaje_3')]);
+            renderList(summaryTareas, [getValue('tarea_1'), getValue('tarea_2'), getValue('tarea_3')]);
+        }
+
+        function buildPayload() {
+            return {
+                nombre: getValue('nombre'),
+                email: getValue('correo'),
+                rol_profesional: getValue('rol'),
+                aprendizaje_prioridad_1: getValue('aprendizaje_1'),
+                aprendizaje_prioridad_2: getValue('aprendizaje_2'),
+                aprendizaje_prioridad_3: getValue('aprendizaje_3'),
+                tarea_menos_gusta_1: getValue('tarea_1'),
+                tarea_menos_gusta_2: getValue('tarea_2'),
+                tarea_menos_gusta_3: getValue('tarea_3'),
+                aprendizajes: [getValue('aprendizaje_1'), getValue('aprendizaje_2'), getValue('aprendizaje_3')],
+                tareas_menos_gustan: [getValue('tarea_1'), getValue('tarea_2'), getValue('tarea_3')],
+                encuesta_origen: 'encuesta_comunidades',
+                marca: 'Escalia',
+                submitted_at: new Date().toISOString(),
+                page_url: window.location.href,
+                user_agent: navigator.userAgent,
+                locale: navigator.language || 'es-CO'
+            };
+        }
+
+        async function submitSurvey() {
+            if (!validateStep('screen-contexto') || !validateStep('screen-aprendizajes') || !validateStep('screen-tareas')) {
+                return;
+            }
+
+            submitButton.disabled = true;
+            goToStep('screen-loading');
+
+            try {
+                const response = await fetch(WEBHOOK_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(buildPayload())
+                });
+
+                if (!response.ok) {
+                    throw new Error('Webhook respondió con estado ' + response.status);
+                }
+
+                localStorage.removeItem(STORAGE_KEY);
+                goToStep('screen-success');
+            } catch (error) {
+                console.error('Error al enviar la encuesta:', error);
+                submitButton.disabled = false;
+                goToStep('screen-resumen');
+                statusMessage.textContent = 'No pudimos enviar tus respuestas en este momento. Intenta nuevamente en unos segundos.';
+            }
+        }
+
+        document.querySelectorAll('[data-next]').forEach((button) => {
+            button.addEventListener('click', () => {
+                const currentScreen = button.closest('.screen').id;
+                if (currentScreen !== 'screen-intro' && !validateStep(currentScreen)) return;
+                goToStep(button.getAttribute('data-next'));
+            });
+        });
+
+        backButton.addEventListener('click', () => {
+            if (currentStepIndex > 1) {
+                goToStep(STEPS[currentStepIndex - 1]);
+            }
+        });
+
+        submitButton.addEventListener('click', submitSurvey);
+
+        FORM_FIELDS.forEach((field) => {
+            document.getElementById(field).addEventListener('input', () => {
+                saveDraft();
+                if (statusMessage.textContent) {
+                    statusMessage.textContent = '';
+                }
+            });
+        });
+
+        restoreDraft();
+        goToStep('screen-intro');
+    </script>
+</body>
+</html>
