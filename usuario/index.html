@@ -1,0 +1,1387 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel de Cliente | Escalia Elite CRM</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+    :root {
+      --crm-bg: #0a0a0a;
+      --crm-bg-elevated: #111111;
+      --crm-surface: #151515;
+      --crm-surface-2: #1a1a1a;
+      --crm-surface-3: #202020;
+      --crm-text: #ffffff;
+      --crm-text-soft: #cccccc;
+      --crm-text-muted: #9a9a9a;
+      --crm-border: #222222;
+      --crm-border-strong: rgba(45, 212, 170, 0.34);
+      --crm-accent: #2dd4aa;
+      --crm-accent-deep: #007565;
+      --crm-accent-soft: rgba(45, 212, 170, 0.1);
+      --crm-accent-border: rgba(45, 212, 170, 0.24);
+      --crm-success: #6be0b8;
+      --crm-danger: #ff8a8a;
+      --crm-shadow: 0 24px 60px rgba(0, 0, 0, 0.34);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      min-height: 100%;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background:
+        radial-gradient(circle at 12% 0%, rgba(45, 212, 170, 0.1), transparent 22%),
+        radial-gradient(circle at 90% 12%, rgba(0, 117, 101, 0.12), transparent 20%),
+        linear-gradient(180deg, #111111 0%, #0a0a0a 100%);
+      color: var(--crm-text);
+    }
+
+    body {
+      padding: 28px 16px 56px;
+    }
+
+    .page-shell {
+      width: min(1200px, 100%);
+      margin: 0 auto;
+    }
+
+    .panel {
+      border-radius: 28px;
+      border: 1px solid var(--crm-border);
+      background: linear-gradient(180deg, rgba(26, 26, 26, 0.96), rgba(17, 17, 17, 0.96));
+      box-shadow: 0 28px 80px rgba(0, 0, 0, 0.45);
+      overflow: hidden;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 22px 24px;
+      border-bottom: 1px solid var(--crm-border);
+      background: rgba(17, 17, 17, 0.92);
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .brand-logo {
+      display: block;
+      height: 22px;
+      width: auto;
+      filter: brightness(10);
+    }
+
+    .brand-copy strong {
+      display: block;
+      font-size: 12px;
+      line-height: 1.1;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #ffffff;
+    }
+
+    .brand-copy span {
+      display: block;
+      margin-top: 2px;
+      font-size: 11px;
+      color: var(--crm-text-muted);
+    }
+
+    .shell-content {
+      padding: 26px;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .login-layout {
+      min-height: 78vh;
+      display: grid;
+      grid-template-columns: minmax(0, 0.95fr) minmax(360px, 0.75fr);
+      gap: 22px;
+      align-items: center;
+    }
+
+    .hero-card,
+    .login-card,
+    .summary-card,
+    .action-card,
+    .password-card {
+      position: relative;
+      border-radius: 22px;
+      border: 1px solid var(--crm-border);
+      background: linear-gradient(180deg, rgba(26, 26, 26, 0.98), rgba(17, 17, 17, 0.98));
+      box-shadow: var(--crm-shadow);
+      overflow: hidden;
+    }
+
+    .hero-card::before,
+    .login-card::before,
+    .summary-card::before,
+    .action-card::before,
+    .password-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: linear-gradient(180deg, rgba(45, 212, 170, 0.04), transparent 28%);
+    }
+
+    .card-inner {
+      position: relative;
+      z-index: 1;
+      padding: 28px;
+    }
+
+    .kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0;
+      border-radius: 0;
+      background: transparent;
+      color: var(--crm-accent);
+      font-size: 11px;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .kicker::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--crm-accent);
+      box-shadow: 0 0 0 6px rgba(45, 212, 170, 0.08);
+    }
+
+    h1,
+    h2,
+    p,
+    label,
+    input,
+    button {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    .hero-card h1,
+    .login-card h2,
+    .summary-card h2,
+    .password-card h2 {
+      margin: 18px 0 12px;
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      line-height: 1.03;
+      letter-spacing: -0.035em;
+      color: #ffffff;
+      text-wrap: balance;
+    }
+
+    .summary-card h2,
+    .password-card h2,
+    .login-card h2 {
+      font-size: clamp(1.75rem, 3vw, 2.4rem);
+    }
+
+    .hero-card p,
+    .login-card p,
+    .summary-card p,
+    .password-card p,
+    .action-card p {
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.72;
+      color: var(--crm-text-soft);
+      text-wrap: pretty;
+    }
+
+    .hero-points {
+      margin: 22px 0 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 12px;
+    }
+
+    .hero-points li {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      padding: 14px 16px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--crm-border);
+      color: var(--crm-text-soft);
+      font-size: 13px;
+      line-height: 1.65;
+    }
+
+    .hero-points li::before {
+      content: "\2192";
+      flex-shrink: 0;
+      width: 22px;
+      height: 22px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      color: var(--crm-accent);
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      background: rgba(45, 212, 170, 0.08);
+      border: 1px solid rgba(45, 212, 170, 0.16);
+    }
+
+    form {
+      margin-top: 20px;
+    }
+
+    .field {
+      display: grid;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    label {
+      font-size: 11px;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--crm-text-muted);
+    }
+
+    input {
+      width: 100%;
+      min-height: 54px;
+      padding: 14px 16px;
+      border-radius: 14px;
+      border: 1px solid #2a2a2a;
+      background: #101010;
+      color: var(--crm-text);
+      outline: none;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+    }
+
+    input:focus {
+      border-color: var(--crm-border-strong);
+      box-shadow: 0 0 0 4px rgba(45, 212, 170, 0.12);
+      transform: translateY(-1px);
+    }
+
+    input::placeholder {
+      color: #727272;
+    }
+
+    .input-wrap {
+      position: relative;
+    }
+
+    .input-wrap input {
+      padding-right: 108px;
+    }
+
+    .input-toggle {
+      position: absolute;
+      top: 50%;
+      right: 12px;
+      transform: translateY(-50%);
+      min-height: 38px;
+      padding: 0 14px;
+      border-radius: 10px;
+      border: 1px solid #2e2e2e;
+      background: #1a1a1a;
+      color: var(--crm-text-soft);
+      font-size: 11px;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .field-note {
+      margin-top: 6px;
+      font-size: 12px;
+      line-height: 1.5;
+      color: var(--crm-text-muted);
+    }
+
+    .field-note.success {
+      color: var(--crm-success);
+    }
+
+    .field-note.error {
+      color: var(--crm-danger);
+    }
+
+    .btn,
+    .btn-secondary,
+    .action-button,
+    .signout-button {
+      border: 0;
+      cursor: pointer;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease, border-color 0.25s ease, background 0.25s ease;
+    }
+
+    .btn,
+    .action-button,
+    .signout-button {
+      color: #0a0a0a;
+      background: var(--crm-accent);
+      box-shadow: 0 16px 28px rgba(45, 212, 170, 0.18);
+    }
+
+    .btn,
+    .btn-secondary {
+      min-height: 56px;
+      width: 100%;
+      border-radius: 14px;
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .btn-secondary {
+      margin-top: 10px;
+      color: var(--crm-text-soft);
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid #2f2f2f;
+      box-shadow: none;
+    }
+
+    .btn:hover,
+    .btn:focus,
+    .btn-secondary:hover,
+    .btn-secondary:focus,
+    .action-button:hover,
+    .action-button:focus,
+    .signout-button:hover,
+    .signout-button:focus {
+      transform: translateY(-2px);
+      filter: brightness(1.03);
+      outline: none;
+    }
+
+    .btn:disabled,
+    .btn-secondary:disabled,
+    .action-button:disabled,
+    .signout-button:disabled {
+      opacity: 0.72;
+      cursor: wait;
+      transform: none;
+    }
+
+    .status {
+      min-height: 24px;
+      margin-top: 14px;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .status.success {
+      color: var(--crm-success);
+    }
+
+    .status.error {
+      color: var(--crm-danger);
+    }
+
+    .dashboard-header {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 18px;
+      align-items: center;
+      margin-bottom: 26px;
+    }
+
+    .dashboard-title {
+      margin: 0;
+      font-size: clamp(34px, 5vw, 58px);
+      line-height: 0.95;
+      letter-spacing: -0.06em;
+      color: #ffffff;
+      text-wrap: balance;
+    }
+
+    .dashboard-subtitle {
+      margin-top: 12px;
+      max-width: 760px;
+      color: var(--crm-text-soft);
+      line-height: 1.8;
+    }
+
+    .signout-button {
+      min-height: 48px;
+      padding: 12px 18px;
+      border-radius: 14px;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #0a0a0a;
+      background: var(--crm-accent);
+      border: 1px solid rgba(45, 212, 170, 0.55);
+      box-shadow: 0 16px 28px rgba(45, 212, 170, 0.18);
+    }
+
+    .summary-grid,
+    .actions-grid {
+      display: grid;
+      gap: 18px;
+    }
+
+    .summary-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      margin-bottom: 18px;
+    }
+
+    .summary-card .value {
+      margin-top: 16px;
+      font-size: 24px;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      color: #ffffff;
+    }
+
+    .summary-card .label {
+      margin-top: 10px;
+      font-size: 11px;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--crm-text-muted);
+    }
+
+    .summary-card .meta {
+      margin-top: 6px;
+      font-size: 13px;
+      color: var(--crm-text-soft);
+      line-height: 1.6;
+    }
+
+    .actions-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .action-card {
+      min-height: 250px;
+    }
+
+    .action-card h3 {
+      margin: 18px 0 10px;
+      font-size: 28px;
+      line-height: 1.08;
+      letter-spacing: -0.03em;
+      color: #ffffff;
+      text-wrap: balance;
+    }
+
+    .action-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      background: var(--crm-accent-soft);
+      border: 1px solid var(--crm-accent-border);
+      color: var(--crm-accent);
+    }
+
+    .action-button {
+      width: 100%;
+      min-height: 54px;
+      margin-top: 22px;
+      border-radius: 14px;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .action-status {
+      min-height: 42px;
+      margin-top: 12px;
+      font-size: 12px;
+      line-height: 1.55;
+      color: var(--crm-text-muted);
+    }
+
+    .portal-status {
+      margin-bottom: 18px;
+    }
+
+    .portal-status:empty {
+      display: none;
+    }
+
+    .password-overlay {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background: rgba(10, 10, 10, 0.82);
+      z-index: 20;
+    }
+
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background: rgba(10, 10, 10, 0.82);
+      z-index: 30;
+    }
+
+    .modal-card {
+      width: min(520px, 100%);
+      border-radius: 22px;
+      border: 1px solid var(--crm-border);
+      background: linear-gradient(180deg, rgba(26, 26, 26, 0.98), rgba(17, 17, 17, 0.98));
+      box-shadow: var(--crm-shadow);
+      overflow: hidden;
+    }
+
+    .modal-card .card-inner {
+      padding: 28px;
+    }
+
+    .modal-card h3 {
+      margin: 18px 0 10px;
+      font-size: clamp(24px, 3vw, 34px);
+      line-height: 1.05;
+      letter-spacing: -0.04em;
+      color: #ffffff;
+    }
+
+    .modal-card p {
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.8;
+      color: var(--crm-text-soft);
+    }
+
+    .modal-actions {
+      margin-top: 24px;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .modal-close {
+      min-width: 160px;
+      min-height: 48px;
+      padding: 12px 18px;
+      border-radius: 14px;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      border: 0;
+      cursor: pointer;
+      color: #0a0a0a;
+      background: var(--crm-accent);
+      box-shadow: 0 16px 28px rgba(45, 212, 170, 0.18);
+    }
+
+    .password-card {
+      width: min(560px, 100%);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation: none !important;
+        transition: none !important;
+        scroll-behavior: auto !important;
+      }
+    }
+
+    @media (max-width: 1024px) {
+      .login-layout,
+      .summary-grid,
+      .actions-grid,
+      .dashboard-header {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 720px) {
+      body {
+        padding: 16px 10px 34px;
+      }
+
+      .shell-content,
+      .card-inner {
+        padding: 22px;
+      }
+
+      .topbar {
+        padding: 18px;
+      }
+
+      .brand-copy span {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-shell">
+    <div class="panel">
+      <div class="topbar">
+        <div class="brand">
+          <img class="brand-logo" src="https://aprende.escalia.co/wp-content/uploads/2026/05/Logo-Escalia-Escritorio-Fondo-blanco.webp" alt="Escalia">
+          <span class="brand-copy">
+            <strong>Escalia Elite CRM</strong>
+            <span>Panel de cliente</span>
+          </span>
+        </div>
+      </div>
+
+      <div class="shell-content">
+        <section id="authView" class="login-layout">
+          <article class="hero-card">
+            <div class="card-inner">
+              <div class="kicker">Acceso privado</div>
+              <h1>Todo lo que necesitas para gestionar tu cuenta en Escalia, desde un solo lugar.</h1>
+              <p>Desde este panel puedes revisar tu plan, actualizar tu facturacion, consultar tus facturas y entrar rapidamente a tu CRM cuando lo necesites.</p>
+
+              <ul class="hero-points">
+                 <li>Consulta en un solo lugar el estado de tu cuenta, tu suscripcion y los accesos principales de tu servicio.</li>
+                 <li>Actualiza tu metodo de pago, revisa facturas o gestiona tu suscripcion de forma segura cuando lo necesites.</li>
+                 <li>Si es tu primer ingreso, podras crear una nueva contrasena para dejar tu acceso listo y protegido.</li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="login-card">
+            <div class="card-inner">
+              <div class="kicker">Inicia sesion</div>
+              <h2>Ingresa a tu panel</h2>
+              <p>Usa el correo con el que se activo tu cuenta y la clave temporal o definitiva enviada a tu correo.</p>
+
+        <form id="loginForm">
+          <div class="field">
+            <label for="loginEmail">Correo</label>
+            <input id="loginEmail" type="email" placeholder="correo@empresa.com" autocomplete="email" required>
+          </div>
+
+          <div class="field">
+            <label for="loginPassword">Contrasena</label>
+            <div class="input-wrap">
+              <input id="loginPassword" type="password" placeholder="Tu contrasena" autocomplete="current-password" required>
+              <button class="input-toggle" data-peek-password="loginPassword" type="button" aria-label="Mostrar contrasena">Ver</button>
+            </div>
+          </div>
+
+                <button class="btn" id="loginButton" type="submit">Entrar al panel</button>
+                <button class="btn-secondary" id="forgotPasswordButton" type="button">Olvide mi contrasena</button>
+                <div class="status" id="authStatus"></div>
+              </form>
+            </div>
+          </article>
+        </section>
+
+        <section id="dashboardView" class="hidden">
+          <div class="dashboard-header">
+            <div>
+              <div class="kicker">Panel de control</div>
+              <h1 class="dashboard-title" id="welcomeTitle">Bienvenido al panel de control de Escalia Elite CRM</h1>
+              <p class="dashboard-subtitle">Desde aqui podras gestionar tu experiencia operativa, revisar el estado de tu plan y acceder rapidamente a los servicios principales vinculados a tu cuenta.</p>
+            </div>
+
+            <button class="signout-button" id="signOutButton" type="button">Cerrar sesion</button>
+          </div>
+
+          <div class="portal-status status" id="portalStatus"></div>
+
+          <div class="summary-grid">
+            <article class="summary-card">
+              <div class="card-inner">
+                <div class="kicker">Cliente</div>
+                <div class="value" id="summaryName">-</div>
+                <div class="label">Nombre</div>
+                <div class="meta" id="summaryEmail">-</div>
+              </div>
+            </article>
+
+            <article class="summary-card">
+              <div class="card-inner">
+                <div class="kicker">Plan</div>
+                <div class="value" id="summaryPlan">crm-standard</div>
+                <div class="label">Plan mensual</div>
+                <div class="meta" id="summaryCompany">-</div>
+              </div>
+            </article>
+
+            <article class="summary-card">
+              <div class="card-inner">
+                <div class="kicker">Suscripcion</div>
+                <div class="value" id="summaryStatus">-</div>
+                <div class="label">Estado actual y acceso</div>
+                <div class="meta" id="summaryWebsite">-</div>
+              </div>
+            </article>
+          </div>
+
+          <div class="actions-grid">
+            <article class="action-card">
+              <div class="card-inner">
+                <div class="action-badge">Gestion</div>
+                <h3>Cancelar suscripcion al CRM</h3>
+                <p>Abre tu portal seguro de facturacion para administrar la continuidad de tu suscripcion directamente desde Stripe.</p>
+                <button class="action-button" data-action="billing-portal" type="button">Gestionar suscripcion</button>
+                <div class="action-status status" data-status-for="billing-portal"></div>
+              </div>
+            </article>
+
+            <article class="action-card">
+              <div class="card-inner">
+                <div class="action-badge">Pagos</div>
+                <h3>Cambiar metodo de pago</h3>
+                <p>Actualiza tu tarjeta o el metodo principal de cobro sin depender de soporte manual.</p>
+                <button class="action-button" data-action="billing-portal" type="button">Actualizar metodo de pago</button>
+                <div class="action-status status" data-status-for="billing-portal"></div>
+              </div>
+            </article>
+
+            <article class="action-card">
+              <div class="card-inner">
+                <div class="action-badge">Facturacion</div>
+                <h3>Descargar recibos o facturas</h3>
+                <p>Consulta tu historial de facturacion y descarga los documentos disponibles de tu cuenta.</p>
+                <button class="action-button" data-action="invoice" type="button">Ver facturas</button>
+                <div class="action-status status" data-status-for="invoice"></div>
+              </div>
+            </article>
+
+            <article class="action-card">
+              <div class="card-inner">
+                <div class="action-badge">Operacion</div>
+                <h3>Ir al CRM</h3>
+                <p>Accede rapidamente al entorno operativo de GoHighLevel o a la URL personalizada asociada a tu cuenta.</p>
+                <button class="action-button" data-action="crm" type="button">Abrir CRM</button>
+                <div class="action-status status" data-status-for="crm"></div>
+              </div>
+            </article>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <div class="password-overlay hidden" id="passwordOverlay">
+    <article class="password-card">
+      <div class="card-inner">
+        <div class="kicker">Primer acceso</div>
+        <h2>Actualiza tu contrasena</h2>
+        <p>Por seguridad, antes de usar tu panel debes reemplazar la clave temporal por una nueva contrasena.</p>
+
+        <form id="passwordForm">
+          <div class="field">
+            <label for="newPassword">Nueva contrasena</label>
+            <div class="input-wrap">
+              <input id="newPassword" type="password" placeholder="Minimo 8 caracteres" autocomplete="new-password" minlength="8" required>
+              <button class="input-toggle" data-toggle-password="newPassword" type="button">Mostrar</button>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="confirmPassword">Confirmar contrasena</label>
+            <div class="input-wrap">
+              <input id="confirmPassword" type="password" placeholder="Repite la nueva contrasena" autocomplete="new-password" minlength="8" required>
+              <button class="input-toggle" data-toggle-password="confirmPassword" type="button">Mostrar</button>
+            </div>
+            <div class="field-note" id="passwordMatchHint">Verifica que ambas contrasenas coincidan exactamente.</div>
+          </div>
+
+          <button class="btn" id="passwordButton" type="submit">Guardar nueva contrasena</button>
+          <div class="status" id="passwordStatus"></div>
+        </form>
+      </div>
+    </article>
+  </div>
+
+  <div class="modal-overlay hidden" id="feedbackModal" aria-hidden="true">
+    <article class="modal-card">
+      <div class="card-inner">
+        <div class="kicker" id="feedbackModalKicker">Aviso</div>
+        <h3 id="feedbackModalTitle">Estado de la accion</h3>
+        <p id="feedbackModalMessage">Aqui apareceran los mensajes importantes del panel.</p>
+        <div class="modal-actions">
+          <button class="modal-close" id="feedbackModalClose" type="button">Entendido</button>
+        </div>
+      </div>
+    </article>
+  </div>
+
+  <script type="module">
+    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+
+    const SUPABASE_URL = 'https://aopfemwrydnqeugqvgbb.supabase.co';
+    const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_anQTc5a9Rtz0CJG6ueZ8jg_x86-0yA-';
+    const BILLING_PORTAL_ENDPOINT = 'https://aopfemwrydnqeugqvgbb.supabase.co/functions/v1/create-billing-portal-session';
+    const DEFAULT_GHL_LOGIN_URL = 'https://app.gohighlevel.com/';
+    const INACTIVITY_TIMEOUT_MS = 5 * 60 * 1000;
+
+    const supabase = createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+
+    const authView = document.getElementById('authView');
+    const dashboardView = document.getElementById('dashboardView');
+    const passwordOverlay = document.getElementById('passwordOverlay');
+    const loginForm = document.getElementById('loginForm');
+    const passwordForm = document.getElementById('passwordForm');
+    const loginButton = document.getElementById('loginButton');
+    const forgotPasswordButton = document.getElementById('forgotPasswordButton');
+    const signOutButton = document.getElementById('signOutButton');
+    const authStatus = document.getElementById('authStatus');
+    const portalStatus = document.getElementById('portalStatus');
+    const passwordStatus = document.getElementById('passwordStatus');
+    const welcomeTitle = document.getElementById('welcomeTitle');
+    const summaryName = document.getElementById('summaryName');
+    const summaryEmail = document.getElementById('summaryEmail');
+    const summaryPlan = document.getElementById('summaryPlan');
+    const summaryCompany = document.getElementById('summaryCompany');
+    const summaryStatus = document.getElementById('summaryStatus');
+    const summaryWebsite = document.getElementById('summaryWebsite');
+    const passwordMatchHint = document.getElementById('passwordMatchHint');
+    const feedbackModal = document.getElementById('feedbackModal');
+    const feedbackModalKicker = document.getElementById('feedbackModalKicker');
+    const feedbackModalTitle = document.getElementById('feedbackModalTitle');
+    const feedbackModalMessage = document.getElementById('feedbackModalMessage');
+    const feedbackModalClose = document.getElementById('feedbackModalClose');
+
+    let currentProfile = null;
+    let inactivityTimer = null;
+    let inactivityMonitoringEnabled = false;
+
+    function setStatus(element, message, tone) {
+      element.className = 'status' + (tone ? ' ' + tone : '');
+      element.textContent = message || '';
+    }
+
+    function showAuthView() {
+      authView.classList.remove('hidden');
+      dashboardView.classList.add('hidden');
+      passwordOverlay.classList.add('hidden');
+      stopInactivityMonitoring();
+    }
+
+    function showDashboardView() {
+      authView.classList.add('hidden');
+      dashboardView.classList.remove('hidden');
+      startInactivityMonitoring();
+    }
+
+    async function signOutForInactivity() {
+      stopInactivityMonitoring();
+      await supabase.auth.signOut();
+      currentProfile = null;
+      loginForm.reset();
+      passwordForm.reset();
+      showAuthView();
+      setStatus(portalStatus, '', '');
+      setStatus(authStatus, 'Tu sesion se cerro despues de 5 minutos de inactividad. Ingresa de nuevo para continuar.', 'error');
+    }
+
+    function resetInactivityTimer() {
+      if (!inactivityMonitoringEnabled) return;
+      if (inactivityTimer) {
+        window.clearTimeout(inactivityTimer);
+      }
+
+      inactivityTimer = window.setTimeout(function () {
+        signOutForInactivity().catch(function () {
+          showAuthView();
+          setStatus(authStatus, 'Tu sesion se cerro por inactividad. Ingresa de nuevo para continuar.', 'error');
+        });
+      }, INACTIVITY_TIMEOUT_MS);
+    }
+
+    function startInactivityMonitoring() {
+      inactivityMonitoringEnabled = true;
+      resetInactivityTimer();
+    }
+
+    function stopInactivityMonitoring() {
+      inactivityMonitoringEnabled = false;
+      if (inactivityTimer) {
+        window.clearTimeout(inactivityTimer);
+        inactivityTimer = null;
+      }
+    }
+
+    function setCardStatus(button, message, tone) {
+      const card = button && button.closest ? button.closest('.action-card') : null;
+      const target = card ? card.querySelector('.action-status') : null;
+      if (target) {
+        setStatus(target, message, tone);
+      }
+    }
+
+    function clearActionStatuses() {
+      document.querySelectorAll('.action-status').forEach(function (element) {
+        setStatus(element, '', '');
+      });
+    }
+
+    function showModal(kicker, title, message) {
+      feedbackModalKicker.textContent = kicker || 'Aviso';
+      feedbackModalTitle.textContent = title || 'Estado de la accion';
+      feedbackModalMessage.textContent = message || 'No hay informacion adicional disponible.';
+      feedbackModal.classList.remove('hidden');
+      feedbackModal.setAttribute('aria-hidden', 'false');
+    }
+
+    function hideModal() {
+      feedbackModal.classList.add('hidden');
+      feedbackModal.setAttribute('aria-hidden', 'true');
+    }
+
+    function setButtonBusy(button, busy) {
+      if (!button) return;
+      button.disabled = busy;
+    }
+
+    function normalizeStatusLabel(status) {
+      if (!status) return 'Pendiente';
+      return status.replace(/_/g, ' ').replace(/\b\w/g, function (letter) {
+        return letter.toUpperCase();
+      });
+    }
+
+    function getSafeReturnUrl() {
+      if (window.location.protocol === 'http:' || window.location.protocol === 'https:') {
+        return window.location.href;
+      }
+
+      return '';
+    }
+
+    function formatDateLabel(value) {
+      if (!value) return 'Sin fecha registrada';
+      const date = new Date(value);
+      if (Number.isNaN(date.getTime())) return 'Sin fecha registrada';
+      return date.toLocaleDateString('es-CO', {
+        timeZone: 'America/Bogota',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+      });
+    }
+
+    function formatPlanAmount(profile) {
+      if (profile.monthly_amount) {
+        return ((profile.billing_currency || 'usd').toUpperCase() + ' ' + profile.monthly_amount + ' / ' + (profile.billing_interval || 'mes'));
+      }
+
+      if (profile.plan_code === 'crm-standard') {
+        return 'USD 180 / mes';
+      }
+
+      return 'Valor mensual pendiente de sincronizar';
+    }
+
+    function hydrateDashboard(profile) {
+      currentProfile = profile;
+      welcomeTitle.textContent = 'Bienvenido, ' + (profile.full_name || profile.company_name || profile.email) + ', al panel de control de Escalia Elite CRM';
+      summaryName.textContent = profile.full_name || 'Cliente Escalia';
+      summaryEmail.textContent = profile.email || '-';
+      summaryPlan.textContent = profile.plan_code || 'crm-standard';
+      summaryCompany.textContent = [
+        profile.company_name || 'Empresa no registrada',
+        formatPlanAmount(profile)
+      ].join(' · ');
+      summaryStatus.textContent = normalizeStatusLabel(profile.subscription_status);
+      summaryWebsite.textContent = [
+        'Acceso: ' + normalizeStatusLabel(profile.access_status || 'restricted'),
+        'Proxima renovacion: ' + formatDateLabel(profile.current_period_end),
+        'Ultimo pago: ' + normalizeStatusLabel(profile.last_payment_status || 'pending')
+      ].join(' · ');
+    }
+
+    async function fetchProfile(userId) {
+      const { data, error } = await supabase
+        .from('customer_accounts')
+        .select('id, auth_user_id, email, full_name, phone, company_name, company_address, country, state, city, website, plan_code, subscription_status, onboarding_status, auth_status, access_status, must_change_password, ghl_login_url, current_period_end, cancel_at_period_end, last_payment_status, last_invoice_url, last_invoice_pdf, monthly_amount, billing_currency, billing_interval')
+        .eq('auth_user_id', userId)
+        .single();
+
+      if (error) throw error;
+      return data;
+    }
+
+    async function restoreSession() {
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+
+      if (!session) {
+        showAuthView();
+        return;
+      }
+
+      await loadDashboard(session.user.id);
+    }
+
+    async function loadDashboard(userId) {
+      setStatus(portalStatus, 'Cargando tu informacion...', '');
+
+      try {
+        const profile = await fetchProfile(userId);
+        hydrateDashboard(profile);
+        showDashboardView();
+        setStatus(portalStatus, '', '');
+        clearActionStatuses();
+
+        if (profile.must_change_password) {
+          passwordOverlay.classList.remove('hidden');
+        } else {
+          passwordOverlay.classList.add('hidden');
+        }
+      } catch (error) {
+        showAuthView();
+        setStatus(authStatus, 'No pudimos cargar tu perfil. Si tu acceso fue activado recientemente, intenta de nuevo en unos minutos.', 'error');
+      }
+    }
+
+    loginForm.addEventListener('submit', async function (event) {
+      event.preventDefault();
+      setStatus(authStatus, 'Validando tu acceso...', '');
+      loginButton.disabled = true;
+
+      const email = document.getElementById('loginEmail').value.trim();
+      const password = document.getElementById('loginPassword').value;
+
+      try {
+        const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+        if (error) throw error;
+        // Load the dashboard directly after sign-in instead of waiting for the
+        // auth state listener, which can race with Supabase session updates.
+        await loadDashboard(data.user.id);
+        setStatus(authStatus, '', '');
+      } catch (error) {
+        setStatus(authStatus, 'No fue posible iniciar sesion. Verifica tu correo, tu contrasena o solicita recuperacion.', 'error');
+      } finally {
+        loginButton.disabled = false;
+      }
+    });
+
+    forgotPasswordButton.addEventListener('click', async function () {
+      const email = document.getElementById('loginEmail').value.trim();
+      if (!email) {
+        setStatus(authStatus, 'Escribe primero tu correo para enviarte el enlace de recuperacion.', 'error');
+        return;
+      }
+
+      forgotPasswordButton.disabled = true;
+      setStatus(authStatus, 'Enviando enlace de recuperacion...', '');
+
+      try {
+        const { error } = await supabase.auth.resetPasswordForEmail(email, {
+          redirectTo: window.location.origin + window.location.pathname,
+        });
+
+        if (error) throw error;
+
+        setStatus(authStatus, 'Te enviamos un enlace de recuperacion a tu correo.', 'success');
+      } catch (error) {
+        setStatus(authStatus, 'No pudimos enviar el enlace de recuperacion en este momento.', 'error');
+      } finally {
+        forgotPasswordButton.disabled = false;
+      }
+    });
+
+    passwordForm.addEventListener('submit', async function (event) {
+      event.preventDefault();
+      const passwordButton = document.getElementById('passwordButton');
+      const newPassword = document.getElementById('newPassword').value;
+      const confirmPassword = document.getElementById('confirmPassword').value;
+
+      if (newPassword.length < 8) {
+        setStatus(passwordStatus, 'La nueva contrasena debe tener minimo 8 caracteres.', 'error');
+        return;
+      }
+
+      if (newPassword !== confirmPassword) {
+        setStatus(passwordStatus, 'La confirmacion no coincide con la nueva contrasena.', 'error');
+        return;
+      }
+
+      passwordButton.disabled = true;
+      setStatus(passwordStatus, 'Actualizando contrasena...', '');
+
+      try {
+        const { data: userData } = await supabase.auth.getUser();
+        const user = userData.user;
+        if (!user) throw new Error('No active user');
+
+        const { error: authError } = await supabase.auth.updateUser({ password: newPassword });
+        if (authError) throw authError;
+
+        const { error: profileError } = await supabase
+          .from('customer_accounts')
+          .update({ must_change_password: false })
+          .eq('auth_user_id', user.id);
+
+        if (profileError) throw profileError;
+
+        currentProfile.must_change_password = false;
+        passwordOverlay.classList.add('hidden');
+        setStatus(passwordStatus, 'Tu contrasena fue actualizada correctamente.', 'success');
+        setStatus(portalStatus, '', '');
+        passwordMatchHint.className = 'field-note';
+        passwordMatchHint.textContent = 'Verifica que ambas contrasenas coincidan exactamente.';
+        passwordForm.reset();
+      } catch (error) {
+        setStatus(passwordStatus, 'No fue posible actualizar la contrasena. Intenta de nuevo.', 'error');
+      } finally {
+        passwordButton.disabled = false;
+      }
+    });
+
+    signOutButton.addEventListener('click', async function () {
+      signOutButton.disabled = true;
+      await supabase.auth.signOut();
+      currentProfile = null;
+      loginForm.reset();
+      showAuthView();
+      setStatus(portalStatus, '', '');
+      signOutButton.disabled = false;
+    });
+
+    function extractPortalError(payload) {
+      if (!payload) return 'No pudimos abrir tu portal de facturacion.';
+      if (typeof payload.error === 'string' && payload.error.trim()) return payload.error.trim();
+      if (payload.details && typeof payload.details.error === 'object' && typeof payload.details.error.message === 'string') {
+        return payload.details.error.message.trim();
+      }
+      if (payload.details && typeof payload.details.message === 'string') {
+        return payload.details.message.trim();
+      }
+      return 'No pudimos abrir tu portal de facturacion.';
+    }
+
+    async function openBillingPortal(button) {
+      setButtonBusy(button, true);
+      setCardStatus(button, 'Abriendo tu portal de facturacion...', '');
+
+      try {
+        const {
+          data: { session },
+        } = await supabase.auth.getSession();
+
+        if (!session) throw new Error('Missing session');
+
+        const response = await fetch(BILLING_PORTAL_ENDPOINT, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + session.access_token,
+          },
+          body: JSON.stringify({
+            returnUrl: getSafeReturnUrl(),
+          }),
+        });
+
+        const payload = await response.json().catch(function () {
+          return {};
+        });
+        if (!response.ok || !payload.url) {
+          throw new Error(extractPortalError(payload));
+        }
+
+        window.open(payload.url, '_blank', 'noopener');
+        setCardStatus(button, 'Tu portal de facturacion se abrio en una nueva pestana.', 'success');
+      } catch (error) {
+        const message = error instanceof Error ? error.message : 'No pudimos abrir tu portal de facturacion.';
+        setCardStatus(button, message, 'error');
+        showModal('Facturacion', 'No fue posible abrir el portal', message);
+      } finally {
+        setButtonBusy(button, false);
+      }
+    }
+
+    function openCrm(button) {
+      if (!currentProfile || currentProfile.access_status !== 'enabled') {
+        const message = 'Tu acceso al CRM esta restringido por falta de pago o porque tu suscripcion aun no esta al dia. Regulariza tu facturacion para habilitar el ingreso.';
+        setCardStatus(button, message, 'error');
+        showModal('Operacion', 'Acceso al CRM restringido', message);
+        return;
+      }
+
+      setCardStatus(button, 'Abriendo tu entorno CRM en una nueva pestana...', 'success');
+      const crmUrl = currentProfile && currentProfile.ghl_login_url ? currentProfile.ghl_login_url : DEFAULT_GHL_LOGIN_URL;
+      window.open(crmUrl, '_blank', 'noopener');
+    }
+
+    function openInvoice(button) {
+      setButtonBusy(button, true);
+
+      if (currentProfile && currentProfile.last_invoice_url) {
+        setCardStatus(button, 'Abriendo tu ultima factura registrada...', 'success');
+        window.open(currentProfile.last_invoice_url, '_blank', 'noopener');
+        setButtonBusy(button, false);
+        return;
+      }
+
+      openBillingPortal(button).finally(function () {
+        setButtonBusy(button, false);
+      });
+    }
+
+    document.querySelectorAll('[data-toggle-password]').forEach(function (button) {
+      button.addEventListener('click', function () {
+        const inputId = button.getAttribute('data-toggle-password');
+        const input = document.getElementById(inputId);
+        if (!input) return;
+        const nextType = input.type === 'password' ? 'text' : 'password';
+        input.type = nextType;
+        button.textContent = nextType === 'password' ? 'Mostrar' : 'Ocultar';
+      });
+    });
+
+    document.querySelectorAll('[data-peek-password]').forEach(function (button) {
+      const inputId = button.getAttribute('data-peek-password');
+      const input = document.getElementById(inputId);
+      if (!input) return;
+
+      const reveal = function () {
+        input.type = 'text';
+        button.textContent = 'Ocultar';
+      };
+
+      const conceal = function () {
+        input.type = 'password';
+        button.textContent = 'Ver';
+      };
+
+      button.addEventListener('mousedown', reveal);
+      button.addEventListener('mouseup', conceal);
+      button.addEventListener('mouseleave', conceal);
+      button.addEventListener('touchstart', reveal, { passive: true });
+      button.addEventListener('touchend', conceal);
+      button.addEventListener('touchcancel', conceal);
+      button.addEventListener('blur', conceal);
+      button.addEventListener('keydown', function (event) {
+        if (event.key === ' ' || event.key === 'Enter') {
+          event.preventDefault();
+          reveal();
+        }
+      });
+      button.addEventListener('keyup', function (event) {
+        if (event.key === ' ' || event.key === 'Enter') {
+          conceal();
+        }
+      });
+    });
+
+    function updatePasswordMatchHint() {
+      const newPassword = document.getElementById('newPassword').value;
+      const confirmPassword = document.getElementById('confirmPassword').value;
+
+      if (!newPassword && !confirmPassword) {
+        passwordMatchHint.className = 'field-note';
+        passwordMatchHint.textContent = 'Verifica que ambas contrasenas coincidan exactamente.';
+        return;
+      }
+
+      if (!confirmPassword) {
+        passwordMatchHint.className = 'field-note';
+        passwordMatchHint.textContent = 'Escribe nuevamente la contrasena para confirmar que coincide.';
+        return;
+      }
+
+      if (newPassword === confirmPassword) {
+        passwordMatchHint.className = 'field-note success';
+        passwordMatchHint.textContent = 'Las contrasenas coinciden.';
+        return;
+      }
+
+      passwordMatchHint.className = 'field-note error';
+      passwordMatchHint.textContent = 'Las contrasenas no coinciden todavia.';
+    }
+
+    document.getElementById('newPassword').addEventListener('input', updatePasswordMatchHint);
+    document.getElementById('confirmPassword').addEventListener('input', updatePasswordMatchHint);
+
+    document.querySelectorAll('[data-action="billing-portal"]').forEach(function (button) {
+      button.addEventListener('click', function () {
+        openBillingPortal(button);
+      });
+    });
+
+    document.querySelector('[data-action="invoice"]').addEventListener('click', function (event) {
+      openInvoice(event.currentTarget);
+    });
+
+    document.querySelector('[data-action="crm"]').addEventListener('click', function (event) {
+      openCrm(event.currentTarget);
+    });
+
+    feedbackModalClose.addEventListener('click', hideModal);
+
+    feedbackModal.addEventListener('click', function (event) {
+      if (event.target === feedbackModal) {
+        hideModal();
+      }
+    });
+
+    ['mousedown', 'mousemove', 'keydown', 'scroll', 'touchstart', 'click'].forEach(function (eventName) {
+      document.addEventListener(eventName, function () {
+        resetInactivityTimer();
+      }, { passive: true });
+    });
+
+    document.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape' && !feedbackModal.classList.contains('hidden')) {
+        hideModal();
+      }
+    });
+
+    supabase.auth.onAuthStateChange(function (event, session) {
+      if (event === 'SIGNED_OUT') {
+        showAuthView();
+        return;
+      }
+
+      if (session) {
+        // Supabase recommends keeping this callback synchronous to avoid
+        // deadlocks with session refresh and auth events in the browser.
+        window.setTimeout(function () {
+          loadDashboard(session.user.id).catch(function () {
+            setStatus(authStatus, 'No pudimos restaurar tu acceso automaticamente. Intenta iniciar sesion otra vez.', 'error');
+          });
+        }, 0);
+      }
+    });
+
+    restoreSession();
+  </script>
+</body>
+</html>
