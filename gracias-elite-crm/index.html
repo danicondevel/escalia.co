@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gracias | Escalia Elite CRM</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+    :root {
+      --crm-bg: #0a0a0a;
+      --crm-bg-elevated: #111111;
+      --crm-surface: #151515;
+      --crm-surface-2: #1a1a1a;
+      --crm-text: #ffffff;
+      --crm-text-soft: #cccccc;
+      --crm-text-muted: #8f8f8f;
+      --crm-border: #222222;
+      --crm-border-strong: rgba(45, 212, 170, 0.34);
+      --crm-accent: #2dd4aa;
+      --crm-accent-deep: #007565;
+      --crm-accent-soft: rgba(45, 212, 170, 0.1);
+      --crm-accent-border: rgba(45, 212, 170, 0.24);
+      --crm-success: #6be0b8;
+      --crm-danger: #ff8a8a;
+      --crm-shadow: 0 24px 60px rgba(0, 0, 0, 0.34);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      min-height: 100%;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background:
+        radial-gradient(circle at 12% 0%, rgba(45, 212, 170, 0.1), transparent 22%),
+        radial-gradient(circle at 90% 10%, rgba(0, 117, 101, 0.12), transparent 20%),
+        linear-gradient(180deg, #111111 0%, #0a0a0a 100%);
+      color: var(--crm-text);
+      overflow-x: hidden;
+    }
+
+    body {
+      position: relative;
+    }
+
+    .page-shell {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      padding: 24px 16px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .panel {
+      width: min(1120px, 100%);
+      border-radius: 28px;
+      border: 1px solid var(--crm-border);
+      background: linear-gradient(180deg, rgba(26, 26, 26, 0.96), rgba(17, 17, 17, 0.96));
+      box-shadow: 0 28px 80px rgba(0, 0, 0, 0.45);
+      overflow: hidden;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--crm-border);
+      background: rgba(17, 17, 17, 0.92);
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .brand-logo {
+      display: block;
+      height: 22px;
+      width: auto;
+      filter: brightness(10);
+    }
+
+    .brand-copy strong {
+      display: block;
+      font-size: 12px;
+      line-height: 1.1;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #ffffff;
+    }
+
+    .brand-copy span {
+      display: block;
+      margin-top: 2px;
+      font-size: 11px;
+      color: var(--crm-text-muted);
+    }
+
+    .hero {
+      padding: 44px 28px 22px;
+      text-align: left;
+    }
+
+    .hero-badge,
+    .kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0;
+      border-radius: 0;
+      background: transparent;
+      color: var(--crm-accent);
+      font-size: 11px;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .hero-badge::before,
+    .kicker::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--crm-accent);
+      box-shadow: 0 0 0 6px rgba(45, 212, 170, 0.08);
+    }
+
+    .hero-title {
+      margin: 18px 0 12px;
+      max-width: 900px;
+      font-size: clamp(2.6rem, 6vw, 5rem);
+      line-height: 0.95;
+      letter-spacing: -0.05em;
+      font-weight: 800;
+      color: #ffffff;
+      text-wrap: balance;
+    }
+
+    .hero-subtitle {
+      max-width: 760px;
+      margin: 0;
+      font-size: 17px;
+      line-height: 1.72;
+      color: var(--crm-text-soft);
+      text-wrap: pretty;
+    }
+
+    .content {
+      display: grid;
+      grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+      gap: 22px;
+      padding: 0 28px 30px;
+    }
+
+    .info-card,
+    .form-card {
+      position: relative;
+      padding: 26px;
+      border-radius: 22px;
+      background: linear-gradient(180deg, rgba(26, 26, 26, 0.98), rgba(17, 17, 17, 0.98));
+      border: 1px solid var(--crm-border);
+      box-shadow: var(--crm-shadow);
+      overflow: hidden;
+    }
+
+    .info-card::before,
+    .form-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: linear-gradient(180deg, rgba(45, 212, 170, 0.04), transparent 28%);
+    }
+
+    .card-inner {
+      position: relative;
+      z-index: 1;
+    }
+
+    h1,
+    h2,
+    p,
+    label,
+    input,
+    button,
+    select {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    .info-card h2,
+    .form-card h2 {
+      margin: 18px 0 10px;
+      font-size: clamp(1.9rem, 3vw, 2.6rem);
+      line-height: 1.05;
+      letter-spacing: -0.04em;
+      font-weight: 800;
+      color: #ffffff;
+      text-wrap: balance;
+    }
+
+    .info-card p,
+    .form-card p {
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.72;
+      color: var(--crm-text-soft);
+      text-wrap: pretty;
+    }
+
+    .check-list {
+      margin: 22px 0 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 12px;
+    }
+
+    .check-list li {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      padding: 14px 16px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--crm-border);
+      color: var(--crm-text-soft);
+      font-size: 13px;
+      line-height: 1.65;
+    }
+
+    .check-list li::before {
+      content: "\2192";
+      flex-shrink: 0;
+      width: 22px;
+      height: 22px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      color: var(--crm-accent);
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      background: rgba(45, 212, 170, 0.08);
+      border: 1px solid rgba(45, 212, 170, 0.16);
+    }
+
+    .form-grid {
+      margin-top: 22px;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .field {
+      display: grid;
+      gap: 8px;
+    }
+
+    .field.full {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      font-size: 11px;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--crm-text-muted);
+    }
+
+    input {
+      width: 100%;
+      min-height: 54px;
+      padding: 14px 16px;
+      border-radius: 14px;
+      border: 1px solid #2a2a2a;
+      background: #101010;
+      color: var(--crm-text);
+      outline: none;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+    }
+
+    input:focus {
+      border-color: var(--crm-border-strong);
+      box-shadow: 0 0 0 4px rgba(45, 212, 170, 0.12);
+      transform: translateY(-1px);
+    }
+
+    input::placeholder {
+      color: #727272;
+    }
+
+    .submit {
+      width: 100%;
+      min-height: 58px;
+      margin-top: 18px;
+      border: 0;
+      border-radius: 14px;
+      cursor: pointer;
+      color: #0a0a0a;
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      background: var(--crm-accent);
+      box-shadow: 0 16px 28px rgba(45, 212, 170, 0.18);
+      transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
+    }
+
+    .submit:hover,
+    .submit:focus {
+      transform: translateY(-2px);
+      filter: brightness(1.03);
+      box-shadow: 0 18px 32px rgba(45, 212, 170, 0.22);
+      outline: none;
+    }
+
+    .submit:disabled {
+      opacity: 0.7;
+      cursor: wait;
+      transform: none;
+    }
+
+    .status {
+      min-height: 24px;
+      margin-top: 14px;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .status.success {
+      color: var(--crm-success);
+    }
+
+    .status.error {
+      color: var(--crm-danger);
+    }
+
+    .micro-note {
+      margin-top: 14px;
+      font-size: 11px;
+      line-height: 1.7;
+      color: var(--crm-text-muted);
+    }
+
+    @media (max-width: 920px) {
+      .content {
+        grid-template-columns: 1fr;
+        padding: 0 18px 20px;
+      }
+
+      .hero {
+        padding: 30px 18px 18px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .page-shell {
+        padding: 12px 10px 24px;
+      }
+
+      .panel {
+        border-radius: 22px;
+      }
+
+      .hero-subtitle {
+        font-size: 15px;
+      }
+
+      .info-card,
+      .form-card {
+        padding: 18px;
+        border-radius: 20px;
+      }
+
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .topbar {
+        padding: 18px;
+      }
+
+      .brand-copy span {
+        display: none;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation: none !important;
+        transition: none !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page-shell">
+    <section class="panel">
+      <div class="topbar">
+        <div class="brand">
+          <img class="brand-logo" src="https://aprende.escalia.co/wp-content/uploads/2026/05/Logo-Escalia-Escritorio-Fondo-blanco.webp" alt="Escalia">
+          <span class="brand-copy">
+            <strong>Escalia Elite CRM</strong>
+            <span>Registro posterior al pago</span>
+          </span>
+        </div>
+      </div>
+
+      <div class="hero" id="hero">
+        <div>
+          <div class="hero-badge">Registro confirmado</div>
+          <div class="hero-title">Gracias por completar tu compra.</div>
+          <p class="hero-subtitle">Ahora solo necesitamos algunos datos para dejar tu cuenta lista y enviarte el acceso de Escalia Elite CRM al correo que registres en este formulario.</p>
+        </div>
+      </div>
+
+      <div class="content visible" id="content">
+        <article class="info-card">
+          <div class="card-inner">
+            <div class="kicker">Siguiente paso</div>
+            <h2>Completa tu registro y dejamos tu acceso listo.</h2>
+            <p>Con esta informacion terminamos de asociar tu cuenta, tu empresa y la configuracion base para que puedas entrar al CRM con todo correctamente organizado desde el inicio.</p>
+
+            <ul class="check-list">
+              <li>Recibiras en tu correo las credenciales de acceso y las instrucciones para ingresar al panel privado.</li>
+              <li>Usa un correo al que tengas acceso real, porque sera tu canal principal para recibir el acceso y futuros avisos operativos.</li>
+              <li>Mientras mas precisa sea la informacion de empresa y ubicacion, mas limpio quedara tu arranque dentro del CRM.</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="form-card">
+            <div class="card-inner">
+              <div class="kicker">Formulario de acceso</div>
+              <h2>Completa tu registro</h2>
+              <p>Este paso toma menos de dos minutos y nos permite dejar tu cuenta correctamente configurada.</p>
+
+            <form id="crmForm">
+              <input type="hidden" name="plan" value="crm-standard">
+              <input type="hidden" id="session_id" name="session_id" value="">
+              <div class="form-grid">
+                <div class="field">
+                  <label for="nombre">Nombre</label>
+                  <input id="nombre" name="nombre" type="text" placeholder="Tu nombre completo" required>
+                </div>
+                <div class="field">
+                  <label for="correo">Correo</label>
+                  <input id="correo" name="correo" type="email" placeholder="correo@empresa.com" required>
+                </div>
+                <div class="field">
+                  <label for="celular">Celular</label>
+                  <input id="celular" name="celular" type="tel" placeholder="+57 300 000 0000" required>
+                </div>
+                <div class="field">
+                  <label for="empresa">Nombre de la empresa</label>
+                  <input id="empresa" name="empresa" type="text" placeholder="Nombre de tu empresa" required>
+                </div>
+                <div class="field full">
+                  <label for="direccion">Direccion de la empresa</label>
+                  <input id="direccion" name="direccion" type="text" placeholder="Direccion principal de la empresa" required>
+                </div>
+                <div class="field">
+                  <label for="pais">Pais</label>
+                  <input id="pais" name="pais" type="text" placeholder="Pais" required>
+                </div>
+                <div class="field">
+                  <label for="estado">Estado</label>
+                  <input id="estado" name="estado" type="text" placeholder="Estado o provincia" required>
+                </div>
+                <div class="field">
+                  <label for="ciudad">Ciudad</label>
+                  <input id="ciudad" name="ciudad" type="text" placeholder="Ciudad" required>
+                </div>
+                <div class="field">
+                  <label for="sitio_web">Sitio web</label>
+                  <input id="sitio_web" name="sitio_web" type="url" placeholder="https://tuempresa.com" required>
+                </div>
+              </div>
+
+              <button class="submit" id="submitButton" type="submit">Enviar mis datos</button>
+              <div class="status" id="status"></div>
+              <div class="micro-note">Al enviar este formulario autorizas el uso de esta informacion para crear tu acceso y completar la configuracion inicial de tu cuenta en Escalia Elite CRM.</div>
+            </form>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    (function () {
+      var form = document.getElementById('crmForm');
+      var status = document.getElementById('status');
+      var submitButton = document.getElementById('submitButton');
+      var sessionField = document.getElementById('session_id');
+      var endpoint = 'https://n8n.cambiatearemoto.com/webhook/formulario-compra-crm';
+      var params = new URLSearchParams(window.location.search);
+
+      sessionField.value = params.get('session_id') || params.get('checkout_session_id') || '';
+
+      if (params.get('email')) {
+        document.getElementById('correo').value = params.get('email');
+      }
+
+      form.addEventListener('submit', async function (event) {
+        event.preventDefault();
+        status.className = 'status';
+        status.textContent = 'Enviando tu informacion...';
+        submitButton.disabled = true;
+
+        var formData = new FormData(form);
+        var payload = {};
+
+        formData.forEach(function (value, key) {
+          payload[key] = value;
+        });
+
+        try {
+          var response = await fetch(endpoint, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payload)
+          });
+
+          if (!response.ok) {
+            throw new Error('No se pudo completar el envio.');
+          }
+
+          status.className = 'status success';
+          status.textContent = 'Datos enviados correctamente. Muy pronto recibirás en tu correo las credenciales de acceso a tu CRM.';
+          form.reset();
+        } catch (error) {
+          status.className = 'status error';
+          status.textContent = 'Hubo un problema enviando el formulario. Intenta nuevamente en unos segundos.';
+        } finally {
+          submitButton.disabled = false;
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
