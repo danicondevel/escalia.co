@@ -54,7 +54,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,10,10,.82
 .btn-ghost:hover{color:var(--ink)}
 
 /* ---------- Hero ---------- */
-.hero{position:relative;padding:150px 0 90px;overflow:hidden}
+.hero{position:relative;padding:150px 0 20px;overflow:hidden}
 .hero-glow{position:absolute;top:-220px;left:50%;transform:translateX(-50%);width:900px;height:600px;background:radial-gradient(ellipse at center,rgba(45,212,170,.14),transparent 65%);pointer-events:none}
 .hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);background-size:56px 56px;mask-image:radial-gradient(ellipse 80% 60% at 50% 0%,#000 40%,transparent 100%);-webkit-mask-image:radial-gradient(ellipse 80% 60% at 50% 0%,#000 40%,transparent 100%);pointer-events:none}
 .hero-in{position:relative;display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center}
@@ -98,13 +98,13 @@ h1 .strike::after{content:"";position:absolute;left:-2%;right:-2%;top:54%;height
 .strip .lbl{font-size:14.5px;color:var(--gray);margin-top:4px}
 
 /* ---------- Sections ---------- */
-section{padding:100px 0;scroll-margin-top:80px}
+section{padding:48px 0;scroll-margin-top:80px}
 .kicker{font-family:var(--font-mono);font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--green);margin-bottom:16px}
 h2{font-family:var(--font-display);font-weight:900;font-size:clamp(30px,4vw,46px);line-height:1.12;letter-spacing:-.02em;margin-bottom:16px}
 .sec-sub{font-size:18px;color:var(--gray);max-width:640px}
 
 /* ---------- Dolores ---------- */
-.pains{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:54px}
+.pains{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:36px}
 .pain{background:var(--bg-2);border:1px solid var(--border);border-radius:16px;padding:28px;transition:border-color .3s,transform .3s}
 .pain:hover{border-color:rgba(45,212,170,.35);transform:translateY(-3px)}
 .pain-top{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;margin-bottom:14px}
@@ -258,7 +258,7 @@ footer p{font-family:var(--font-mono);font-size:12.5px;color:var(--gray-2)}
   .quotes{grid-template-columns:1fr}
   .pains{grid-template-columns:1fr}
   .ba{grid-template-columns:1fr}
-  section{padding:72px 0}
+  section{padding:40px 0}
   .strip-in{grid-template-columns:1fr;gap:26px;padding:32px 0}
 }
 @media(max-width:520px){
@@ -325,7 +325,6 @@ footer p{font-family:var(--font-mono);font-size:12.5px;color:var(--gray-2)}
 <section id="dolores">
   <div class="wrap">
     <div class="reveal">
-      <div class="kicker">¿Te suena?</div>
       <h2>415 contadores nos hablaron de lo más<br>desgastante de su trabajo cotidiano</h2>
       <p class="sec-sub">Por eso decidimos solucionarlo. Estas fueron sus respuestas — si te ves reflejado en alguna, esta página es para ti.</p>
     </div>
