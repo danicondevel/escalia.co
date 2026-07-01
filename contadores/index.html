@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IA para Contadores — Escalia | Deja de digitar. Empieza a asesorar.</title>
+<meta name="description" content="Descubre cómo la IA hace por ti las conciliaciones bancarias, la causación, los informes y los reportes a la DIAN. Capacítate gratis con Escalia.">
+<meta property="og:title" content="IA para Contadores — Escalia">
+<meta property="og:description" content="Conciliaciones en minutos, causación automática, informes que se escriben solos. Capacítate gratis.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700;9..40,800;9..40,900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0A0A0A;
+  --bg-2:#111111;
+  --bg-3:#161616;
+  --ink:#FFFFFF;
+  --gray:#CCCCCC;
+  --gray-2:#8a8a8a;
+  --green:#2DD4AA;
+  --green-dark:#1a8068;
+  --red:#ef4444;
+  --border:rgba(255,255,255,.08);
+  --font-display:"DM Sans",system-ui,sans-serif;
+  --font-body:"DM Sans",system-ui,sans-serif;
+  --font-mono:"DM Mono",ui-monospace,monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:auto}
+body{background:var(--bg);color:var(--ink);font-family:var(--font-body);line-height:1.6;overflow-x:hidden}
+::selection{background:var(--green);color:#0A0A0A}
+.wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+.mono{font-family:var(--font-mono)}
+.green{color:var(--green)}
+
+/* ---------- Reveal on scroll ---------- */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease}
+.reveal.visible{opacity:1;transform:none}
+.reveal.d1{transition-delay:.1s}.reveal.d2{transition-delay:.2s}.reveal.d3{transition-delay:.3s}.reveal.d4{transition-delay:.4s}
+
+/* ---------- Nav ---------- */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,10,10,.82);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--border)}
+.nav-in{display:flex;align-items:center;justify-content:space-between;height:68px}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.logo-img{display:block;height:30px;aspect-ratio:240/58;background:url(data:image/png;base64,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) no-repeat center/contain}
+.btn{display:inline-flex;align-items:center;gap:10px;background:var(--green);color:#0A0A0A;font-family:var(--font-display);font-weight:700;font-size:16px;padding:13px 26px;border-radius:100px;text-decoration:none;transition:transform .2s ease,box-shadow .2s ease;white-space:nowrap}
+.btn:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(45,212,170,.35)}
+.btn.sm{font-size:14px;padding:10px 20px}
+.btn .arrow{transition:transform .2s ease}
+.btn:hover .arrow{transform:translateX(3px)}
+.btn-ghost{display:inline-flex;align-items:center;gap:8px;color:var(--gray);font-weight:500;font-size:15px;text-decoration:none;padding:13px 10px;transition:color .2s}
+.btn-ghost:hover{color:var(--ink)}
+
+/* ---------- Hero ---------- */
+.hero{position:relative;padding:150px 0 90px;overflow:hidden}
+.hero-glow{position:absolute;top:-220px;left:50%;transform:translateX(-50%);width:900px;height:600px;background:radial-gradient(ellipse at center,rgba(45,212,170,.14),transparent 65%);pointer-events:none}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);background-size:56px 56px;mask-image:radial-gradient(ellipse 80% 60% at 50% 0%,#000 40%,transparent 100%);-webkit-mask-image:radial-gradient(ellipse 80% 60% at 50% 0%,#000 40%,transparent 100%);pointer-events:none}
+.hero-in{position:relative;display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center}
+.badge{display:inline-flex;align-items:center;gap:8px;font-family:var(--font-mono);font-size:13px;color:var(--green);background:rgba(45,212,170,.08);border:1px solid rgba(45,212,170,.25);padding:7px 16px;border-radius:100px;margin-bottom:26px}
+.badge .dot{width:7px;height:7px;border-radius:50%;background:var(--green);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(45,212,170,.5)}50%{box-shadow:0 0 0 6px rgba(45,212,170,0)}}
+h1{font-family:var(--font-display);font-weight:900;font-size:clamp(38px,5.2vw,62px);line-height:1.06;letter-spacing:-.02em;margin-bottom:22px}
+h1 .mono-kicker{display:inline-block;color:var(--green);letter-spacing:-.02em}
+h1 .strike{position:relative;color:var(--gray-2);white-space:nowrap}
+h1 .strike::after{content:"";position:absolute;left:-2%;right:-2%;top:54%;height:4px;background:var(--red);border-radius:2px;transform:rotate(-1.5deg)}
+.hero-sub{font-size:19px;color:var(--gray);max-width:520px;margin-bottom:34px}
+.hero-ctas{display:flex;align-items:center;gap:18px;flex-wrap:wrap;margin-bottom:30px}
+.hero-note{font-family:var(--font-mono);font-size:13px;color:var(--gray-2)}
+.hero-note b{color:var(--green);font-weight:500}
+
+/* Terminal demo (hero) */
+.terminal{background:var(--bg-2);border:1px solid var(--border);border-radius:16px;box-shadow:0 30px 80px rgba(0,0,0,.55),0 0 0 1px rgba(45,212,170,.06);overflow:hidden;font-family:var(--font-body);font-size:14.5px}
+.term-bar{display:flex;align-items:center;gap:8px;padding:13px 16px;border-bottom:1px solid var(--border);background:rgba(255,255,255,.02)}
+.term-bar .c{width:11px;height:11px;border-radius:50%}
+.term-bar .c1{background:#ff5f57}.term-bar .c2{background:#febc2e}.term-bar .c3{background:#28c840}
+.term-bar .title{margin-left:8px;color:var(--gray-2);font-size:12px}
+.term-body{padding:20px 22px;min-height:262px}
+.tline{display:flex;gap:10px;margin-bottom:10px;opacity:0;animation:tIn .4s ease forwards}
+.tline .pr{color:var(--green)}
+.tline .ok{color:var(--green)}
+.tline .dim{color:var(--gray-2)}
+@keyframes tIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.tline:nth-child(1){animation-delay:.4s}.tline:nth-child(2){animation-delay:1.2s}
+.tline:nth-child(3){animation-delay:2s}.tline:nth-child(4){animation-delay:2.7s}
+.tline:nth-child(5){animation-delay:3.4s}.tline:nth-child(6){animation-delay:4.1s}
+.tline:nth-child(7){animation-delay:4.9s}
+.tresult{margin-top:14px;padding:14px 16px;border:1px solid rgba(45,212,170,.3);background:rgba(45,212,170,.06);border-radius:10px;opacity:0;animation:tIn .5s ease forwards;animation-delay:5.7s}
+.tresult .big{color:var(--green);font-size:17px;font-weight:700}
+.tresult .sub{color:var(--gray);font-size:12.5px;margin-top:3px}
+
+/* ---------- Stat strip ---------- */
+.strip{border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:var(--bg-2)}
+.strip-in{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;padding:38px 0}
+.strip .cell{text-align:center}
+.strip .num{font-family:var(--font-display);font-weight:900;font-size:clamp(30px,3.4vw,44px);color:var(--green);letter-spacing:-.02em}
+.strip .lbl{font-size:14.5px;color:var(--gray);margin-top:4px}
+
+/* ---------- Sections ---------- */
+section{padding:100px 0;scroll-margin-top:80px}
+.kicker{font-family:var(--font-mono);font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--green);margin-bottom:16px}
+h2{font-family:var(--font-display);font-weight:900;font-size:clamp(30px,4vw,46px);line-height:1.12;letter-spacing:-.02em;margin-bottom:16px}
+.sec-sub{font-size:18px;color:var(--gray);max-width:640px}
+
+/* ---------- Dolores ---------- */
+.pains{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:54px}
+.pain{background:var(--bg-2);border:1px solid var(--border);border-radius:16px;padding:28px;transition:border-color .3s,transform .3s}
+.pain:hover{border-color:rgba(45,212,170,.35);transform:translateY(-3px)}
+.pain-top{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;margin-bottom:14px}
+.pain h3{font-size:20px;font-weight:700;letter-spacing:-.01em}
+.pain .pct{font-family:var(--font-mono);font-size:15px;color:var(--green);white-space:nowrap;background:rgba(45,212,170,.08);border:1px solid rgba(45,212,170,.2);padding:4px 12px;border-radius:100px}
+.pain p{font-size:15px;color:var(--gray);margin-bottom:18px}
+.bar{height:7px;background:rgba(255,255,255,.06);border-radius:100px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--green-dark),var(--green));border-radius:100px;transition:width 1.3s cubic-bezier(.25,.8,.3,1)}
+.visible .bar i{width:var(--w)}
+.pains-src{margin-top:22px;font-family:var(--font-mono);font-size:12.5px;color:var(--gray-2);text-align:center}
+
+/* ---------- Demos ---------- */
+#demos{background:var(--bg-2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.demo{display:grid;grid-template-columns:1fr 1.15fr;gap:56px;align-items:center;margin-top:80px}
+.demo.flip{grid-template-columns:1.15fr 1fr}
+.demo.flip .demo-txt{order:2}
+.demo-txt .step{font-family:var(--font-mono);font-size:13px;color:var(--green);margin-bottom:12px}
+.demo-txt h3{font-family:var(--font-display);font-weight:800;font-size:clamp(24px,2.8vw,32px);letter-spacing:-.015em;margin-bottom:14px}
+.demo-txt p{color:var(--gray);font-size:16.5px;margin-bottom:18px}
+.demo-txt ul{list-style:none}
+.demo-txt li{display:flex;gap:11px;align-items:flex-start;color:var(--gray);font-size:15.5px;margin-bottom:10px}
+.demo-txt li svg{flex:none;margin-top:4px}
+.demo-txt li b{color:var(--ink);font-weight:600}
+
+/* window chrome compartido */
+.win{background:var(--bg);border:1px solid var(--border);border-radius:16px;overflow:hidden;box-shadow:0 24px 70px rgba(0,0,0,.5)}
+.win-bar{display:flex;align-items:center;gap:8px;padding:12px 16px;border-bottom:1px solid var(--border);background:rgba(255,255,255,.02);font-family:var(--font-body);font-size:12.5px;color:var(--gray-2)}
+.win-bar .c{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.14)}
+.win-bar .name{margin-left:6px}
+.win-body{padding:20px}
+
+/* Demo 1: conciliación */
+.rec-cols{display:grid;grid-template-columns:1fr 1fr;gap:12px;font-family:var(--font-body);font-size:12.5px}
+.rec-col h4{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--gray-2);margin-bottom:10px;font-weight:500}
+.rec-row{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px 10px;border:1px solid var(--border);border-radius:8px;margin-bottom:7px;color:var(--gray);background:rgba(255,255,255,.015);position:relative;transition:border-color .4s,background .4s}
+.rec-row .v{color:var(--ink)}
+.rec-row .chk{width:16px;height:16px;flex:none;opacity:0;transform:scale(.4);transition:opacity .35s,transform .35s cubic-bezier(.2,1.6,.4,1)}
+.visible .rec-row.matched{border-color:rgba(45,212,170,.45);background:rgba(45,212,170,.05)}
+.visible .rec-row.matched .chk{opacity:1;transform:scale(1)}
+.rec-row.m1{transition-delay:.5s}.rec-row.m1 .chk{transition-delay:.5s}
+.rec-row.m2{transition-delay:1s}.rec-row.m2 .chk{transition-delay:1s}
+.rec-row.m3{transition-delay:1.5s}.rec-row.m3 .chk{transition-delay:1.5s}
+.rec-row.m4{transition-delay:2s}.rec-row.m4 .chk{transition-delay:2s}
+.rec-row.pend{border-style:dashed}
+.visible .rec-row.pend{border-color:rgba(254,188,46,.5);background:rgba(254,188,46,.05);transition-delay:2.5s}
+.rec-total{margin-top:14px;display:flex;justify-content:space-between;align-items:center;padding:14px 16px;border-radius:10px;border:1px solid rgba(45,212,170,.35);background:rgba(45,212,170,.07)}
+.rec-total .l{font-size:12px;color:var(--gray)}
+.rec-total .r{font-size:18px;color:var(--green);font-weight:700}
+
+/* Demo 2: causación */
+.caus{display:flex;flex-direction:column;gap:14px;font-family:var(--font-body);font-size:12.5px}
+.invoice{border:1px solid var(--border);border-radius:10px;padding:14px 16px;background:rgba(255,255,255,.015)}
+.invoice .tag{display:inline-block;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--gray-2);border:1px solid var(--border);padding:2px 8px;border-radius:100px;margin-bottom:9px}
+.invoice .row{display:flex;justify-content:space-between;color:var(--gray);padding:2.5px 0}
+.invoice .row .v{color:var(--ink)}
+.caus-arrow{align-self:center;display:flex;align-items:center;gap:10px;color:var(--green);font-size:11.5px}
+.caus-arrow .pulse-line{width:36px;height:1px;background:linear-gradient(90deg,transparent,var(--green));position:relative;overflow:visible}
+.caus-arrow svg{animation:downFloat 1.6s ease-in-out infinite}
+@keyframes downFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(4px)}}
+.ledger{border:1px solid rgba(45,212,170,.3);border-radius:10px;overflow:hidden}
+.ledger table{width:100%;border-collapse:collapse}
+.ledger th{font-weight:500;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--gray-2);text-align:left;padding:9px 12px;border-bottom:1px solid var(--border);background:rgba(45,212,170,.05)}
+.ledger td{padding:8px 12px;border-bottom:1px solid rgba(255,255,255,.04);color:var(--gray)}
+.ledger td.num{text-align:right;color:var(--ink)}
+.ledger tr:last-child td{border-bottom:none}
+.ledger .acct{color:var(--green)}
+.ledger tbody tr{opacity:0;transform:translateX(-8px);transition:opacity .5s,transform .5s}
+.visible .ledger tbody tr{opacity:1;transform:none}
+.visible .ledger tbody tr:nth-child(1){transition-delay:.5s}
+.visible .ledger tbody tr:nth-child(2){transition-delay:.8s}
+.visible .ledger tbody tr:nth-child(3){transition-delay:1.1s}
+.visible .ledger tbody tr:nth-child(4){transition-delay:1.4s}
+.visible .ledger tbody tr:nth-child(5){transition-delay:1.7s}
+
+/* Demo 3: informes */
+.report{font-family:var(--font-body);font-size:12.5px}
+.report-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+.report-head .t{color:var(--ink);font-size:13px}
+.report-head .d{color:var(--gray-2);font-size:11px}
+.chart{display:flex;align-items:flex-end;gap:10px;height:120px;padding:0 4px;border-bottom:1px solid var(--border);margin-bottom:8px}
+.chart .col{flex:1;display:flex;flex-direction:column;justify-content:flex-end;gap:0;height:100%}
+.chart .col i{display:block;background:linear-gradient(180deg,var(--green),var(--green-dark));border-radius:4px 4px 0 0;height:0;transition:height 1.1s cubic-bezier(.25,.8,.3,1)}
+.visible .chart .col i{height:var(--h)}
+.chart .col:nth-child(2) i{transition-delay:.15s}.chart .col:nth-child(3) i{transition-delay:.3s}
+.chart .col:nth-child(4) i{transition-delay:.45s}.chart .col:nth-child(5) i{transition-delay:.6s}
+.chart .col:nth-child(6) i{transition-delay:.75s}
+.chart-lbls{display:flex;gap:10px;padding:0 4px;margin-bottom:16px}
+.chart-lbls span{flex:1;text-align:center;font-size:10px;color:var(--gray-2)}
+.report-note{border-left:2px solid var(--green);padding:10px 14px;background:rgba(45,212,170,.05);border-radius:0 8px 8px 0;color:var(--gray);font-size:12px;line-height:1.55;margin-bottom:8px;opacity:0;transform:translateY(8px);transition:opacity .6s,transform .6s}
+.visible .report-note{opacity:1;transform:none}
+.visible .report-note:nth-of-type(1){transition-delay:.9s}
+.visible .report-note:nth-of-type(2){transition-delay:1.3s}
+.report-note .who{color:var(--green);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;display:block;margin-bottom:3px}
+.typing-caret::after{content:"▌";color:var(--green);animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+
+/* ---------- Antes / Después ---------- */
+.ba{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:54px}
+.ba-col{border-radius:18px;padding:34px;border:1px solid var(--border)}
+.ba-col.before{background:var(--bg-2)}
+.ba-col.after{background:linear-gradient(180deg,rgba(45,212,170,.09),rgba(45,212,170,.02));border-color:rgba(45,212,170,.3)}
+.ba-col h3{font-size:14px;font-family:var(--font-mono);letter-spacing:.12em;text-transform:uppercase;margin-bottom:22px}
+.ba-col.before h3{color:var(--gray-2)}
+.ba-col.after h3{color:var(--green)}
+.ba-item{display:flex;gap:13px;align-items:flex-start;padding:13px 0;border-bottom:1px solid rgba(255,255,255,.05);font-size:15.5px}
+.ba-item:last-child{border-bottom:none}
+.ba-col.before .ba-item{color:var(--gray)}
+.ba-col.after .ba-item{color:var(--ink)}
+.ba-item svg{flex:none;margin-top:4px}
+.ba-item .t{font-family:var(--font-mono);font-size:12px;color:var(--gray-2);display:block;margin-top:2px}
+.ba-col.after .ba-item .t{color:var(--green)}
+
+/* ---------- Testimonios ---------- */
+.quotes{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:54px}
+.quote{background:var(--bg-2);border:1px solid var(--border);border-radius:16px;padding:30px;display:flex;flex-direction:column;gap:18px;transition:border-color .3s,transform .3s}
+.quote:hover{border-color:rgba(45,212,170,.3);transform:translateY(-3px)}
+.quote .q{font-size:16px;color:var(--ink);line-height:1.55;flex:1}
+.quote .q b{color:var(--green)}
+.quote .who{display:flex;align-items:center;gap:12px}
+.quote .av{width:42px;height:42px;border-radius:50%;background:rgba(45,212,170,.12);border:1px solid rgba(45,212,170,.3);display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);color:var(--green);font-size:14px;flex:none}
+.quote .who .n{font-weight:700;font-size:14.5px}
+.quote .who .r{font-size:12.5px;color:var(--gray-2);font-family:var(--font-mono)}
+
+/* ---------- Big quote ---------- */
+.bigq{background:var(--bg-2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);text-align:center}
+.bigq blockquote{font-family:var(--font-display);font-weight:800;font-size:clamp(26px,3.6vw,42px);line-height:1.22;letter-spacing:-.02em;max-width:880px;margin:0 auto}
+.bigq blockquote .fade{color:var(--gray-2)}
+.bigq cite{display:block;margin-top:26px;font-family:var(--font-mono);font-style:normal;font-size:13.5px;color:var(--green)}
+
+/* ---------- CTA final ---------- */
+.cta-card{position:relative;border-radius:24px;padding:74px 40px;text-align:center;background:radial-gradient(ellipse 70% 120% at 50% -20%,rgba(45,212,170,.22),rgba(17,17,17,1) 60%);border:1px solid rgba(45,212,170,.3);overflow:hidden}
+.cta-card::before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);background-size:44px 44px;mask-image:radial-gradient(ellipse 70% 80% at 50% 0%,#000,transparent);-webkit-mask-image:radial-gradient(ellipse 70% 80% at 50% 0%,#000,transparent);pointer-events:none}
+.cta-card>*{position:relative}
+.cta-card h2{margin-bottom:14px}
+.cta-card p{font-size:18px;color:var(--gray);max-width:560px;margin:0 auto 36px}
+.cta-bullets{display:flex;justify-content:center;gap:26px;flex-wrap:wrap;margin-top:30px;font-family:var(--font-mono);font-size:13px;color:var(--gray)}
+.cta-bullets span{display:flex;align-items:center;gap:8px}
+.btn.big{font-size:18px;padding:18px 40px}
+
+/* ---------- Footer ---------- */
+footer{border-top:1px solid var(--border);padding:44px 0}
+.foot-in{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.foot-in .logo-img{height:24px}
+footer p{font-family:var(--font-mono);font-size:12.5px;color:var(--gray-2)}
+
+/* ---------- Responsive ---------- */
+@media(max-width:920px){
+  .hero-in{grid-template-columns:1fr;gap:44px}
+  .demo,.demo.flip{grid-template-columns:1fr;gap:30px;margin-top:64px}
+  .demo.flip .demo-txt{order:0}
+  .quotes{grid-template-columns:1fr}
+  .pains{grid-template-columns:1fr}
+  .ba{grid-template-columns:1fr}
+  section{padding:72px 0}
+  .strip-in{grid-template-columns:1fr;gap:26px;padding:32px 0}
+}
+@media(max-width:520px){
+  .hero{padding-top:120px}
+  .btn-ghost{display:none}
+  .rec-cols{grid-template-columns:1fr}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
+  .reveal{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+
+<!-- ============ NAV ============ -->
+<nav>
+  <div class="wrap nav-in">
+    <a class="logo" href="#" aria-label="Escalia">
+      <span class="logo-img" role="img" aria-label="Escalia"></span>
+    </a>
+    <a class="btn sm" href="https://aprende.escalia.co/webinar-ia-contadores/?utm_source=website&utm_medium=organic&utm_campaign=webinar_contadores&utm_content=cta-web">Capacítate gratis <span class="arrow">→</span></a>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<header class="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-grid"></div>
+  <div class="wrap hero-in">
+    <div>
+      <div class="badge"><span class="dot"></span> IA para contadores · Capacitación gratuita</div>
+      <h1><span class="mono-kicker">Contador:</span><br>deja de <span class="strike">digitar</span>.<br>Empieza a <span class="green">asesorar</span>.</h1>
+      <p class="hero-sub">Las conciliaciones, la causación, los informes y los cruces con la DIAN que hoy te consumen la semana, la IA los hace en minutos. Aprende cómo, gratis y en vivo.</p>
+      <div class="hero-ctas">
+        <a class="btn" href="https://aprende.escalia.co/webinar-ia-contadores/?utm_source=website&utm_medium=organic&utm_campaign=webinar_contadores&utm_content=cta-web">Quiero capacitarme gratis <span class="arrow">→</span></a>
+        <a class="btn-ghost" href="#demos">Ver cómo funciona ↓</a>
+      </div>
+      <p class="hero-note">Masterclass en vivo · Con demos sobre <b>archivos reales</b> · Sin conocimientos técnicos previos</p>
+    </div>
+    <div class="terminal reveal" aria-hidden="true">
+      <div class="term-bar">
+        <span class="c c1"></span><span class="c c2"></span><span class="c c3"></span>
+        <span class="title">Asistente IA — Conciliación bancaria</span>
+      </div>
+      <div class="term-body">
+        <div class="tline"><span class="pr">›</span><span>Concilia el extracto de Bancolombia contra el auxiliar contable</span></div>
+        <div class="tline"><span class="ok">✓</span><span class="dim">Leyendo el extracto de junio… 138 movimientos</span></div>
+        <div class="tline"><span class="ok">✓</span><span class="dim">Leyendo el auxiliar contable… 141 registros</span></div>
+        <div class="tline"><span class="ok">✓</span><span class="dim">Cruzando por fecha, valor y referencia…</span></div>
+        <div class="tline"><span class="ok">✓</span><span class="dim">135 partidas conciliadas automáticamente</span></div>
+        <div class="tline"><span class="ok">✓</span><span class="dim">3 partidas pendientes identificadas y explicadas</span></div>
+        <div class="tline"><span class="ok">✓</span><span class="dim">Generando Excel con 6 hojas de trabajo…</span></div>
+        <div class="tresult">
+          <div class="big">Diferencia: $0.00</div>
+          <div class="sub">Conciliación completa · 2 minutos · Lista para revisar y firmar</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ============ DOLORES ============ -->
+<section id="dolores">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="kicker">¿Te suena?</div>
+      <h2>415 contadores nos hablaron de lo más<br>desgastante de su trabajo cotidiano</h2>
+      <p class="sec-sub">Por eso decidimos solucionarlo. Estas fueron sus respuestas — si te ves reflejado en alguna, esta página es para ti.</p>
+    </div>
+    <div class="pains">
+      <div class="pain reveal">
+        <div class="pain-top"><h3>Conciliaciones bancarias</h3><span class="pct">69%</span></div>
+        <p>Cruzar extractos contra auxiliares, movimiento por movimiento, buscando esa partida que no cuadra. Horas frente al Excel cada cierre.</p>
+        <div class="bar"><i style="--w:69%"></i></div>
+      </div>
+      <div class="pain reveal d1">
+        <div class="pain-top"><h3>Reportes e informes</h3><span class="pct">36%</span></div>
+        <p>Armar el informe mensual, los estados financieros y las notas desde cero, cliente por cliente, mes tras mes.</p>
+        <div class="bar"><i style="--w:36%"></i></div>
+      </div>
+      <div class="pain reveal d2">
+        <div class="pain-top"><h3>Exógena, DIAN y tributario</h3><span class="pct">28%</span></div>
+        <p>El portal lento, los CAPTCHA, descargar documentos uno por uno, cruzar información y rezar para que la página no se caiga.</p>
+        <div class="bar"><i style="--w:28%"></i></div>
+      </div>
+      <div class="pain reveal d3">
+        <div class="pain-top"><h3>Causación y digitación</h3><span class="pct">27%</span></div>
+        <p>Digitar factura por factura, verificar retenciones a mano, crear terceros, alimentar el software contable campo por campo.</p>
+        <div class="bar"><i style="--w:27%"></i></div>
+      </div>
+    </div>
+    <p class="pains-src reveal">Fuente: encuesta de Escalia a 415 contadores en Colombia y LATAM · 2026</p>
+  </div>
+</section>
+
+<!-- ============ DEMOS ============ -->
+<section id="demos">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="kicker">Así se ve con IA</div>
+      <h2>Lo que hoy haces a mano,<br>así lo hace la IA</h2>
+      <p class="sec-sub">No es teoría ni promesas: son los mismos procesos que ya mostramos en vivo, con archivos reales de contadores reales.</p>
+    </div>
+
+    <!-- Demo 1: Conciliación -->
+    <div class="demo">
+      <div class="demo-txt reveal">
+        <div class="step">01 / Conciliación bancaria</div>
+        <h3>De horas de cruce manual a minutos de revisión</h3>
+        <p>Le entregas a la IA el extracto del banco y tu auxiliar contable. Ella cruza cada movimiento, identifica las partidas pendientes y te entrega el Excel de trabajo listo.</p>
+        <ul>
+          <li><svg width="16" height="16" viewBox="0 0 16 16"><path d="M3 8.5L6.5 12L13 4.5" stroke="#2DD4AA" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Cruce automático por <b>fecha, valor y referencia</b></span></li>
+          <li><svg width="16" height="16" viewBox="0 0 16 16"><path d="M3 8.5L6.5 12L13 4.5" stroke="#2DD4AA" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Partidas pendientes <b>identificadas y explicadas</b>, no solo marcadas</span></li>
+          <li><svg width="16" height="16" viewBox="0 0 16 16"><path d="M3 8.5L6.5 12L13 4.5" stroke="#2DD4AA" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Tú solo <b>revisas, ajustas y firmas</b> — el criterio sigue siendo tuyo</span></li>
+        </ul>
+      </div>
+      <div class="win reveal d1">
+        <div class="win-bar"><span class="c"></span><span class="c"></span><span class="c"></span><span class="name">Conciliación de junio — generada por IA</span></div>
+        <div class="win-body">
+          <div class="rec-cols">
+            <div class="rec-col">
+              <h4>Extracto bancario</h4>
+              <div class="rec-row matched m1"><span>05/06 · Transf. recibida</span><span class="v">$4.850.000</span><svg class="chk" viewBox="0 0 16 16"><circle cx="8" cy="8" r="8" fill="#2DD4AA"/><path d="M4.5 8.2L7 10.5L11.5 5.5" stroke="#0A0A0A" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg></div>
+              <div class="rec-row matched m2"><span>09/06 · Pago proveedor</span><span class="v">−$2.310.400</span><svg class="chk" viewBox="0 0 16 16"><circle cx="8" cy="8" r="8" fill="#2DD4AA"/><path d="M4.5 8.2L7 10.5L11.5 5.5" stroke="#0A0A0A" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg></div>
+              <div class="rec-row matched m3"><span>14/06 · Comisión bancaria</span><span class="v">−$18.900</span><svg class="chk" viewBox="0 0 16 16"><circle cx="8" cy="8" r="8" fill="#2DD4AA"/><path d="M4.5 8.2L7 10.5L11.5 5.5" stroke="#0A0A0A" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg></div>
+              <div class="rec-row pend"><span>28/06 · Cheque en canje</span><span class="v">−$960.000</span></div>
+            </div>
+            <div class="rec-col">
+              <h4>Auxiliar contable</h4>
+              <div class="rec-row matched m1"><span>05/06 · CxC Cliente 8842</span><span class="v">$4.850.000</span><svg class="chk" viewBox="0 0 16 16"><circle cx="8" cy="8" r="8" fill="#2DD4AA"/><path d="M4.5 8.2L7 10.5L11.5 5.5" stroke="#0A0A0A" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg></div>
+              <div class="rec-row matched m2"><span>09/06 · CxP FV-2231</span><span class="v">−$2.310.400</span><svg class="chk" viewBox="0 0 16 16"><circle cx="8" cy="8" r="8" fill="#2DD4AA"/><path d="M4.5 8.2L7 10.5L11.5 5.5" stroke="#0A0A0A" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg></div>
+              <div class="rec-row matched m3"><span>14/06 · Gasto financiero</span><span class="v">−$18.900</span><svg class="chk" viewBox="0 0 16 16"><circle cx="8" cy="8" r="8" fill="#2DD4AA"/><path d="M4.5 8.2L7 10.5L11.5 5.5" stroke="#0A0A0A" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg></div>
+              <div class="rec-row matched m4"><span>21/06 · Rendimientos</span><span class="v">$42.130</span><svg class="chk" viewBox="0 0 16 16"><circle cx="8" cy="8" r="8" fill="#2DD4AA"/><path d="M4.5 8.2L7 10.5L11.5 5.5" stroke="#0A0A0A" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg></div>
+            </div>
+          </div>
+          <div class="rec-total"><span class="l">138 movimientos · 3 partidas en conciliación, explicadas</span><span class="r">Diferencia: $0.00</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Demo 2: Causación -->
+    <div class="demo flip">
+      <div class="demo-txt reveal">
+        <div class="step">02 / Causación y digitación</div>
+        <h3>La factura entra, el asiento sale</h3>
+        <p>La IA lee la factura electrónica, identifica el tercero, clasifica las cuentas, calcula las retenciones según el tipo de servicio y contribuyente, y deja el registro listo para tu software contable.</p>
+        <ul>
+          <li><svg width="16" height="16" viewBox="0 0 16 16"><path d="M3 8.5L6.5 12L13 4.5" stroke="#2DD4AA" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Lee facturas de la DIAN <b>directamente desde el CUFE</b></span></li>
+          <li><svg width="16" height="16" viewBox="0 0 16 16"><path d="M3 8.5L6.5 12L13 4.5" stroke="#2DD4AA" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Calcula <b>ReteFuente, ReteIVA y ReteICA</b> según cada caso</span></li>
+          <li><svg width="16" height="16" viewBox="0 0 16 16"><path d="M3 8.5L6.5 12L13 4.5" stroke="#2DD4AA" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Genera el <b>archivo plano para tu software</b> (SIIGO y otros)</span></li>
+        </ul>
+      </div>
+      <div class="win reveal d1">
+        <div class="win-bar"><span class="c"></span><span class="c"></span><span class="c"></span><span class="name">Causación automática — factura electrónica</span></div>
+        <div class="win-body">
+          <div class="caus">
+            <div class="invoice">
+              <span class="tag">Factura electrónica · DIAN</span>
+              <div class="row"><span>Proveedor</span><span class="v">Servicios Logísticos S.A.S.</span></div>
+              <div class="row"><span>NIT</span><span class="v">901.442.318-7</span></div>
+              <div class="row"><span>Concepto</span><span class="v">Servicio de transporte</span></div>
+              <div class="row"><span>Valor + IVA</span><span class="v">$3.200.000 + $608.000</span></div>
+            </div>
+            <div class="caus-arrow"><span class="pulse-line"></span><svg width="18" height="18" viewBox="0 0 18 18"><path d="M9 3v10M4.5 9.5L9 14l4.5-4.5" stroke="#2DD4AA" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg> la IA clasifica, calcula y registra <span class="pulse-line" style="transform:scaleX(-1)"></span></div>
+            <div class="ledger">
+              <table>
+                <thead><tr><th>Cuenta</th><th>Descripción</th><th style="text-align:right">Débito</th><th style="text-align:right">Crédito</th></tr></thead>
+                <tbody>
+                  <tr><td class="acct">513550</td><td>Transporte, fletes</td><td class="num">$3.200.000</td><td class="num">—</td></tr>
+                  <tr><td class="acct">240820</td><td>IVA descontable</td><td class="num">$608.000</td><td class="num">—</td></tr>
+                  <tr><td class="acct">236525</td><td>ReteFuente servicios 1%</td><td class="num">—</td><td class="num">$32.000</td></tr>
+                  <tr><td class="acct">236801</td><td>ReteICA</td><td class="num">—</td><td class="num">$22.144</td></tr>
+                  <tr><td class="acct">220505</td><td>Proveedores nacionales</td><td class="num">—</td><td class="num">$3.753.856</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Demo 3: Informes -->
+    <div class="demo">
+      <div class="demo-txt reveal">
+        <div class="step">03 / Informes y estados financieros</div>
+        <h3>El informe mensual que se escribe solo</h3>
+        <p>Con los datos ya procesados, la IA redacta el informe del mes: análisis de variaciones, indicadores, notas a los estados financieros y recomendaciones — en tu tono y con tu formato.</p>
+        <ul>
+          <li><svg width="16" height="16" viewBox="0 0 16 16"><path d="M3 8.5L6.5 12L13 4.5" stroke="#2DD4AA" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Análisis financiero con <b>variaciones e indicadores explicados</b></span></li>
+          <li><svg width="16" height="16" viewBox="0 0 16 16"><path d="M3 8.5L6.5 12L13 4.5" stroke="#2DD4AA" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Notas a los EEFF <b>redactadas en segundos</b></span></li>
+          <li><svg width="16" height="16" viewBox="0 0 16 16"><path d="M3 8.5L6.5 12L13 4.5" stroke="#2DD4AA" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><span>El mismo informe, <b>para cada cliente</b>, sin empezar de cero</span></li>
+        </ul>
+      </div>
+      <div class="win reveal d1">
+        <div class="win-bar"><span class="c"></span><span class="c"></span><span class="c"></span><span class="name">Informe gerencial de junio — borrador IA</span></div>
+        <div class="win-body report">
+          <div class="report-head"><span class="t">Informe gerencial · Junio 2026</span><span class="d">generado en 40 s</span></div>
+          <div class="chart" aria-hidden="true">
+            <div class="col"><i style="--h:38%"></i></div>
+            <div class="col"><i style="--h:52%"></i></div>
+            <div class="col"><i style="--h:46%"></i></div>
+            <div class="col"><i style="--h:64%"></i></div>
+            <div class="col"><i style="--h:58%"></i></div>
+            <div class="col"><i style="--h:82%"></i></div>
+          </div>
+          <div class="chart-lbls"><span>Ene</span><span>Feb</span><span>Mar</span><span>Abr</span><span>May</span><span>Jun</span></div>
+          <div class="report-note"><span class="who">Análisis · IA</span>Los ingresos operacionales crecieron 12,4% frente a mayo, impulsados por la línea de servicios. El margen bruto se mantiene en 41%.</div>
+          <div class="report-note"><span class="who">Nota EEFF · IA</span><span class="typing-caret">La cartera a más de 60 días se redujo 18% tras la gestión de cobro de junio. Se recomienda…</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ANTES / DESPUÉS ============ -->
+<section id="antes-despues">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="kicker">El cambio real</div>
+      <h2>Tu semana hoy vs. tu semana con IA</h2>
+      <p class="sec-sub">La IA no te reemplaza: te quita lo operativo para que vendas lo que de verdad vale — tu criterio profesional.</p>
+    </div>
+    <div class="ba">
+      <div class="ba-col before reveal">
+        <h3>— Tu semana hoy</h3>
+        <div class="ba-item"><svg width="16" height="16" viewBox="0 0 16 16"><path d="M4 4l8 8M12 4l-8 8" stroke="#8a8a8a" stroke-width="2" stroke-linecap="round"/></svg><div>Cruzas extractos contra auxiliares línea por línea<span class="t">horas por cliente, cada cierre</span></div></div>
+        <div class="ba-item"><svg width="16" height="16" viewBox="0 0 16 16"><path d="M4 4l8 8M12 4l-8 8" stroke="#8a8a8a" stroke-width="2" stroke-linecap="round"/></svg><div>Digitas facturas y verificas retenciones a mano<span class="t">factura por factura, campo por campo</span></div></div>
+        <div class="ba-item"><svg width="16" height="16" viewBox="0 0 16 16"><path d="M4 4l8 8M12 4l-8 8" stroke="#8a8a8a" stroke-width="2" stroke-linecap="round"/></svg><div>Peleas con el portal de la DIAN y sus CAPTCHA<span class="t">documento por documento</span></div></div>
+        <div class="ba-item"><svg width="16" height="16" viewBox="0 0 16 16"><path d="M4 4l8 8M12 4l-8 8" stroke="#8a8a8a" stroke-width="2" stroke-linecap="round"/></svg><div>Redactas cada informe y cada nota desde cero<span class="t">el mismo formato, mil veces</span></div></div>
+        <div class="ba-item"><svg width="16" height="16" viewBox="0 0 16 16"><path d="M4 4l8 8M12 4l-8 8" stroke="#8a8a8a" stroke-width="2" stroke-linecap="round"/></svg><div>Cobras por horas de digitación<span class="t">y el cliente regatea el precio</span></div></div>
+      </div>
+      <div class="ba-col after reveal d1">
+        <h3>+ Tu semana con IA</h3>
+        <div class="ba-item"><svg width="16" height="16" viewBox="0 0 16 16"><path d="M3 8.5L6.5 12L13 4.5" stroke="#2DD4AA" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><div>La IA concilia; tú revisas las partidas señaladas<span class="t">minutos por cliente</span></div></div>
+        <div class="ba-item"><svg width="16" height="16" viewBox="0 0 16 16"><path d="M3 8.5L6.5 12L13 4.5" stroke="#2DD4AA" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><div>Las facturas se procesan y clasifican solas<span class="t">retenciones calculadas, plano listo</span></div></div>
+        <div class="ba-item"><svg width="16" height="16" viewBox="0 0 16 16"><path d="M3 8.5L6.5 12L13 4.5" stroke="#2DD4AA" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><div>La IA navega la DIAN y descarga por ti<span class="t">mientras tú haces otra cosa</span></div></div>
+        <div class="ba-item"><svg width="16" height="16" viewBox="0 0 16 16"><path d="M3 8.5L6.5 12L13 4.5" stroke="#2DD4AA" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><div>Los informes salen en borrador; tú aportas el análisis<span class="t">de horas a minutos</span></div></div>
+        <div class="ba-item"><svg width="16" height="16" viewBox="0 0 16 16"><path d="M3 8.5L6.5 12L13 4.5" stroke="#2DD4AA" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><div>Cobras por criterio y asesoría<span class="t">de digitador a asesor estratégico</span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TESTIMONIOS ============ -->
+<section id="resultados">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="kicker">Contadores reales, resultados reales</div>
+      <h2>Ya lo demostramos en vivo,<br>con archivos reales</h2>
+      <p class="sec-sub">En nuestras masterclasses sin costo no mostramos diapositivas: procesamos documentos reales de los asistentes, en vivo, frente a todos.</p>
+    </div>
+    <div class="quotes">
+      <div class="quote reveal">
+        <p class="q">Procesamos <b>2,712 documentos</b> de su operación con IA. Lo que antes era semanas de digitación, quedó resuelto en una sesión.</p>
+        <div class="who"><span class="av">N</span><div><div class="n">Néstor</div><div class="r">Contador · Colombia</div></div></div>
+      </div>
+      <div class="quote reveal d1">
+        <p class="q">Trajo su conciliación real a la masterclass. La IA cruzó su extracto contra su auxiliar en vivo y el resultado cuadró: <b>diferencia $0.00</b>.</p>
+        <div class="who"><span class="av">N</span><div><div class="n">Nohora</div><div class="r">Contadora · Colombia</div></div></div>
+      </div>
+      <div class="quote reveal d2">
+        <p class="q">Su firma procesó <b>500 facturas</b> con el flujo que enseñamos: clasificadas, con retenciones verificadas y listas para el software contable.</p>
+        <div class="who"><span class="av">A</span><div><div class="n">Auxiliares Contables SAS</div><div class="r">Firma contable · Colombia</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ BIG QUOTE ============ -->
+<section class="bigq">
+  <div class="wrap reveal">
+    <blockquote>«El contador que digita manualmente va a desaparecer.<br><span class="green">El que asesora y supervisa con IA se vuelve indispensable.</span>»</blockquote>
+    <cite>— Escalia · Capacitación en IA para profesionales</cite>
+  </div>
+</section>
+
+<!-- ============ CTA FINAL ============ -->
+<section id="cta">
+  <div class="wrap">
+    <div class="cta-card reveal">
+      <div class="badge"><span class="dot"></span> Cupos limitados · 100% gratis</div>
+      <h2>Aprende a hacerlo tú mismo,<br>en una masterclass <span class="green">gratuita</span></h2>
+      <p>Una sesión en vivo donde verás, paso a paso y con archivos reales, cómo la IA hace la conciliación, la causación y los informes por ti. Sin conocimientos técnicos previos.</p>
+      <a class="btn big" href="https://aprende.escalia.co/webinar-ia-contadores/?utm_source=website&utm_medium=organic&utm_campaign=webinar_contadores&utm_content=cta-web">Reservar mi cupo gratis <span class="arrow">→</span></a>
+      <div class="cta-bullets">
+        <span><svg width="15" height="15" viewBox="0 0 16 16"><path d="M3 8.5L6.5 12L13 4.5" stroke="#2DD4AA" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg> En vivo y en español</span>
+        <span><svg width="15" height="15" viewBox="0 0 16 16"><path d="M3 8.5L6.5 12L13 4.5" stroke="#2DD4AA" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg> Demos con archivos reales</span>
+        <span><svg width="15" height="15" viewBox="0 0 16 16"><path d="M3 8.5L6.5 12L13 4.5" stroke="#2DD4AA" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg> Regalo: asistente contable con IA</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="wrap foot-in">
+    <a class="logo" href="#" aria-label="Escalia">
+      <span class="logo-img" role="img" aria-label="Escalia"></span>
+    </a>
+    <p>© 2026 Escalia · Capacitación en IA para profesionales en LATAM · escalia.co</p>
+  </div>
+</footer>
+
+<script>
+// Reveal on scroll
+const io = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target);}
+  });
+},{threshold:.18,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+// Smooth scroll propio (rAF) — el nativo se cancela en algunos navegadores/embeds
+function smoothTo(target){
+  const start=window.scrollY, dist=target-start, dur=Math.min(900,Math.max(400,Math.abs(dist)*.4)), t0=performance.now();
+  let done=false;
+  function step(now){
+    const p=Math.min(1,(now-t0)/dur), e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;
+    window.scrollTo(0,start+dist*e);
+    if(p<1)requestAnimationFrame(step); else done=true;
+  }
+  requestAnimationFrame(step);
+  setTimeout(()=>{if(!done)window.scrollTo(0,target);},dur+150);
+}
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',ev=>{
+    const id=a.getAttribute('href').slice(1);
+    const t=id?document.getElementById(id):null;
+    if(t){ev.preventDefault();smoothTo(t.offsetTop-70);}
+  });
+});
+</script>
+</body>
+</html>
