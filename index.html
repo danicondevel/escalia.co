@@ -213,6 +213,20 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 .cta-card p{font-size:18px;color:var(--gray);max-width:560px;margin:0 auto 36px}
 .btn.big{font-size:18px;padding:18px 40px}
 
+/* ---------- Instituciones y empresas ---------- */
+.orgs{margin-top:64px;padding-top:44px;border-top:1px solid var(--border)}
+.orgs-label{font-family:var(--font-mono);font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--gray-2);margin-bottom:22px}
+.org-cards{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+.org{background:var(--bg);border:1px solid var(--border);border-radius:16px;padding:30px;display:flex;flex-direction:column;gap:14px;transition:border-color .3s,transform .3s}
+.org:hover{border-color:rgba(45,212,170,.3);transform:translateY(-3px)}
+.org-name{display:block;font-weight:900;font-size:26px;letter-spacing:-.02em;line-height:1.1}
+.org-sector{display:block;font-family:var(--font-mono);font-size:12.5px;color:var(--green);margin-top:6px}
+.org p{font-size:15.5px;color:var(--gray);line-height:1.6}
+.org p b{color:var(--ink)}
+.orgs-link{display:inline-flex;align-items:center;gap:8px;margin-top:26px;font-weight:700;font-size:15px;color:var(--green);text-decoration:none}
+.orgs-link .arrow{transition:transform .2s}
+.orgs-link:hover .arrow{transform:translateX(4px)}
+
 /* ---------- Footer ---------- */
 footer{border-top:1px solid var(--border);padding:44px 0}
 .foot-in{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
@@ -228,6 +242,7 @@ footer p{font-family:var(--font-mono);font-size:12.5px;color:var(--gray-2)}
   .levels{grid-template-columns:1fr 1fr}
   .ba{grid-template-columns:1fr}
   .quotes{grid-template-columns:1fr}
+  .org-cards{grid-template-columns:1fr}
   .start-cards{grid-template-columns:1fr}
   .strip-in{grid-template-columns:1fr;gap:18px;padding:30px 0}
   section{padding:70px 0}
@@ -485,6 +500,21 @@ footer p{font-family:var(--font-mono);font-size:12.5px;color:var(--gray-2)}
         <p class="q">"Procesamos <b>500 facturas de una sola vez</b>. Nuestro equipo pasó de digitar todo el día a revisar y aprobar."</p>
         <div class="who"><div class="av">AX</div><div><div class="n">Auxyscont</div><div class="r">Firma contable</div></div></div>
       </div>
+    </div>
+
+    <div class="orgs reveal d2">
+      <p class="orgs-label">Instituciones y empresas que trabajan con Escalia</p>
+      <div class="org-cards">
+        <article class="org">
+          <div><span class="org-name">CEITAC</span><span class="org-sector">Educación continua para contadores · Colombia</span></div>
+          <p>Dictamos <b>20 horas de su programa de inteligencia artificial para contadores, a cerca de 200 estudiantes</b>, con descarga de facturas, causación y conciliación bancaria resueltas en vivo. También dictamos las sesiones de automatización de su «Master Class Automatiza con IA».</p>
+        </article>
+        <article class="org">
+          <div><span class="org-name">Agroventure Capital</span><span class="org-sector">Agroindustria · Colombia</span></div>
+          <p>Implementamos <b>inteligencia artificial y automatización con sus equipos de operaciones, marketing y finanzas</b>, y los capacitamos para que las usen en su trabajo diario.</p>
+        </article>
+      </div>
+      <a class="orgs-link" href="https://www.daniconde.com/proyectos">Conoce las herramientas que construimos con inteligencia artificial <span class="arrow">→</span></a>
     </div>
   </div>
 </section>
